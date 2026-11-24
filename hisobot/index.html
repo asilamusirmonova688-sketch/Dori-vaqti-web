@@ -13,56 +13,59 @@
 <title>Mening dasturlarim</title>
 <style>
 :root{--bg:#f3f5fb;--card:#fff;--ink:#18213a;--muted:#6b7590;--line:#e4e8f2;--pri:#4f46e5;--pri2:#eceafd;--ok:#0f9d6b;--ok2:#e2f6ee;--bad:#dc3d3d;--bad2:#fdeaea;--warn:#d98216;--warn2:#fdf2e2;--r:18px}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;min-width:0}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4}
-button{font:inherit;cursor:pointer;border:0;color:inherit}
-input,textarea{font:inherit;color:inherit}
+button{font:inherit;cursor:pointer;border:0;color:inherit;background:none}
+input,textarea,select{font:inherit;color:inherit}
 a{color:var(--pri);text-decoration:none}
-#app{max-width:1100px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom))}
+#app{max-width:1100px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom))}
 .hdr{display:flex;align-items:center;gap:12px;margin:6px 0 16px}
-.hdr h1{margin:0;font-size:1.5rem;flex:1}
+.hdr h1{margin:0;font-size:1.45rem;flex:1}
 .hdr .sub{display:block;font-size:.85rem;color:var(--muted);font-weight:500}
 .ib{background:var(--card);border:1px solid var(--line);border-radius:14px;min-width:46px;height:46px;display:grid;place-items:center;font-size:1.2rem;padding:0 12px}
 .ib.spin span{display:inline-block;animation:sp 1s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
-.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.mt{margin-top:14px}
+.kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.kpi{text-align:left;width:100%;position:relative}
 .kpi .v{font-size:1.9rem;font-weight:800;letter-spacing:-.5px}
 .kpi .l{color:var(--muted);font-size:.85rem}
 .kpi .e{font-size:1.3rem}
+.tap{cursor:pointer;transition:transform .08s}
+.tap:active{transform:scale(.98)}
+.kpi.tap::after{content:"›";position:absolute;right:14px;top:12px;color:var(--muted);font-size:1.3rem}
 .sec{font-weight:800;font-size:1.05rem;margin:22px 2px 10px;display:flex;align-items:center;gap:8px}
 .sec .muted{font-weight:500}
-.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
-.app{cursor:pointer;transition:transform .1s}
-.app:active{transform:scale(.99)}
+.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
 .ah{display:flex;gap:12px;align-items:center}
-.emo{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:1.8rem;flex:none}
-.an{font-weight:800;font-size:1.15rem}
+.emo{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:1.8rem;flex:none}
+.an{font-weight:800;font-size:1.12rem}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:3px}
 .tag{font-size:.75rem;font-weight:700;padding:3px 8px;border-radius:999px;background:#eef1f8;color:#465072}
 .tag.ok{background:var(--ok2);color:var(--ok)}.tag.bad{background:var(--bad2);color:var(--bad)}.tag.run{background:var(--warn2);color:var(--warn)}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 10px}
-.st{background:var(--bg);border-radius:12px;padding:8px 10px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0 8px}
+.st{background:var(--bg);border-radius:12px;padding:8px 10px;text-align:left;width:100%}
 .st b{display:block;font-size:1.05rem}
 .st span{font-size:.75rem;color:var(--muted)}
 .last{font-size:.88rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden}
+.bar{height:10px;background:var(--line);border-radius:9px;overflow:hidden}
 .bar i{display:block;height:100%;border-radius:9px}
 .row{display:flex;gap:10px;align-items:center}
 .muted{color:var(--muted)}.small{font-size:.85rem}
-.btn{background:var(--pri);color:#fff;border-radius:12px;padding:12px 16px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn{background:var(--pri);color:#fff;border-radius:12px;padding:12px 16px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px;line-height:1.2;white-space:nowrap}
 .btn.sec{background:var(--pri2);color:var(--pri)}
 .btn.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
 .btn.bad{background:var(--bad2);color:var(--bad)}
-.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.btns .btn{padding:9px 12px;font-size:.9rem;line-height:1.2;white-space:nowrap;align-self:center}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;align-items:center}
+.btns .btn{padding:9px 12px;font-size:.9rem}
 .alert{border-radius:14px;padding:12px 14px;margin:10px 0;font-size:.92rem;display:flex;gap:10px;align-items:center}
 .alert.bad{background:var(--bad2);color:#8d2020}.alert.warn{background:var(--warn2);color:#83500c}.alert.ok{background:var(--ok2);color:#0b6142}.alert.info{background:var(--pri2);color:#3730a3}
 .alert a{font-weight:700}
 .chart{width:100%;height:auto;display:block}
+.chart rect.col{cursor:pointer}
 .legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.8rem;color:var(--muted);margin-top:8px}
 .legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
-.two{display:grid;grid-template-columns:2fr 1fr;gap:14px}
 .list .it{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start}
 .list .it:last-child{border:0}
 .dot{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:none}
@@ -72,356 +75,412 @@ a{color:var(--pri);text-decoration:none}
 .chk:last-child{border:0}
 .chk input{width:22px;height:22px;accent-color:var(--ok);flex:none}
 .chk.done span{color:var(--muted);text-decoration:line-through}
-.tabs{display:flex;gap:6px;background:#e7eaf3;border-radius:14px;padding:4px;margin:14px 0}
-.tabs button{flex:1;padding:10px 4px;border-radius:10px;font-size:.88rem;background:none}
-.tabs button.on{background:#fff;font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.toast{position:fixed;left:50%;bottom:calc(30px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;z-index:60;font-weight:600;max-width:90%;text-align:center}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:2px 2px 8px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;padding:9px 14px;border-radius:999px;background:#fff;border:1px solid var(--line);font-weight:600;font-size:.92rem}
+.chip.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.toast{position:fixed;left:50%;bottom:calc(90px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;z-index:80;font-weight:600;max-width:90%;text-align:center}
 .steps li{margin:8px 0}
-code{background:#eef1f8;padding:2px 6px;border-radius:6px;font-size:.88em}
+code{background:#eef1f8;padding:2px 6px;border-radius:6px;font-size:.88em;overflow-wrap:anywhere}
 .empty{text-align:center;padding:30px 10px;color:var(--muted)}
 .skel{background:linear-gradient(90deg,#eceff6,#f6f7fb,#eceff6);background-size:200% 100%;animation:sk 1.2s infinite;border-radius:12px}
 @keyframes sk{to{background-position:-200% 0}}
 .ring{position:relative;width:64px;height:64px;flex:none}
 .ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:.9rem}
-.hidden-list .it{opacity:.6}
-@media (max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.kpi .v{font-size:1.6rem}}
+.nav{position:fixed;left:0;right:0;bottom:0;background:#fff;border-top:1px solid var(--line);z-index:20;padding-bottom:env(safe-area-inset-bottom)}
+.nav div{max-width:640px;margin:0 auto;display:flex}
+.nav button{flex:1;padding:8px 2px 10px;font-size:.72rem;color:var(--muted)}
+.nav button .e{display:block;font-size:1.35rem}
+.nav button.on{color:var(--pri);font-weight:800}
+.ov{position:fixed;inset:0;background:rgba(15,20,40,.45);z-index:50;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--bg);width:100%;max-width:640px;max-height:86vh;overflow:auto;border-radius:22px 22px 0 0;padding:16px 16px calc(20px + env(safe-area-inset-bottom))}
+.sheet .sh{display:flex;align-items:center;gap:10px;margin-bottom:10px;position:sticky;top:-16px;background:var(--bg);padding:6px 0;z-index:2}
+.sheet .sh h3{margin:0;flex:1;font-size:1.15rem}
+table.t{width:100%;border-collapse:collapse;font-size:.9rem}
+table.t th{text-align:left;color:var(--muted);font-weight:600;font-size:.8rem;padding:8px 6px;border-bottom:1px solid var(--line)}
+table.t td{padding:10px 6px;border-bottom:1px solid var(--line)}
+table.t td.n,table.t th.n{text-align:right;white-space:nowrap}
+table.t tr.tap:hover td{background:#f7f8fc}
+.scroll{overflow-x:auto}
+.hbar{display:grid;grid-template-columns:minmax(0,9em) minmax(0,1fr) auto;gap:10px;align-items:center;padding:8px 0;width:100%;text-align:left}
+.cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cmp .card{padding:12px}
+.delta{font-size:.8rem;font-weight:700}
+.delta.up{color:var(--ok)}.delta.down{color:var(--bad)}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi .v{font-size:1.6rem}}
 </style>
 </head>
 <body>
 <div id="app"></div>
+<div id="ovl"></div>
 <script>
 "use strict";
-/* ================== Sozlamalar va saqlash ================== */
-const OWNER_DEFAULT = "asilamusirmonova688-sketch";
-const LS = {
-  get(k,d){ try{ const v=localStorage.getItem("hp_"+k); return v==null?d:JSON.parse(v); }catch(e){ return d; } },
-  set(k,v){ try{ localStorage.setItem("hp_"+k, JSON.stringify(v)); }catch(e){} }
-};
-let CFG = LS.get("cfg", {token:"", owner:OWNER_DEFAULT, custom:{}, hidden:[]});
-let NOTES = LS.get("notes", {});      // {appKey:[{t,done,at}]}
-let PLAY = LS.get("play", {});        // {appKey:{itemKey:true}}
-let PLAY_GLOBAL = LS.get("playG", {}); // umumiy (dasturchi akkaunti)
-let CACHE = LS.get("cache", null);    // {at, repos:[...]}
+{
+/* ================== Saqlash ================== */
+const OWNER_DEFAULT="asilamusirmonova688-sketch";
+const LS={get(k,d){try{const v=localStorage.getItem("hp_"+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem("hp_"+k,JSON.stringify(v))}catch(e){}}};
+let CFG=LS.get("cfg",{token:"",owner:OWNER_DEFAULT,custom:{},hidden:[]});
+let NOTES=LS.get("notes",{}), PLAY=LS.get("play",{}), PLAY_GLOBAL=LS.get("playG",{}), CACHE=LS.get("cache",null);
 const N=window.Native||null;
 function syncNative(){ if(N){ try{ N.sync(JSON.stringify({token:CFG.token,owner:CFG.owner,hidden:CFG.hidden,watch:CFG.watch!==false})); }catch(e){} } }
-const saveCfg=()=>{LS.set("cfg",CFG);syncNative();}, saveNotes=()=>LS.set("notes",NOTES), savePlay=()=>{LS.set("play",PLAY);LS.set("playG",PLAY_GLOBAL)};
+const saveCfg=()=>{LS.set("cfg",CFG);syncNative()}, saveNotes=()=>LS.set("notes",NOTES), savePlay=()=>{LS.set("play",PLAY);LS.set("playG",PLAY_GLOBAL)};
 
-/* Ma'lum dasturlar: chiroyli nom va belgi */
-const KNOWN = {
-  "matemiks":        {group:"matemiks", name:"Matemiks", emoji:"🧮", color:"#7c3aed"},
-  "dori-vaqti":      {group:"dori", name:"Dori vaqti", emoji:"💊", color:"#0f8b6f"},
-  "dori-vaqti-web":  {group:"dori", name:"Dori vaqti", emoji:"💊", color:"#0f8b6f"},
-  "oila-byudjeti":   {group:"oila", name:"Oila byudjeti", emoji:"💰", color:"#d97706"},
-  "oilabyudjeti_v1.1":{group:"oila", name:"Oila byudjeti", emoji:"💰", color:"#d97706"},
-  "tugilgan-kunlar": {group:"tugilgan", name:"Tug'ilgan kunlar", emoji:"🎂", color:"#db2777"}
+const KNOWN={
+  "matemiks":{group:"matemiks",name:"Matemiks",emoji:"🧮",color:"#7c3aed"},
+  "matemiks-web":{group:"matemiks",name:"Matemiks",emoji:"🧮",color:"#7c3aed"},
+  "dori-vaqti":{group:"dori",name:"Dori vaqti",emoji:"💊",color:"#0f8b6f"},
+  "dori-vaqti-web":{group:"dori",name:"Dori vaqti",emoji:"💊",color:"#0f8b6f"},
+  "oila-byudjeti":{group:"oila",name:"Oila byudjeti",emoji:"💰",color:"#d97706"},
+  "oilabyudjeti_v1.1":{group:"oila",name:"Oila byudjeti",emoji:"💰",color:"#d97706"},
+  "tugilgan-kunlar":{group:"tugilgan",name:"Tug'ilgan kunlar",emoji:"🎂",color:"#db2777"},
+  "dasturlar-hisoboti":{group:"dasturlarim",name:"Dasturlarim",emoji:"📊",color:"#4f46e5"}
 };
-const PALETTE=["#4f46e5","#0891b2","#16a34a","#ea580c","#9333ea","#e11d48","#0d9488","#ca8a04"];
-const PLAY_ITEMS = [
-  ["icon","Ilova belgisi (512×512)"],["shots","Skrinshotlar (kamida 2 ta)"],["feature","Banner rasm (1024×500)"],
-  ["desc","Qisqa va to'liq tavsif"],["privacy","Maxfiylik siyosati sahifasi"],["aab","Imzolangan AAB fayl"],
-  ["rating","Yosh reytingi anketasi"],["datasafety","Ma'lumotlar xavfsizligi bo'limi"],["test","14 kunlik yopiq sinov (12+ sinovchi)"]
-];
+const PALETTE=["#0891b2","#16a34a","#ea580c","#9333ea","#e11d48","#0d9488","#ca8a04","#2563eb"];
+const PLAY_ITEMS=[["icon","Ilova belgisi (512×512)"],["shots","Skrinshotlar (kamida 2 ta)"],["feature","Banner rasm (1024×500)"],["desc","Qisqa va to'liq tavsif"],["privacy","Maxfiylik siyosati sahifasi"],["aab","Imzolangan AAB fayl"],["rating","Yosh reytingi anketasi"],["datasafety","Ma'lumotlar xavfsizligi bo'limi"],["test","14 kunlik yopiq sinov (12+ sinovchi)"]];
 
 /* ================== Yordamchilar ================== */
 const $=s=>document.querySelector(s);
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const esc=s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const MONTHS=["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];
-function fmtDate(iso){ const d=new Date(iso); return d.getDate()+"-"+MONTHS[d.getMonth()]+(d.getFullYear()!==new Date().getFullYear()?" "+d.getFullYear():""); }
-function fmtTime(iso){ const d=new Date(iso); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
-function ago(iso){
-  if(!iso) return "—";
-  const s=(Date.now()-new Date(iso))/1000;
-  if(s<60) return "hozirgina"; if(s<3600) return Math.floor(s/60)+" daqiqa oldin";
-  if(s<86400) return Math.floor(s/3600)+" soat oldin"; if(s<86400*2) return "kecha";
-  if(s<86400*30) return Math.floor(s/86400)+" kun oldin"; return fmtDate(iso);
-}
-function toast(m,ms=2400){ const t=document.createElement("div"); t.className="toast"; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),ms); }
+const fmtDate=iso=>{const d=new Date(iso);return d.getDate()+"-"+MONTHS[d.getMonth()]+(d.getFullYear()!==new Date().getFullYear()?" "+d.getFullYear():"")};
+const fmtTime=iso=>{const d=new Date(iso);return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0")};
+function ago(iso){ if(!iso) return "—"; const s=(Date.now()-new Date(iso))/1000;
+  if(s<60) return "hozirgina"; if(s<3600) return Math.floor(s/60)+" daqiqa oldin"; if(s<86400) return Math.floor(s/3600)+" soat oldin";
+  if(s<172800) return "kecha"; if(s<2592000) return Math.floor(s/86400)+" kun oldin"; return fmtDate(iso); }
+function toast(m,ms=2400){const t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),ms)}
 const keyOf=r=>r.name.toLowerCase();
-function metaOf(repo){
-  const k=keyOf(repo), c=CFG.custom[k]||{}, kn=KNOWN[k]||{};
-  return { group:c.group||kn.group||k, name:c.name||kn.name||repo.name.replace(/[-_]/g," "), emoji:c.emoji||kn.emoji||"📦", color:kn.color };
-}
+function metaOf(r){const k=keyOf(r),c=CFG.custom[k]||{},kn=KNOWN[k]||{};return{group:c.group||kn.group||k,name:c.name||kn.name||r.name.replace(/[-_]/g," "),emoji:c.emoji||kn.emoji||"📦",color:kn.color}}
+const mb=b=>(b/1048576).toFixed(1)+" MB";
+function weekStart(d){const x=new Date(d);x.setHours(0,0,0,0);x.setDate(x.getDate()-(x.getDay()+6)%7);return x}
 
-/* ================== GitHub API ================== */
+/* ================== GitHub ================== */
 async function gh(path){
-  const h={"Accept":"application/vnd.github+json"};
-  if(CFG.token) h["Authorization"]="Bearer "+CFG.token;
+  const h={"Accept":"application/vnd.github+json"}; if(CFG.token) h.Authorization="Bearer "+CFG.token;
   const r=await fetch("https://api.github.com"+path,{headers:h,cache:"no-store"});
   if(r.status===401) throw new Error("TOKEN");
-  if(r.status===403||r.status===429){ const rem=r.headers.get("x-ratelimit-remaining"); if(rem==="0") throw new Error("LIMIT"); }
+  if((r.status===403||r.status===429)&&r.headers.get("x-ratelimit-remaining")==="0") throw new Error("LIMIT");
   if(r.status===404||r.status===409) return null;
   if(!r.ok) throw new Error("HTTP "+r.status);
   return r.json();
 }
-let loading=false, lastErr="";
+let loading=false,lastErr="";
 async function refresh(){
   if(loading) return; loading=true; lastErr=""; render();
   try{
     const owner=CFG.owner||OWNER_DEFAULT;
-    let repos = CFG.token ? await gh("/user/repos?per_page=100&affiliation=owner&sort=pushed") : await gh(`/users/${owner}/repos?per_page=100&sort=pushed`);
-    repos=(repos||[]).filter(r=>!r.fork && !r.archived);
+    let repos=CFG.token?await gh("/user/repos?per_page=100&affiliation=owner&sort=pushed"):await gh(`/users/${owner}/repos?per_page=100&sort=pushed`);
+    repos=(repos||[]).filter(r=>!r.fork&&!r.archived);
     const since=new Date(Date.now()-120*86400000).toISOString();
     const out=await Promise.all(repos.map(async r=>{
       const full=r.full_name;
       const [rel,runs,commits]=await Promise.all([
-        gh(`/repos/${full}/releases?per_page=30`).catch(()=>[]),
+        gh(`/repos/${full}/releases?per_page=50`).catch(()=>[]),
         gh(`/repos/${full}/actions/runs?per_page=5`).catch(()=>null),
-        gh(`/repos/${full}/commits?per_page=100&since=${since}`).catch(()=>[])
-      ]);
+        gh(`/repos/${full}/commits?per_page=100&since=${since}`).catch(()=>[])]);
       const run=runs&&runs.workflow_runs&&runs.workflow_runs[0];
-      return {
-        full, name:r.name, private:r.private, html:r.html_url, pushed:r.pushed_at, created:r.created_at, desc:r.description||"",
-        pages: r.has_pages ? `https://${r.owner.login.toLowerCase()}.github.io/${r.name}/` : "",
-        size:r.size, lang:r.language||"",
+      return {full,name:r.name,private:r.private,html:r.html_url,pushed:r.pushed_at,created:r.created_at,
+        pages:r.has_pages?`https://${r.owner.login.toLowerCase()}.github.io/${r.name}/`:"",
         releases:(rel||[]).map(x=>({tag:x.tag_name,name:x.name||x.tag_name,date:x.published_at||x.created_at,html:x.html_url,
           assets:(x.assets||[]).map(a=>({name:a.name,url:a.browser_download_url,count:a.download_count,size:a.size}))})),
-        run: run? {status:run.status,conclusion:run.conclusion,date:run.created_at,html:run.html_url,title:run.display_title||run.name}:null,
-        commits:(commits||[]).map(c=>({sha:c.sha.slice(0,7),msg:(c.commit.message||"").split("\n")[0],date:c.commit.author&&c.commit.author.date||c.commit.committer.date,html:c.html_url}))
-      };
+        run:run?{status:run.status,conclusion:run.conclusion,date:run.created_at,html:run.html_url,title:run.display_title||run.name}:null,
+        commits:(commits||[]).map(c=>({sha:c.sha.slice(0,7),msg:(c.commit.message||"").split("\n")[0],date:(c.commit.author&&c.commit.author.date)||c.commit.committer.date,html:c.html_url}))};
     }));
     CACHE={at:new Date().toISOString(),repos:out}; LS.set("cache",CACHE);
   }catch(e){
-    lastErr = e.message==="TOKEN" ? "Kalit (token) noto'g'ri yoki muddati tugagan. Sozlamalardan yangisini kiriting." :
-              e.message==="LIMIT" ? "GitHub so'rovlar chegarasiga yetildi. Kalit (token) kiriting yoki 1 soatdan keyin urinib ko'ring." :
-              "Internetga ulanib bo'lmadi. Oxirgi saqlangan ma'lumot ko'rsatilmoqda.";
+    lastErr=e.message==="TOKEN"?"Kalit (token) noto'g'ri yoki muddati tugagan. Sozlamalardan yangisini kiriting.":
+      e.message==="LIMIT"?"GitHub so'rovlar chegarasiga yetildi. Kalit kiriting yoki 1 soatdan keyin urinib ko'ring.":
+      "Internetga ulanib bo'lmadi. Oxirgi saqlangan ma'lumot ko'rsatilmoqda.";
   }
   loading=false; render();
 }
 
-/* ================== Ma'lumotni dasturlarga yig'ish ================== */
+/* ================== Dasturlarga yig'ish ================== */
+const platOf=n=>{n=n.toLowerCase(); if(/\.(apk|aab)$/.test(n)) return "Android"; if(/\.(exe|msi)$/.test(n)) return "Windows"; return "Boshqa"};
 function buildApps(){
   if(!CACHE) return [];
   const map={};
-  CACHE.repos.forEach(r=>{
-    if(CFG.hidden.includes(keyOf(r))) return;
-    const m=metaOf(r);
-    const a=map[m.group]||(map[m.group]={key:m.group,name:m.name,emoji:m.emoji,color:m.color,repos:[]});
-    a.repos.push(r);
-  });
+  CACHE.repos.forEach(r=>{ if(CFG.hidden.includes(keyOf(r))) return; const m=metaOf(r);
+    (map[m.group]||(map[m.group]={key:m.group,name:m.name,emoji:m.emoji,color:m.color,repos:[]})).repos.push(r); });
   const apps=Object.values(map);
   apps.forEach((a,i)=>{
     if(!a.color) a.color=PALETTE[i%PALETTE.length];
-    const rels=a.repos.flatMap(r=>r.releases.map(x=>Object.assign({repo:r.name,priv:r.private},x))).sort((x,y)=>new Date(y.date)-new Date(x.date));
-    a.releases=rels; a.latest=rels[0]||null;
-    a.downloads=rels.reduce((s,x)=>s+x.assets.reduce((t,as)=>t+as.count,0),0);
+    a.releases=a.repos.flatMap(r=>r.releases.map(x=>Object.assign({repo:r.name,priv:r.private},x))).sort((x,y)=>new Date(y.date)-new Date(x.date));
+    a.latest=a.releases[0]||null;
+    a.dlBy={}; a.downloads=0;
+    a.releases.forEach(x=>x.assets.forEach(s=>{const p=platOf(s.name);a.dlBy[p]=(a.dlBy[p]||0)+s.count;a.downloads+=s.count}));
     a.commits=a.repos.flatMap(r=>r.commits.map(c=>Object.assign({repo:r.name},c))).sort((x,y)=>new Date(y.date)-new Date(x.date));
     a.pushed=a.repos.map(r=>r.pushed).sort().pop();
     a.created=a.repos.map(r=>r.created).sort()[0];
-    const plats=new Set();
-    rels.forEach(x=>x.assets.forEach(as=>{ const n=as.name.toLowerCase(); if(n.endsWith(".apk")||n.endsWith(".aab")) plats.add("Android"); if(n.endsWith(".exe")||n.endsWith(".msi")) plats.add("Windows"); }));
-    a.repos.forEach(r=>{ if(r.pages) plats.add("iPhone / Veb"); });
-    a.platforms=[...plats];
-    const runs=a.repos.map(r=>r.run).filter(Boolean);
-    a.failed=runs.filter(r=>r.status==="completed"&&r.conclusion==="failure");
-    a.running=runs.filter(r=>r.status!=="completed");
-    a.build = !runs.length? "none" : a.failed.length? "bad" : a.running.length? "run" : "ok";
-    a.apk=null; for(const x of rels){ const as=x.assets.find(s=>/\.apk$/i.test(s.name)); if(as){ a.apk={url:as.url,tag:x.tag,priv:x.priv}; break; } }
-    a.site=(a.repos.find(r=>r.pages)||{}).pages||"";
-    a.play=playPct(a.key);
-    a.openNotes=(NOTES[a.key]||[]).filter(n=>!n.done).length;
+    const pl=new Set(); a.releases.forEach(x=>x.assets.forEach(s=>{const p=platOf(s.name); if(p!=="Boshqa") pl.add(p)}));
+    a.site=(a.repos.find(r=>r.pages)||{}).pages||""; if(a.site) pl.add("iPhone / Veb");
+    a.platforms=[...pl];
+    a.runs=a.repos.filter(r=>r.run).map(r=>Object.assign({repo:r.name},r.run));
+    a.failed=a.runs.filter(r=>r.status==="completed"&&r.conclusion==="failure");
+    a.running=a.runs.filter(r=>r.status!=="completed");
+    a.build=!a.runs.length?"none":a.failed.length?"bad":a.running.length?"run":"ok";
+    a.apk=null; for(const x of a.releases){const s=x.assets.find(s=>/\.apk$/i.test(s.name)); if(s){a.apk={url:s.url,tag:x.tag,priv:x.priv};break}}
+    a.play=playPct(a.key); a.openNotes=(NOTES[a.key]||[]).filter(n=>!n.done).length;
   });
   apps.sort((x,y)=>new Date(y.pushed)-new Date(x.pushed));
   return apps;
 }
-function playPct(key){ const p=PLAY[key]||{}; const done=PLAY_ITEMS.filter(([k])=>p[k]).length+(PLAY_GLOBAL.account?1:0); return Math.round(done/(PLAY_ITEMS.length+1)*100); }
-function weekStart(d){ const x=new Date(d); x.setHours(0,0,0,0); const w=(x.getDay()+6)%7; x.setDate(x.getDate()-w); return x; }
+function playPct(k){const p=PLAY[k]||{};return Math.round((PLAY_ITEMS.filter(([i])=>p[i]).length+(PLAY_GLOBAL.account?1:0))/(PLAY_ITEMS.length+1)*100)}
+const monthStart=(off=0)=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth()+off,1)};
+const inRange=(iso,a,b)=>{const t=new Date(iso);return t>=a&&t<b};
+
+/* ================== Batafsil oyna (bosilganda) ================== */
+function sheet(title,html){
+  $("#ovl").innerHTML=`<div class="ov" id="ov"><div class="sheet"><div class="sh"><h3>${title}</h3><button class="ib" id="shX">✕</button></div>${html}</div></div>`;
+  $("#shX").onclick=closeSheet; $("#ov").onclick=e=>{if(e.target.id==="ov")closeSheet()};
+  bindLinks($("#ovl"));
+}
+function closeSheet(){$("#ovl").innerHTML=""}
+const commitRows=cs=>cs.length?`<div class="card list">${cs.map(c=>`<div class="it"><span class="dot" style="background:${c.color||"var(--pri)"}"></span><div style="flex:1"><div>${esc(c.msg)}</div><div class="muted small">${fmtDate(c.date)}, ${fmtTime(c.date)} · ${esc(c.app||c.repo)}${c.html?` · <a href="${esc(c.html)}" target="_blank">${esc(c.sha)}</a>`:""}</div></div></div>`).join("")}</div>`:`<div class="empty">O'zgarish yo'q</div>`;
+function allCommits(apps){return apps.flatMap(a=>a.commits.map(c=>Object.assign({app:a.emoji+" "+a.name,color:a.color},c))).sort((x,y)=>new Date(y.date)-new Date(x.date))}
+
+const DETAIL={
+  apps(apps){ sheet("📱 Dasturlar ("+apps.length+")",`<div class="card scroll"><table class="t"><tr><th>Dastur</th><th>Platforma</th><th>Versiya</th><th class="n">Boshlangan</th></tr>${apps.map(a=>`<tr class="tap" data-open="${esc(a.key)}"><td>${a.emoji} <b>${esc(a.name)}</b></td><td class="small">${esc(a.platforms.join(", ")||"—")}</td><td>${a.latest?esc(a.latest.tag):"—"}</td><td class="n small">${a.created?fmtDate(a.created):"—"}</td></tr>`).join("")}</table></div><p class="muted small">Dasturni bosing — uning bo'limi ochiladi</p>`); },
+  month(apps){ const a0=monthStart(0),a1=monthStart(1); const cs=allCommits(apps).filter(c=>inRange(c.date,a0,a1));
+    const by={}; cs.forEach(c=>by[c.app]=(by[c.app]||0)+1);
+    sheet("✏️ Bu oy: "+cs.length+" ta o'zgarish",`<div class="card">${Object.entries(by).sort((x,y)=>y[1]-x[1]).map(([k,v])=>`<div class="row small" style="padding:4px 0"><span style="flex:1">${esc(k)}</span><b>${v}</b></div>`).join("")||"<span class='muted'>Yo'q</span>"}</div><div class="sec">Ro'yxat</div>${commitRows(cs)}`); },
+  downloads(apps){ const tot=apps.reduce((s,a)=>s+a.downloads,0);
+    sheet("⬇️ Yuklab olishlar: "+tot,`${apps.filter(a=>a.downloads||a.site).map(a=>`<div class="card mt"><div class="row"><span style="font-size:1.4rem">${a.emoji}</span><b style="flex:1">${esc(a.name)}</b><b>${a.downloads}</b></div>
+      <div class="small mt">${Object.entries(a.dlBy).map(([p,n])=>`${p==="Android"?"🤖":"🪟"} ${p}: <b>${n}</b>`).join(" · ")}${a.site?` · 🍏 iPhone / Veb: <span class="muted">sanalmaydi</span>`:""}</div>
+      <table class="t mt"><tr><th>Versiya</th><th>Fayl</th><th class="n">Yuklash</th></tr>${a.releases.flatMap(x=>x.assets.map(s=>`<tr><td>${esc(x.tag)}</td><td class="small"><a href="${esc(s.url)}" target="_blank">${esc(s.name)}</a></td><td class="n"><b>${s.count}</b></td></tr>`)).join("")||`<tr><td colspan="3" class="muted">Versiya yo'q</td></tr>`}</table></div>`).join("")}
+      <p class="muted small">iPhone (veb-sayt) tashriflari hisoblagich qo'shilmaguncha sanalmaydi.</p>`); },
+  builds(apps){ sheet("🛠 Yig'ilish holati",`<div class="card scroll"><table class="t"><tr><th>Dastur</th><th>Repo</th><th>Holat</th><th class="n">Qachon</th></tr>${apps.flatMap(a=>a.runs.map(r=>`<tr><td>${a.emoji} ${esc(a.name)}</td><td class="small">${esc(r.repo)}</td><td>${r.status!=="completed"?`<span class="tag run">⏳ Yig'ilmoqda</span>`:r.conclusion==="success"?`<span class="tag ok">✅ Muvaffaqiyatli</span>`:`<span class="tag bad">❌ ${esc(r.conclusion||"xato")}</span>`}</td><td class="n small"><a href="${esc(r.html)}" target="_blank">${ago(r.date)}</a></td></tr>`)).join("")||`<tr><td colspan="4" class="muted">Avtomatik yig'ish sozlanmagan</td></tr>`}</table></div>`); },
+  relMonth(apps){ const m0=monthStart(0),m1=monthStart(1); const rs=apps.flatMap(a=>a.releases.filter(x=>inRange(x.date,m0,m1)).map(x=>Object.assign({a},x))).sort((x,y)=>new Date(y.date)-new Date(x.date));
+    sheet("📦 Bu oydagi versiyalar: "+rs.length,`<div class="card list">${rs.map(x=>`<div class="it"><span style="font-size:1.3rem">${x.a.emoji}</span><div style="flex:1"><b>${esc(x.a.name)} ${esc(x.tag)}</b><div class="muted small">${fmtDate(x.date)} · ⬇️ ${x.assets.reduce((s,y)=>s+y.count,0)}</div></div></div>`).join("")||"<div class='empty'>Yo'q</div>"}</div>`); },
+  week(apps,i){ const ws=weekStart(new Date()); const a0=new Date(ws); a0.setDate(a0.getDate()-7*(11-i)); const a1=new Date(a0); a1.setDate(a1.getDate()+7);
+    const e=new Date(a1); e.setDate(e.getDate()-1);
+    const cs=allCommits(apps).filter(c=>inRange(c.date,a0,a1));
+    sheet(`📈 ${fmtDate(a0.toISOString())} – ${fmtDate(e.toISOString())}: ${cs.length} ta`,commitRows(cs)); },
+  appStat(a,kind){
+    if(kind==="ver") sheet(`${a.emoji} ${esc(a.name)}: versiyalar`,`<div class="card list">${a.releases.map(x=>`<div class="it"><span style="font-size:1.3rem">📦</span><div style="flex:1"><b>${esc(x.name)}</b> <span class="muted small">${fmtDate(x.date)} · ${esc(x.repo)}</span>${x.assets.map(s=>`<div class="small"><a href="${esc(s.url)}" target="_blank">${esc(s.name)}</a> · ${mb(s.size)} · ⬇️ ${s.count}</div>`).join("")}</div></div>`).join("")||`<div class="empty">Hali versiya chiqarilmagan</div>`}</div>`);
+    if(kind==="dl") DETAIL.downloads([a]);
+    if(kind==="ch") sheet(`${a.emoji} ${esc(a.name)}: o'zgarishlar (${a.commits.length})`,commitRows(a.commits.map(c=>Object.assign({color:a.color},c))));
+  },
+  play(a){ const p=PLAY[a.key]||{};
+    sheet(`🏪 ${esc(a.name)}: Play tayyorligi ${a.play}%`,`<div class="card">${[["account","Google Play dasturchi akkaunti (25$)",PLAY_GLOBAL.account]].concat(PLAY_ITEMS.map(([k,l])=>[k,l,p[k]])).map(([k,l,v])=>`<div class="chk ${v?"done":""}" style="cursor:default"><span style="font-size:1.1rem">${v?"✅":"⬜"}</span><span>${l}</span></div>`).join("")}</div><button class="btn mt" style="width:100%" id="toTasks">Belgilash uchun Vazifalar bo'limiga o'tish</button>`);
+    $("#toTasks").onclick=()=>go("tasks",{app:a.key,playOpen:a.key}); }
+};
 
 /* ================== Ekranlar ================== */
 let R={scr:"home"};
-function go(scr,extra={}){ R=Object.assign({scr},extra); render(); window.scrollTo(0,0); }
+function go(scr,extra={}){R=Object.assign({scr},extra);closeSheet();render();window.scrollTo(0,0)}
+function nav(){const it=[["home","🏠","Bosh sahifa"],["apps","📱","Dasturlar"],["rep","📊","Hisobotlar"],["tasks","✅","Vazifalar"],["set","⚙️","Sozlamalar"]];
+  return `<nav class="nav"><div>${it.map(([k,e,l])=>`<button class="${R.scr===k?"on":""}" data-nav="${k}"><span class="e">${e}</span>${l}</button>`).join("")}</div></nav>`}
+function header(t,s,right=""){return `<div class="hdr"><h1>${t}<span class="sub">${s}</span></h1>${right}</div>`}
+const refreshBtn=()=>`<button class="ib ${loading?"spin":""}" data-refresh title="Yangilash"><span>🔄</span></button>`;
+const statusTag=a=>a.build==="ok"?`<span class="tag ok">✅ Yig'ildi</span>`:a.build==="bad"?`<span class="tag bad">❌ Xato</span>`:a.build==="run"?`<span class="tag run">⏳ Yig'ilmoqda</span>`:"";
+const platTag=p=>`<span class="tag">${p==="Android"?"🤖":p==="Windows"?"🪟":"🍏"} ${p}</span>`;
+function notice(){ let h=""; if(lastErr) h+=`<div class="alert bad">⚠️ ${esc(lastErr)}</div>`;
+  if(!CFG.token&&R.scr!=="set") h+=`<div class="alert info">🔑 Yopiq dasturlaringiz ko'rinishi uchun GitHub kalitini kiriting. <a href="#" data-nav="set">Kiritish →</a></div>`; return h; }
+function noData(){ return loading?`<div class="kpis">${[1,2,3,4].map(()=>`<div class="skel" style="height:96px"></div>`).join("")}</div><div class="skel mt" style="height:220px"></div>`:`<div class="empty"><div style="font-size:3rem">📊</div><p>Hali ma'lumot yo'q. «🔄» tugmasini bosing.</p></div>`; }
+
 function render(){
-  const a=$("#app");
-  if(R.scr==="settings"){ a.innerHTML=renderSettings(); bindSettings(); return; }
-  if(R.scr==="app"){ const app=buildApps().find(x=>x.key===R.key); if(!app){ go("home"); return; } a.innerHTML=renderApp(app); bindApp(app); return; }
-  a.innerHTML=renderHome(); bindHome();
-}
-
-function header(title,sub,left="",right=""){
-  return `<div class="hdr">${left}<h1>${title}<span class="sub">${sub}</span></h1>${right}</div>`;
-}
-function statusTag(a){
-  if(a.build==="ok") return `<span class="tag ok">✅ Yig'ildi</span>`;
-  if(a.build==="bad") return `<span class="tag bad">❌ Xato</span>`;
-  if(a.build==="run") return `<span class="tag run">⏳ Yig'ilmoqda</span>`;
-  return "";
-}
-
-function renderHome(){
+  let h="";
   const apps=buildApps();
-  let h=header("👨‍💻 Mening dasturlarim", CACHE? "Yangilandi: "+ago(CACHE.at) : "GitHub hisoboti", "",
-    `<button class="ib ${loading?"spin":""}" id="rf" title="Yangilash"><span>🔄</span></button><button class="ib" id="st" title="Sozlamalar">⚙️</button>`);
-  if(lastErr) h+=`<div class="alert bad">⚠️ ${esc(lastErr)}</div>`;
-  if(!CFG.token) h+=`<div class="alert info">🔑 Yopiq dasturlaringiz (Matemiks, Dori vaqti Android) ko'rinishi uchun GitHub kalitini kiriting. <a href="#" id="toTok">Kiritish →</a></div>`;
-  if(!CACHE){
-    h+= loading? `<div class="kpis">${[1,2,3,4].map(()=>`<div class="skel" style="height:96px"></div>`).join("")}</div><div class="apps" style="margin-top:20px">${[1,2,3].map(()=>`<div class="skel" style="height:230px"></div>`).join("")}</div>`
-      : `<div class="empty"><div style="font-size:3rem">📊</div><p>Hali ma'lumot yo'q. «🔄» tugmasini bosing.</p></div>`;
-    return h;
-  }
-  // KPI
-  const now=new Date(), mStart=new Date(now.getFullYear(),now.getMonth(),1);
-  const monthCommits=apps.reduce((s,a)=>s+a.commits.filter(c=>new Date(c.date)>=mStart).length,0);
-  const totalDl=apps.reduce((s,a)=>s+a.downloads,0);
-  const okBuilds=apps.filter(a=>a.build==="ok").length, withBuild=apps.filter(a=>a.build!=="none").length;
+  if(R.scr==="home") h=renderHome(apps);
+  else if(R.scr==="apps") h=renderApps(apps);
+  else if(R.scr==="rep") h=renderReports(apps);
+  else if(R.scr==="tasks") h=renderTasks(apps);
+  else h=renderSettings();
+  $("#app").innerHTML=h+nav();
+  bindCommon(apps);
+}
+
+/* ---------- 🏠 Bosh sahifa ---------- */
+function renderHome(apps){
+  let h=header("👨‍💻 Mening dasturlarim",CACHE?"Yangilandi: "+ago(CACHE.at):"GitHub hisoboti",refreshBtn())+notice();
+  if(!CACHE) return h+noData();
+  const mc=apps.reduce((s,a)=>s+a.commits.filter(c=>new Date(c.date)>=monthStart()).length,0);
+  const dl=apps.reduce((s,a)=>s+a.downloads,0);
+  const ok=apps.filter(a=>a.build==="ok").length, wb=apps.filter(a=>a.build!=="none").length;
   h+=`<div class="kpis">
-    <div class="card kpi"><div class="e">📱</div><div class="v">${apps.length}</div><div class="l">Dasturlar</div></div>
-    <div class="card kpi"><div class="e">✏️</div><div class="v">${monthCommits}</div><div class="l">Bu oy yangilanishlar</div></div>
-    <div class="card kpi"><div class="e">⬇️</div><div class="v">${totalDl}</div><div class="l">Jami yuklab olishlar</div></div>
-    <div class="card kpi"><div class="e">🛠</div><div class="v">${withBuild?okBuilds+"/"+withBuild:"—"}</div><div class="l">Muvaffaqiyatli yig'ilish</div></div></div>`;
-  // Ogohlantirishlar
-  apps.filter(a=>a.build==="bad").forEach(a=>{ h+=`<div class="alert bad">❌ <span><b>${esc(a.name)}</b>: oxirgi yig'ilish xato bilan tugadi (${ago(a.failed[0].date)}). <a href="${esc(a.failed[0].html)}" target="_blank">Ko'rish</a></span></div>`; });
-  apps.filter(a=>a.build==="run").forEach(a=>{ h+=`<div class="alert warn">⏳ <span><b>${esc(a.name)}</b> hozir yig'ilmoqda…</span></div>`; });
+    <button class="card kpi tap" data-d="apps"><div class="e">📱</div><div class="v">${apps.length}</div><div class="l">Dasturlar</div></button>
+    <button class="card kpi tap" data-d="month"><div class="e">✏️</div><div class="v">${mc}</div><div class="l">Bu oy yangilanishlar</div></button>
+    <button class="card kpi tap" data-d="downloads"><div class="e">⬇️</div><div class="v">${dl}</div><div class="l">Jami yuklab olishlar</div></button>
+    <button class="card kpi tap" data-d="builds"><div class="e">🛠</div><div class="v">${wb?ok+"/"+wb:"—"}</div><div class="l">Muvaffaqiyatli yig'ilish</div></button></div>`;
+  apps.filter(a=>a.build==="bad").forEach(a=>{h+=`<div class="alert bad">❌ <span><b>${esc(a.name)}</b>: oxirgi yig'ilish xato bilan tugadi (${ago(a.failed[0].date)}). <a href="${esc(a.failed[0].html)}" target="_blank">Ko'rish</a></span></div>`});
+  apps.filter(a=>a.build==="run").forEach(a=>{h+=`<div class="alert warn">⏳ <span><b>${esc(a.name)}</b> hozir yig'ilmoqda…</span></div>`});
   const stale=apps.filter(a=>Date.now()-new Date(a.pushed)>30*86400000);
   if(stale.length) h+=`<div class="alert info">💤 30 kundan beri o'zgarmagan: ${stale.map(a=>esc(a.name)).join(", ")}</div>`;
-
-  // Faollik + Play
-  h+=`<div class="two" style="margin-top:14px"><div class="card"><div class="sec" style="margin-top:0">📈 Faollik <span class="muted small">oxirgi 12 hafta, yangilanishlar soni</span></div>${activityChart(apps)}</div>
-    <div class="card"><div class="sec" style="margin-top:0">🏪 Play Market'ga tayyorlik</div>
-    ${apps.filter(a=>a.platforms.includes("Android")).map(a=>`<div style="margin:10px 0"><div class="row small"><span style="flex:1">${a.emoji} ${esc(a.name)}</span><b>${a.play}%</b></div><div class="bar"><i style="width:${a.play}%;background:${a.play>=100?"var(--ok)":a.play>=50?"var(--warn)":"var(--pri)"}"></i></div></div>`).join("")||`<p class="muted small">Android dasturlari yo'q</p>`}
-    <label class="chk ${PLAY_GLOBAL.account?"done":""}" style="border-top:1px solid var(--line);margin-top:8px"><input type="checkbox" id="pgAcc" ${PLAY_GLOBAL.account?"checked":""}><span class="small">Google Play dasturchi akkaunti (25$, bir marta)</span></label></div></div>`;
-
-  // Dasturlar
-  h+=`<div class="sec">📱 Dasturlar <span class="muted small">(${apps.length})</span></div><div class="apps">`;
-  for(const a of apps){
-    h+=`<div class="card app" data-app="${esc(a.key)}">
-      <div class="ah"><div class="emo" style="background:${a.color}1f">${a.emoji}</div>
-        <div style="flex:1;min-width:0"><div class="an">${esc(a.name)}</div><div class="tags">${a.platforms.map(p=>`<span class="tag">${p==="Android"?"🤖":p==="Windows"?"🪟":"🍏"} ${p}</span>`).join("")}${statusTag(a)}</div></div></div>
-      <div class="stats"><div class="st"><b>${a.latest?esc(a.latest.tag):"—"}</b><span>Versiya</span></div><div class="st"><b>${a.downloads}</b><span>Yuklab olish</span></div><div class="st"><b>${a.commits.length}</b><span>O'zgarish (4 oy)</span></div></div>
-      <div class="last">🕒 ${ago(a.pushed)}${a.commits[0]?" · "+esc(a.commits[0].msg):""}</div>
-      ${a.openNotes?`<div class="small" style="margin-top:6px">📝 ${a.openNotes} ta vazifa qolgan</div>`:""}
-      <div class="btns">${a.apk?`<a class="btn sec" href="${esc(a.apk.url)}" target="_blank" data-stop>⬇️ APK</a>`:""}${a.site?`<a class="btn sec" href="${esc(a.site)}" target="_blank" data-stop>🌐 Sayt</a>`:""}<span class="btn ghost">Batafsil →</span></div>
-    </div>`;
-  }
-  h+=`</div><p class="muted small" style="text-align:center;margin-top:24px">Ma'lumot GitHub'dan olinadi · ${CFG.owner}</p>`;
-  return h;
-}
-function activityChart(apps){
-  const weeks=[], ws=weekStart(new Date());
-  for(let i=11;i>=0;i--){ const d=new Date(ws); d.setDate(d.getDate()-7*i); weeks.push(d); }
-  const data=weeks.map(w=>{ const e=new Date(w); e.setDate(e.getDate()+7); return apps.map(a=>a.commits.filter(c=>{const t=new Date(c.date);return t>=w&&t<e}).length); });
-  const max=Math.max(1,...data.map(v=>v.reduce((s,x)=>s+x,0)));
-  const W=600,H=200,pl=28,pb=24,bw=(W-pl)/12*0.62,gap=(W-pl)/12;
-  let svg=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img">`;
-  const ticks=[0,Math.ceil(max/2),max];
-  ticks.forEach(t=>{ const y=H-pb-(t/max)*(H-pb-10); svg+=`<line x1="${pl}" x2="${W}" y1="${y}" y2="${y}" stroke="#e4e8f2"/><text x="${pl-6}" y="${y+4}" font-size="11" text-anchor="end" fill="#6b7590">${t}</text>`; });
-  data.forEach((v,i)=>{ let y=H-pb; const x=pl+i*gap+(gap-bw)/2;
-    v.forEach((n,j)=>{ if(!n) return; const hh=n/max*(H-pb-10); y-=hh; svg+=`<rect x="${x}" y="${y}" width="${bw}" height="${hh}" fill="${apps[j].color}" rx="3"><title>${esc(apps[j].name)}: ${n}</title></rect>`; });
-    if(i%2===1||i===11) svg+=`<text x="${x+bw/2}" y="${H-6}" font-size="11" text-anchor="middle" fill="#6b7590">${weeks[i].getDate()}.${String(weeks[i].getMonth()+1).padStart(2,"0")}</text>`;
-  });
-  svg+=`</svg>`;
-  return svg+`<div class="legend">${apps.map(a=>`<span><i style="background:${a.color}"></i>${esc(a.name)}</span>`).join("")}</div>`;
-}
-function bindHome(){
-  $("#rf").onclick=refresh; $("#st").onclick=()=>go("settings");
-  const tt=$("#toTok"); if(tt) tt.onclick=e=>{e.preventDefault();go("settings")};
-  document.querySelectorAll("[data-app]").forEach(c=>c.onclick=()=>go("app",{key:c.dataset.app,tab:"info"}));
-  document.querySelectorAll("[data-stop]").forEach(b=>b.addEventListener("click",e=>e.stopPropagation()));
-  const pg=$("#pgAcc"); if(pg) pg.onchange=()=>{ PLAY_GLOBAL.account=pg.checked; savePlay(); render(); };
+  h+=`<div class="sec">📱 Dasturlarim <span class="muted small">bosing — batafsil</span></div><div class="apps">`;
+  apps.forEach(a=>{ h+=`<div class="card tap" data-open="${esc(a.key)}"><div class="ah"><div class="emo" style="background:${a.color}1f">${a.emoji}</div>
+    <div style="flex:1"><div class="an">${esc(a.name)}</div><div class="tags">${a.platforms.map(platTag).join("")}${statusTag(a)}</div></div><span class="muted" style="font-size:1.3rem">›</span></div>
+    <div class="last" style="margin-top:10px">🕒 ${ago(a.pushed)}${a.commits[0]?" · "+esc(a.commits[0].msg):""}</div>
+    <div class="small muted" style="margin-top:4px">${a.latest?esc(a.latest.tag)+" · ":""}⬇️ ${a.downloads}${a.openNotes?" · 📝 "+a.openNotes+" vazifa":""}</div></div>`; });
+  return h+`</div>`;
 }
 
-/* ---------- Dastur tafsilotlari ---------- */
-function renderApp(a){
-  let h=header(`${a.emoji} ${esc(a.name)}`, a.repos.map(r=>esc(r.name)+(r.private?" 🔒":"")).join(" · "), `<button class="ib" id="bk">←</button>`, `<button class="ib" id="ed" title="Tahrirlash">✏️</button>`);
-  h+=`<div class="kpis"><div class="card kpi"><div class="v" style="font-size:1.4rem">${a.latest?esc(a.latest.tag):"—"}</div><div class="l">Versiya${a.latest?" · "+fmtDate(a.latest.date):""}</div></div>
-    <div class="card kpi"><div class="v">${a.downloads}</div><div class="l">Yuklab olishlar</div></div>
-    <div class="card kpi"><div class="v">${a.releases.length}</div><div class="l">Chiqarilgan versiyalar</div></div>
-    <div class="card kpi"><div class="v" style="font-size:1.2rem">${a.created?fmtDate(a.created):"—"}</div><div class="l">Boshlangan sana</div></div></div>`;
+/* ---------- 📱 Dasturlar (har biri alohida bo'lim) ---------- */
+function renderApps(apps){
+  let h=header("📱 Dasturlar","Har bir dastur alohida bo'lim",refreshBtn())+notice();
+  if(!CACHE) return h+noData();
+  if(!apps.length) return h+`<div class="empty">Dastur topilmadi</div>`;
+  const a=apps.find(x=>x.key===R.app)||apps[0]; R.app=a.key;
+  h+=`<div class="chips">${apps.map(x=>`<button class="chip ${x.key===a.key?"on":""}" data-app="${esc(x.key)}">${x.emoji} ${esc(x.name)}</button>`).join("")}</div>`;
+  h+=`<div class="card"><div class="ah"><div class="emo" style="background:${a.color}1f;width:64px;height:64px;font-size:2.2rem">${a.emoji}</div>
+    <div style="flex:1"><div class="an" style="font-size:1.35rem">${esc(a.name)}</div><div class="tags">${a.platforms.map(platTag).join("")}${statusTag(a)}</div>
+    <div class="small muted" style="margin-top:4px">${a.repos.map(r=>esc(r.name)+(r.private?" 🔒":"")).join(" · ")}</div></div>
+    <button class="ib" id="edA" title="Tahrirlash">✏️</button></div>
+    <div class="stats"><button class="st tap" data-as="ver"><b>${a.latest?esc(a.latest.tag):"—"}</b><span>Versiya ›</span></button><button class="st tap" data-as="dl"><b>${a.downloads}</b><span>Yuklab olish ›</span></button><button class="st tap" data-as="ch"><b>${a.commits.length}</b><span>O'zgarish (4 oy) ›</span></button></div>
+    <div class="btns">${a.apk?`<a class="btn" href="${esc(a.apk.url)}" target="_blank">⬇️ APK (${esc(a.apk.tag)})</a>`:""}${a.site?`<a class="btn sec" href="${esc(a.site)}" target="_blank">🌐 Sayt</a>`:""}${a.repos.map(r=>`<a class="btn ghost" href="${esc(r.html)}" target="_blank">GitHub: ${esc(r.name)}</a>`).join("")}</div>
+    ${a.apk&&a.apk.priv?`<p class="muted small">🔒 Repo yopiq: APK'ni yuklash uchun GitHub'ga kirgan bo'lish kerak.</p>`:""}</div>`;
   if(a.build==="bad") h+=`<div class="alert bad">❌ Oxirgi yig'ilish xato bilan tugadi. <a href="${esc(a.failed[0].html)}" target="_blank">Xatoni ko'rish</a></div>`;
-  h+=`<div class="btns">${a.apk?`<a class="btn" href="${esc(a.apk.url)}" target="_blank">⬇️ APK yuklab olish (${esc(a.apk.tag)})</a>`:""}${a.site?`<a class="btn sec" href="${esc(a.site)}" target="_blank">🌐 Saytni ochish</a>`:""}${a.repos.map(r=>`<a class="btn ghost" href="${esc(r.html)}" target="_blank">GitHub: ${esc(r.name)}</a>`).join("")}</div>`;
-  if(a.apk&&a.apk.priv) h+=`<p class="muted small">🔒 Repo yopiq: APK'ni yuklash uchun GitHub'ga kirgan bo'lish kerak.</p>`;
-  const tabs=[["info","🕒 O'zgarishlar"],["rel","📦 Versiyalar"],["notes",`📝 Vazifalar${a.openNotes?" ("+a.openNotes+")":""}`],["play",`🏪 Play ${a.play}%`]];
-  h+=`<div class="tabs">${tabs.map(([k,l])=>`<button class="${R.tab===k?"on":""}" data-tab="${k}">${l}</button>`).join("")}</div>`;
-  if(R.tab==="info"){
-    h+=`<div class="card list">${a.commits.slice(0,30).map(c=>`<div class="it"><span class="dot" style="background:${a.color}"></span><div style="flex:1;min-width:0"><div>${esc(c.msg)}</div><div class="muted small">${fmtDate(c.date)}, ${fmtTime(c.date)} · ${esc(c.repo)} · <a href="${esc(c.html)}" target="_blank">${c.sha}</a></div></div></div>`).join("")||`<div class="empty">Oxirgi 4 oyda o'zgarish yo'q</div>`}</div>`;
-  }
-  if(R.tab==="rel"){
-    h+=`<div class="card list">${a.releases.map(x=>`<div class="it"><span style="font-size:1.3rem">📦</span><div style="flex:1"><b>${esc(x.name)}</b> <span class="muted small">${fmtDate(x.date)} · ${esc(x.repo)}</span>
-      ${x.assets.map(as=>`<div class="small"><a href="${esc(as.url)}" target="_blank">${esc(as.name)}</a> · ${(as.size/1048576).toFixed(1)} MB · ⬇️ ${as.count}</div>`).join("")}</div></div>`).join("")||`<div class="empty">Hali versiya chiqarilmagan</div>`}</div>`;
-  }
-  if(R.tab==="notes"){
-    const ns=NOTES[a.key]||[];
-    h+=`<div class="card"><div class="row"><input class="inp" id="nIn" placeholder="Yangi vazifa, masalan: yangi o'yin qo'shish"><button class="btn" id="nAdd">+</button></div>
-      <div style="margin-top:8px">${ns.map((n,i)=>`<label class="chk ${n.done?"done":""}"><input type="checkbox" data-nd="${i}" ${n.done?"checked":""}><span style="flex:1">${esc(n.t)}</span><button class="btn bad" style="padding:6px 10px" data-nx="${i}">✕</button></label>`).join("")||`<div class="empty">Vazifa yo'q 🎉</div>`}</div></div>`;
-  }
-  if(R.tab==="play"){
-    const p=PLAY[a.key]||{};
-    h+=`<div class="card"><div class="row" style="margin-bottom:8px">${ring(a.play,a.color)}<div><b>Play Market'ga chiqarish tayyorligi</b><div class="muted small">Har bir bajarilgan bandni belgilang</div></div></div>
-      <label class="chk ${PLAY_GLOBAL.account?"done":""}"><input type="checkbox" id="pAcc" ${PLAY_GLOBAL.account?"checked":""}><span>Google Play dasturchi akkaunti (25$) <span class="muted small">· barcha dasturlar uchun</span></span></label>
-      ${PLAY_ITEMS.map(([k,l])=>`<label class="chk ${p[k]?"done":""}"><input type="checkbox" data-pi="${k}" ${p[k]?"checked":""}><span>${l}</span></label>`).join("")}</div>`;
-  }
+  h+=`<div class="sec">📲 Platformalar bo'yicha</div><div class="cmp">
+    <button class="card tap" data-as="dl" style="text-align:left"><div class="small muted">🤖 Android</div><div style="font-size:1.6rem;font-weight:800">${a.dlBy.Android||0}</div><div class="small muted">APK yuklab olingan ›</div></button>
+    <div class="card"><div class="small muted">🍏 iPhone / Veb</div><div style="font-size:1.6rem;font-weight:800">${a.site?"—":"yo'q"}</div><div class="small muted">${a.site?"tashriflar sanalmaydi":"veb-versiya yo'q"}</div></div>
+    ${a.dlBy.Windows?`<button class="card tap" data-as="dl" style="text-align:left"><div class="small muted">🪟 Windows</div><div style="font-size:1.6rem;font-weight:800">${a.dlBy.Windows}</div><div class="small muted">yuklab olingan ›</div></button>`:""}</div>`;
+  h+=`<div class="card mt"><div class="sec" style="margin-top:0">📈 Faollik <span class="muted small">12 hafta · ustunni bosing</span></div>${activityChart([a],"wk1")}</div>`;
+  h+=`<div class="sec">🕒 Oxirgi o'zgarishlar <button class="chip" data-as="ch" style="margin-left:auto">Hammasi ›</button></div>${commitRows(a.commits.slice(0,5).map(c=>Object.assign({color:a.color},c)))}`;
+  h+=`<div class="cmp mt"><button class="card tap" data-gotasks style="text-align:left"><div class="small muted">📝 Vazifalar</div><div style="font-size:1.4rem;font-weight:800">${a.openNotes}</div><div class="small muted">qolgan ›</div></button>
+    <button class="card tap" data-playd style="text-align:left"><div class="small muted">🏪 Play tayyorligi</div><div style="font-size:1.4rem;font-weight:800">${a.play}%</div><div class="bar mt"><i style="width:${a.play}%;background:${a.color}"></i></div></button></div>`;
   return h;
 }
-function ring(pct,color){ const r=27,c=2*Math.PI*r; return `<div class="ring"><svg width="64" height="64"><circle cx="32" cy="32" r="${r}" stroke="#e4e8f2" stroke-width="7" fill="none"/><circle cx="32" cy="32" r="${r}" stroke="${color}" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="${c*pct/100} ${c}" transform="rotate(-90 32 32)"/></svg><b>${pct}%</b></div>`; }
-function bindApp(a){
-  $("#bk").onclick=()=>go("home");
-  $("#ed").onclick=()=>editApp(a);
-  document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{R.tab=b.dataset.tab;render()});
-  const add=$("#nAdd"); if(add){ const doAdd=()=>{ const v=$("#nIn").value.trim(); if(!v) return; (NOTES[a.key]=NOTES[a.key]||[]).unshift({t:v,done:false,at:Date.now()}); saveNotes(); render(); $("#nIn")&&$("#nIn").focus(); };
-    add.onclick=doAdd; $("#nIn").onkeydown=e=>{ if(e.key==="Enter") doAdd(); }; }
-  document.querySelectorAll("[data-nd]").forEach(c=>c.onchange=()=>{ NOTES[a.key][+c.dataset.nd].done=c.checked; saveNotes(); render(); });
-  document.querySelectorAll("[data-nx]").forEach(b=>b.onclick=e=>{ e.preventDefault(); NOTES[a.key].splice(+b.dataset.nx,1); saveNotes(); render(); });
-  document.querySelectorAll("[data-pi]").forEach(c=>c.onchange=()=>{ (PLAY[a.key]=PLAY[a.key]||{})[c.dataset.pi]=c.checked; savePlay(); render(); });
-  const pa=$("#pAcc"); if(pa) pa.onchange=()=>{ PLAY_GLOBAL.account=pa.checked; savePlay(); render(); };
+
+/* ---------- 📊 Hisobotlar ---------- */
+function activityChart(apps,id){
+  const ws=weekStart(new Date()), weeks=[]; for(let i=11;i>=0;i--){const d=new Date(ws);d.setDate(d.getDate()-7*i);weeks.push(d)}
+  const data=weeks.map(w=>{const e=new Date(w);e.setDate(e.getDate()+7);return apps.map(a=>a.commits.filter(c=>inRange(c.date,w,e)).length)});
+  const max=Math.max(1,...data.map(v=>v.reduce((s,x)=>s+x,0)));
+  const W=600,H=200,pl=28,pb=24,gap=(W-pl)/12,bw=gap*.62;
+  let s=`<svg class="chart" viewBox="0 0 ${W} ${H}" data-chart="${id}">`;
+  [0,Math.ceil(max/2),max].forEach(t=>{const y=H-pb-(t/max)*(H-pb-10);s+=`<line x1="${pl}" x2="${W}" y1="${y}" y2="${y}" stroke="#e4e8f2"/><text x="${pl-6}" y="${y+4}" font-size="11" text-anchor="end" fill="#6b7590">${t}</text>`});
+  data.forEach((v,i)=>{let y=H-pb;const x=pl+i*gap+(gap-bw)/2;
+    s+=`<rect class="col" data-wk="${i}" x="${pl+i*gap}" y="0" width="${gap}" height="${H-pb}" fill="transparent"/>`;
+    v.forEach((n,j)=>{if(!n)return;const hh=n/max*(H-pb-10);y-=hh;s+=`<rect class="col" data-wk="${i}" x="${x}" y="${y}" width="${bw}" height="${hh}" fill="${apps[j].color}" rx="3"/>`});
+    if(i%2===1||i===11) s+=`<text x="${x+bw/2}" y="${H-6}" font-size="11" text-anchor="middle" fill="#6b7590">${weeks[i].getDate()}.${String(weeks[i].getMonth()+1).padStart(2,"0")}</text>`;});
+  s+=`</svg>`;
+  return s+(apps.length>1?`<div class="legend">${apps.map(a=>`<span><i style="background:${a.color}"></i>${esc(a.name)}</span>`).join("")}</div>`:"");
 }
-function editApp(a){
-  const name=prompt("Dastur nomi:",a.name); if(name===null) return;
-  const emoji=prompt("Belgi (emoji):",a.emoji); if(emoji===null) return;
-  a.repos.forEach(r=>{ const k=keyOf(r); CFG.custom[k]=Object.assign({},CFG.custom[k],{name:name.trim()||a.name,emoji:emoji.trim()||a.emoji,group:a.key}); });
-  saveCfg(); render();
+function renderReports(apps){
+  let h=header("📊 Hisobotlar","Raqam yoki ustunni bosing — batafsil",refreshBtn())+notice();
+  if(!CACHE) return h+noData();
+  const tot=apps.reduce((s,a)=>s+a.downloads,0), and=apps.reduce((s,a)=>s+(a.dlBy.Android||0),0), win=apps.reduce((s,a)=>s+(a.dlBy.Windows||0),0);
+  const maxDl=Math.max(1,...apps.map(a=>a.downloads));
+  h+=`<div class="sec">⬇️ Yuklab olishlar</div><div class="kpis">
+    <button class="card kpi tap" data-d="downloads"><div class="v">${tot}</div><div class="l">Jami</div></button>
+    <button class="card kpi tap" data-d="downloads"><div class="v">${and}</div><div class="l">🤖 Android</div></button>
+    <div class="card kpi"><div class="v">—</div><div class="l">🍏 iPhone / Veb (sanalmaydi)</div></div>
+    <button class="card kpi tap" data-d="downloads"><div class="v">${win}</div><div class="l">🪟 Windows</div></button></div>
+    <div class="card mt">${apps.map(a=>`<button class="hbar tap" data-dla="${esc(a.key)}"><span>${a.emoji} ${esc(a.name)}</span><span class="bar"><i style="width:${a.downloads/maxDl*100}%;background:${a.color}"></i></span><b>${a.downloads}</b></button>`).join("")}</div>`;
+  h+=`<div class="card mt"><div class="sec" style="margin-top:0">📈 Faollik <span class="muted small">12 hafta · ustunni bosing</span></div>${activityChart(apps,"wkAll")}</div>`;
+  const m0=monthStart(0),m1=monthStart(1),p0=monthStart(-1), ac=allCommits(apps);
+  const cNow=ac.filter(c=>inRange(c.date,m0,m1)).length, cPrev=ac.filter(c=>inRange(c.date,p0,m0)).length;
+  const rels=apps.flatMap(a=>a.releases);
+  const rNow=rels.filter(x=>inRange(x.date,m0,m1)).length, rPrev=rels.filter(x=>inRange(x.date,p0,m0)).length;
+  const d=(a,b)=>a===b?`<span class="delta muted">o'tgan oy bilan teng</span>`:`<span class="delta ${a>b?"up":"down"}">${a>b?"▲":"▼"} ${Math.abs(a-b)} (o'tgan oy: ${b})</span>`;
+  const cm=a=>a.commits.filter(c=>new Date(c.date)>=m0).length;
+  const top=apps.slice().sort((x,y)=>cm(y)-cm(x))[0];
+  const mn=MONTHS[m0.getMonth()];
+  h+=`<div class="sec">🗓 ${mn[0].toUpperCase()+mn.slice(1)} oyi xulosasi</div><div class="cmp">
+    <button class="card tap" data-d="month" style="text-align:left"><div class="small muted">✏️ O'zgarishlar</div><div style="font-size:1.6rem;font-weight:800">${cNow}</div>${d(cNow,cPrev)}</button>
+    <button class="card tap" data-d="relMonth" style="text-align:left"><div class="small muted">📦 Yangi versiyalar</div><div style="font-size:1.6rem;font-weight:800">${rNow}</div>${d(rNow,rPrev)}</button></div>
+    ${top&&cNow?`<div class="alert info">🏆 Bu oy eng ko'p ishlangan: <b>${top.emoji} ${esc(top.name)}</b> (${cm(top)} ta o'zgarish)</div>`:""}`;
+  h+=`<div class="sec">⚖️ Dasturlarni solishtirish <span class="muted small">qatorni bosing</span></div><div class="card scroll"><table class="t"><tr><th>Dastur</th><th class="n">O'zgarish (30 kun)</th><th class="n">Versiyalar</th><th class="n">Yuklash</th><th class="n">Play</th><th class="n">Oxirgi</th></tr>
+    ${apps.map(a=>`<tr class="tap" data-open="${esc(a.key)}"><td>${a.emoji} <b>${esc(a.name)}</b></td><td class="n">${a.commits.filter(c=>Date.now()-new Date(c.date)<30*86400000).length}</td><td class="n">${a.releases.length}</td><td class="n">${a.downloads}</td><td class="n">${a.platforms.includes("Android")?a.play+"%":"—"}</td><td class="n small">${ago(a.pushed)}</td></tr>`).join("")}</table></div>`;
+  return h;
 }
 
-/* ---------- Sozlamalar ---------- */
+/* ---------- ✅ Vazifalar ---------- */
+function renderTasks(apps){
+  let h=header("✅ Vazifalar","Barcha dasturlar bo'yicha");
+  if(!apps.length) return h+notice()+noData();
+  const sel=R.app&&apps.find(a=>a.key===R.app)?R.app:apps[0].key;
+  const total=apps.reduce((s,a)=>s+a.openNotes,0);
+  h+=`<div class="card"><div class="row" style="flex-wrap:wrap"><select class="inp" id="tApp" style="flex:1 1 160px">${apps.map(a=>`<option value="${esc(a.key)}" ${a.key===sel?"selected":""}>${a.emoji} ${esc(a.name)}</option>`).join("")}</select>
+    <input class="inp" id="tIn" placeholder="Yangi vazifa…" style="flex:3 1 220px"><button class="btn" id="tAdd">+ Qo'shish</button></div></div>`;
+  h+=`<div class="sec">📝 Qolgan vazifalar <span class="muted small">(${total})</span></div>`;
+  let any=false;
+  apps.forEach(a=>{ const ns=NOTES[a.key]||[]; if(!ns.length) return; any=true;
+    h+=`<div class="card mt"><div class="row" style="margin-bottom:4px"><b style="flex:1">${a.emoji} ${esc(a.name)}</b><span class="muted small">${a.openNotes} qolgan</span></div>
+    ${ns.map((n,i)=>`<label class="chk ${n.done?"done":""}"><input type="checkbox" data-nd="${esc(a.key)}|${i}" ${n.done?"checked":""}><span style="flex:1">${esc(n.t)}</span><button class="btn bad" style="padding:6px 10px" data-nx="${esc(a.key)}|${i}">✕</button></label>`).join("")}</div>`; });
+  if(!any) h+=`<div class="empty">Vazifa yo'q 🎉</div>`;
+  const andr=apps.filter(a=>a.platforms.includes("Android"));
+  h+=`<div class="sec">🏪 Play Market tayyorligi</div>
+    <div class="card"><label class="chk ${PLAY_GLOBAL.account?"done":""}"><input type="checkbox" id="pgAcc" ${PLAY_GLOBAL.account?"checked":""}><span>Google Play dasturchi akkaunti (25$, barcha dasturlar uchun)</span></label></div>`;
+  andr.forEach(a=>{ const p=PLAY[a.key]||{}; const open=R.playOpen===a.key;
+    h+=`<div class="card mt"><button class="row tap" data-po="${esc(a.key)}" style="width:100%;text-align:left">${ring(a.play,a.color)}<div style="flex:1"><b>${a.emoji} ${esc(a.name)}</b><div class="muted small">${open?"Yopish ▲":"Bandlarni ko'rish ▼"}</div></div></button>
+    ${open?PLAY_ITEMS.map(([k,l])=>`<label class="chk ${p[k]?"done":""}"><input type="checkbox" data-pi="${esc(a.key)}|${k}" ${p[k]?"checked":""}><span>${l}</span></label>`).join(""):""}</div>`; });
+  if(!andr.length) h+=`<p class="muted small">Android dasturlari topilmadi</p>`;
+  return h;
+}
+function ring(pct,color){const r=27,c=2*Math.PI*r;return `<div class="ring"><svg width="64" height="64"><circle cx="32" cy="32" r="${r}" stroke="#e4e8f2" stroke-width="7" fill="none"/><circle cx="32" cy="32" r="${r}" stroke="${color}" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="${c*pct/100} ${c}" transform="rotate(-90 32 32)"/></svg><b>${pct}%</b></div>`}
+
+/* ---------- ⚙️ Sozlamalar ---------- */
 function renderSettings(){
-  let h=header("⚙️ Sozlamalar","Kalit va ko'rinish",`<button class="ib" id="bk">←</button>`);
+  let h=header("⚙️ Sozlamalar","Kalit va ko'rinish")+notice();
   h+=`<div class="card"><div class="sec" style="margin-top:0">🔑 GitHub kaliti (token)</div>
     ${CFG.token?`<div class="alert ok">✓ Kalit kiritilgan: <code>${esc(CFG.token.slice(0,11))}…</code></div><button class="btn bad" id="tDel">Kalitni o'chirish</button>`:
-    `<p class="small">Kalit faqat shu qurilmada saqlanadi va hech kimga yuborilmaydi (faqat GitHub'ga). Unga <b>faqat o'qish</b> huquqi beriladi: kalit bilan hech narsani o'zgartirib bo'lmaydi.</p>
-    <ol class="steps small">
-      <li>Kompyuterda GitHub'ga kiring → o'ng yuqoridagi rasmingiz → <b>Settings</b></li>
-      <li>Chap menyuning eng pastida <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b></li>
-      <li><b>Token name:</b> <code>Hisobot</code> · <b>Expiration:</b> <code>1 year</code> (yoki <code>No expiration</code>)</li>
-      <li><b>Repository access:</b> <b>All repositories</b></li>
-      <li><b>Permissions → Repository permissions</b> bo'limida uchtasini <b>Read-only</b> qiling: <code>Actions</code>, <code>Contents</code>, <code>Metadata</code></li>
-      <li>Pastdagi <b>Generate token</b> → chiqqan <code>github_pat_…</code> matnini nusxalang va quyiga qo'ying</li>
-    </ol>
-    <input class="inp" id="tIn" placeholder="github_pat_..." autocomplete="off"><button class="btn" id="tSave" style="margin-top:10px;width:100%">Saqlash va yangilash</button>`}
-  </div>`;
+    `<p class="small">Kalit faqat shu qurilmada saqlanadi. Unga <b>faqat o'qish</b> huquqi beriladi.</p>
+    <ol class="steps small"><li>Shu havolani oching: <a href="https://github.com/settings/personal-access-tokens/new" target="_blank">github.com/settings/personal-access-tokens/new</a></li>
+      <li><b>Token name:</b> <code>Hisobot</code> · <b>Expiration:</b> <code>No expiration</code></li><li><b>Repository access:</b> <b>All repositories</b></li>
+      <li><b>Permissions → Add permissions:</b> <code>Actions</code> va <code>Contents</code> → <b>Read-only</b></li><li><b>Generate token</b> → <code>github_pat_…</code> ni nusxalab, quyiga qo'ying</li></ol>
+    <input class="inp" id="tokIn" placeholder="github_pat_..." autocomplete="off"><button class="btn" id="tokSave" style="margin-top:10px;width:100%">Saqlash va yangilash</button>`}</div>`;
   const all=(CACHE&&CACHE.repos)||[];
-  if(all.length){
-    h+=`<div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">👁 Qaysi repolar ko'rinsin</div><p class="muted small">Dastur bo'lmagan repolarni yashirishingiz mumkin</p>
-      ${all.map(r=>{const k=keyOf(r),m=metaOf(r);return `<label class="chk"><input type="checkbox" data-vis="${esc(k)}" ${CFG.hidden.includes(k)?"":"checked"}><span style="flex:1">${m.emoji} ${esc(r.name)} ${r.private?"🔒":""}</span><span class="muted small">${esc(m.name)}</span></label>`}).join("")}</div>`;
-  }
+  if(all.length) h+=`<div class="card mt"><div class="sec" style="margin-top:0">👁 Qaysi repolar ko'rinsin</div>${all.map(r=>{const k=keyOf(r),m=metaOf(r);return `<label class="chk"><input type="checkbox" data-vis="${esc(k)}" ${CFG.hidden.includes(k)?"":"checked"}><span style="flex:1">${m.emoji} ${esc(r.name)} ${r.private?"🔒":""}</span><span class="muted small">${esc(m.name)}</span></label>`}).join("")}</div>`;
   if(N){ const on=CFG.watch!==false;
-    h+=`<div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">🔔 Bildirishnomalar</div>
-      <p class="small muted">Ilova yopiq bo'lsa ham har 3 soatda GitHub'ni tekshiradi va xabar beradi: yig'ilish xatosi ❌, yangi versiya ✅, yangi yuklab olishlar ⬇️</p>
-      <label class="chk"><input type="checkbox" id="wOn" ${on?"checked":""}><span>Fonda kuzatish yoqilgan</span></label>
-      <div class="btns"><button class="btn sec" id="wNow">🔄 Hozir tekshirish</button></div></div>`;
-  } else {
-  h+=`<div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">📲 Telefonga o'rnatish</div>
-    <p class="small"><b>iPhone:</b> Safari'da «Ulashish» ⬆️ → «Bosh ekranga qo'shish».<br><b>Android:</b> Chrome'da ⋮ menyu → «Bosh ekranga qo'shish».</p></div>`; }
-  h+=`
-    <div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">💾 Zaxira nusxa</div><p class="muted small">Vazifalar va Play ro'yxatlari shu qurilmada saqlanadi. Boshqa qurilmaga ko'chirish uchun:</p>
-    <div class="btns"><button class="btn sec" id="exp">⬆️ Nusxa olish</button><button class="btn sec" id="imp">⬇️ Nusxani tiklash</button></div></div>`;
+    h+=`<div class="card mt"><div class="sec" style="margin-top:0">🔔 Bildirishnomalar</div><p class="small muted">Ilova yopiq bo'lsa ham har 3 soatda tekshiradi: yig'ilish xatosi ❌, yangi versiya ✅, yangi yuklab olishlar ⬇️</p>
+      <label class="chk"><input type="checkbox" id="wOn" ${on?"checked":""}><span>Fonda kuzatish yoqilgan</span></label><div class="btns"><button class="btn sec" id="wNow">🔄 Hozir tekshirish</button></div></div>`;
+  } else h+=`<div class="card mt"><div class="sec" style="margin-top:0">📲 Telefonga o'rnatish</div><p class="small"><b>iPhone:</b> Safari → «Ulashish» ⬆️ → «Bosh ekranga qo'shish».<br><b>Android:</b> Chrome → ⋮ → «Bosh ekranga qo'shish».</p></div>`;
+  h+=`<div class="card mt"><div class="sec" style="margin-top:0">💾 Zaxira nusxa</div><p class="muted small">Vazifalar va Play ro'yxatlarini boshqa qurilmaga ko'chirish uchun</p>
+    <div class="btns"><button class="btn sec" id="exp">⬆️ Nusxa olish</button><button class="btn sec" id="imp">⬇️ Nusxani tiklash</button></div><div id="bk"></div></div>`;
   return h;
 }
-function bindSettings(){
-  $("#bk").onclick=()=>go("home");
-  const ts=$("#tSave"); if(ts) ts.onclick=()=>{ const v=$("#tIn").value.trim(); if(!/^(github_pat_|ghp_)[A-Za-z0-9_]+$/.test(v)) return toast("Kalit «github_pat_» bilan boshlanishi kerak"); CFG.token=v; saveCfg(); go("home"); refresh(); };
-  const td=$("#tDel"); if(td) td.onclick=()=>{ if(confirm("Kalit o'chirilsinmi?")){ CFG.token=""; saveCfg(); render(); } };
-  document.querySelectorAll("[data-vis]").forEach(c=>c.onchange=()=>{ const k=c.dataset.vis; CFG.hidden=c.checked?CFG.hidden.filter(x=>x!==k):[...CFG.hidden,k]; saveCfg(); });
-  const wo=$("#wOn"); if(wo) wo.onchange=()=>{ CFG.watch=wo.checked; saveCfg(); if(wo.checked){ try{N.askNotif()}catch(e){} } toast(wo.checked?"Kuzatish yoqildi":"Kuzatish o'chirildi"); };
-  const wn=$("#wNow"); if(wn) wn.onclick=()=>{ try{N.checkNow()}catch(e){} toast("Tekshirilmoqda… natija bildirishnoma bo'lib keladi"); };
-  $("#exp").onclick=async()=>{ const s=JSON.stringify({notes:NOTES,play:PLAY,playG:PLAY_GLOBAL,custom:CFG.custom,hidden:CFG.hidden});
-    try{ await navigator.clipboard.writeText(s); toast("Nusxa olindi. Uni boshqa qurilmada «Nusxani tiklash» ga qo'ying"); }catch(e){ prompt("Shu matnni nusxalang:",s); } };
-  $("#imp").onclick=()=>{ const s=prompt("Nusxa matnini qo'ying:"); if(!s) return; try{ const o=JSON.parse(s); NOTES=o.notes||{}; PLAY=o.play||{}; PLAY_GLOBAL=o.playG||{}; CFG.custom=o.custom||{}; CFG.hidden=o.hidden||[]; saveNotes(); savePlay(); saveCfg(); toast("Tiklandi ✓"); render(); }catch(e){ toast("Matn noto'g'ri"); } };
+
+/* ================== Hodisalar ================== */
+function bindLinks(root){ root.querySelectorAll("[data-open]").forEach(b=>b.onclick=()=>go("apps",{app:b.dataset.open})); }
+function bindCommon(apps){
+  const A=$("#app");
+  A.querySelectorAll("[data-nav]").forEach(b=>b.onclick=e=>{e.preventDefault();go(b.dataset.nav)});
+  A.querySelectorAll("[data-refresh]").forEach(b=>b.onclick=refresh);
+  bindLinks(A);
+  A.querySelectorAll("[data-d]").forEach(b=>b.onclick=()=>DETAIL[b.dataset.d](apps));
+  A.querySelectorAll("[data-wk]").forEach(b=>b.addEventListener("click",()=>{ const svg=b.closest("svg"); const list=svg.dataset.chart==="wk1"?apps.filter(a=>a.key===R.app):apps; DETAIL.week(list,+b.dataset.wk); }));
+  A.querySelectorAll("[data-dla]").forEach(b=>b.onclick=()=>DETAIL.downloads(apps.filter(a=>a.key===b.dataset.dla)));
+  A.querySelectorAll("[data-app]").forEach(b=>b.onclick=()=>{R.app=b.dataset.app;render()});
+  const cur=apps.find(a=>a.key===R.app);
+  if(cur){
+    A.querySelectorAll("[data-as]").forEach(b=>b.onclick=()=>DETAIL.appStat(cur,b.dataset.as));
+    const pd=A.querySelector("[data-playd]"); if(pd) pd.onclick=()=>DETAIL.play(cur);
+    const gt=A.querySelector("[data-gotasks]"); if(gt) gt.onclick=()=>go("tasks",{app:cur.key});
+    const ed=$("#edA"); if(ed) ed.onclick=()=>editApp(cur);
+  }
+  const ta=$("#tAdd"); if(ta){ const add=()=>{ const v=$("#tIn").value.trim(), k=$("#tApp").value; if(!v) return; (NOTES[k]=NOTES[k]||[]).unshift({t:v,done:false,at:Date.now()}); saveNotes(); R.app=k; render(); };
+    ta.onclick=add; $("#tIn").onkeydown=e=>{if(e.key==="Enter")add()}; $("#tApp").onchange=()=>{R.app=$("#tApp").value}; }
+  A.querySelectorAll("[data-nd]").forEach(c=>c.onchange=()=>{const [k,i]=c.dataset.nd.split("|");NOTES[k][+i].done=c.checked;saveNotes();render()});
+  A.querySelectorAll("[data-nx]").forEach(b=>b.onclick=e=>{e.preventDefault();const [k,i]=b.dataset.nx.split("|");NOTES[k].splice(+i,1);saveNotes();render()});
+  A.querySelectorAll("[data-po]").forEach(b=>b.onclick=()=>{R.playOpen=R.playOpen===b.dataset.po?null:b.dataset.po;render()});
+  A.querySelectorAll("[data-pi]").forEach(c=>c.onchange=()=>{const [k,i]=c.dataset.pi.split("|");(PLAY[k]=PLAY[k]||{})[i]=c.checked;savePlay();render()});
+  const pg=$("#pgAcc"); if(pg) pg.onchange=()=>{PLAY_GLOBAL.account=pg.checked;savePlay();render()};
+  const ts=$("#tokSave"); if(ts) ts.onclick=()=>{const v=$("#tokIn").value.trim(); if(!/^(github_pat_|ghp_)[A-Za-z0-9_]+$/.test(v)) return toast("Kalit «github_pat_» bilan boshlanishi kerak"); CFG.token=v; saveCfg(); if(N){try{N.askNotif()}catch(e){}} go("home"); refresh();};
+  const td=$("#tDel"); if(td) td.onclick=()=>confirmBox("Kalit o'chirilsinmi?",()=>{CFG.token="";saveCfg();render()});
+  A.querySelectorAll("[data-vis]").forEach(c=>c.onchange=()=>{const k=c.dataset.vis;CFG.hidden=c.checked?CFG.hidden.filter(x=>x!==k):[...CFG.hidden,k];saveCfg()});
+  const wo=$("#wOn"); if(wo) wo.onchange=()=>{CFG.watch=wo.checked;saveCfg();if(wo.checked){try{N.askNotif()}catch(e){}}toast(wo.checked?"Kuzatish yoqildi":"Kuzatish o'chirildi")};
+  const wn=$("#wNow"); if(wn) wn.onclick=()=>{try{N.checkNow()}catch(e){}toast("Tekshirilmoqda… natija bildirishnoma bo'lib keladi")};
+  const ex=$("#exp"); if(ex) ex.onclick=async()=>{ const s=JSON.stringify({notes:NOTES,play:PLAY,playG:PLAY_GLOBAL,custom:CFG.custom,hidden:CFG.hidden});
+    try{await navigator.clipboard.writeText(s);toast("Nusxa olindi ✓")}catch(e){$("#bk").innerHTML=`<p class="small">Shu matnni nusxalang:</p><textarea class="inp" rows="4" readonly>${esc(s)}</textarea>`}};
+  const im=$("#imp"); if(im) im.onclick=()=>{ $("#bk").innerHTML=`<textarea class="inp mt" id="impT" rows="4" placeholder="Nusxa matnini qo'ying"></textarea><button class="btn mt" id="impGo">Tiklash</button>`;
+    $("#impGo").onclick=()=>{try{const o=JSON.parse($("#impT").value);NOTES=o.notes||{};PLAY=o.play||{};PLAY_GLOBAL=o.playG||{};CFG.custom=o.custom||{};CFG.hidden=o.hidden||[];saveNotes();savePlay();saveCfg();toast("Tiklandi ✓");render()}catch(e){toast("Matn noto'g'ri")}}; };
 }
+function confirmBox(msg,yes){ sheet("❓",`<p style="font-size:1.05rem;font-weight:600">${esc(msg)}</p><div class="btns"><button class="btn ghost" id="cN">Yo'q</button><button class="btn bad" id="cY">Ha</button></div>`); $("#cN").onclick=closeSheet; $("#cY").onclick=()=>{closeSheet();yes()}; }
+function editApp(a){
+  sheet("✏️ "+esc(a.name),`<label class="small muted">Nomi</label><input class="inp" id="eN" value="${esc(a.name)}"><label class="small muted" style="display:block;margin-top:10px">Belgi (emoji)</label><input class="inp" id="eE" value="${esc(a.emoji)}"><button class="btn mt" id="eS" style="width:100%">Saqlash</button>`);
+  $("#eS").onclick=()=>{const n=$("#eN").value.trim()||a.name,e=$("#eE").value.trim()||a.emoji; a.repos.forEach(r=>{const k=keyOf(r);CFG.custom[k]=Object.assign({},CFG.custom[k],{name:n,emoji:e,group:a.key})}); saveCfg(); closeSheet(); render(); };
+}
+window.handleBack=function(){ if($("#ovl").innerHTML){closeSheet();return true} if(R.scr!=="home"){go("home");return true} return false; };
+window.__R=()=>R;
 
 /* ================== Ishga tushirish ================== */
-if("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("sw.js").catch(()=>{});
+if("serviceWorker" in navigator&&location.protocol==="https:") navigator.serviceWorker.register("sw.js").catch(()=>{});
 syncNative();
-if(N && CFG.token && CFG.watch!==false){ try{N.askNotif()}catch(e){} }
+if(N&&CFG.token&&CFG.watch!==false){try{N.askNotif()}catch(e){}}
 render();
 if(!window.__NO_AUTO) refresh();
-document.addEventListener("visibilitychange",()=>{ if(!document.hidden && CACHE && Date.now()-new Date(CACHE.at)>5*60000) refresh(); });
+document.addEventListener("visibilitychange",()=>{if(!document.hidden&&CACHE&&Date.now()-new Date(CACHE.at)>5*60000) refresh()});
+}
 </script>
 </body>
 </html>
