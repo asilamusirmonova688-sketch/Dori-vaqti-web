@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#f4f7f6">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Dori vaqti">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>Dori vaqti</title>
+<style>
+:root{
+  --bg:#f4f7f6; --card:#fff; --ink:#1d2b2a; --muted:#6b7a78; --line:#e3e9e8;
+  --pri:#0f8b6f; --pri2:#e3f4ef; --warn:#d9822b; --warn2:#fdf1e4; --bad:#d64545; --bad2:#fbe9e9;
+  --gold:#f2b200; --r:16px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{font-size:16px}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4}
+button{font:inherit;cursor:pointer;border:0}
+input,select,textarea{font:inherit;color:inherit}
+#app{max-width:560px;margin:0 auto;min-height:100vh;padding-bottom:calc(90px + env(safe-area-inset-bottom))}
+body.simple #app,.ob{padding-top:env(safe-area-inset-top)}
+.top{position:sticky;top:0;z-index:5;background:var(--bg);padding:calc(16px + env(safe-area-inset-top)) 16px 8px;display:flex;align-items:center;gap:10px}
+.top h1{font-size:1.35rem;margin:0;flex:1}
+.top .sub{color:var(--muted);font-size:.9rem;font-weight:500}
+.iconbtn{background:var(--card);border:1px solid var(--line);border-radius:12px;width:44px;height:44px;font-size:1.2rem;display:grid;place-items:center}
+.wrap{padding:0 16px}
+.card{background:var(--card);border-radius:var(--r);padding:14px;margin:10px 0;border:1px solid var(--line)}
+.btn{background:var(--pri);color:#fff;border-radius:14px;padding:14px 18px;font-weight:600;font-size:1rem;width:100%;display:block;text-align:center}
+.btn.sec{background:var(--pri2);color:var(--pri)}
+.btn.ghost{background:transparent;color:var(--muted);border:1px solid var(--line)}
+.btn.bad{background:var(--bad2);color:var(--bad)}
+.btn:disabled{opacity:.4}
+.row{display:flex;gap:10px;align-items:center}
+.row>*{flex:1}
+.mt{margin-top:12px}.mt2{margin-top:20px}
+label.f{display:block;font-weight:600;margin:14px 0 6px;font-size:.95rem}
+.inp{width:100%;padding:13px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:1rem}
+.inp:focus{outline:2px solid var(--pri);border-color:transparent}
+.muted{color:var(--muted)}.small{font-size:.85rem}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{padding:9px 13px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:.95rem}
+.chip.on{background:var(--pri);color:#fff;border-color:var(--pri)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.tile{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px 4px;text-align:center;font-size:.85rem}
+.tile .e{font-size:1.7rem;display:block}
+.tile.on{border:2px solid var(--pri);background:var(--pri2)}
+.nav{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--line);display:flex;justify-content:center;z-index:9;padding-bottom:env(safe-area-inset-bottom)}
+.nav div{display:flex;max-width:560px;width:100%}
+.nav button{flex:1;background:none;padding:8px 2px 10px;font-size:.72rem;color:var(--muted)}
+.nav button .e{font-size:1.35rem;display:block}
+.nav button.on{color:var(--pri);font-weight:700}
+.fab{position:fixed;right:max(16px,calc(50% - 264px));bottom:calc(84px + env(safe-area-inset-bottom));background:var(--pri);color:#fff;border-radius:18px;padding:15px 20px;font-weight:700;box-shadow:0 6px 18px rgba(15,139,111,.35);z-index:8}
+/* dose cards */
+.tgroup{font-weight:700;color:var(--muted);margin:18px 2px 4px;font-size:.95rem}
+.dose{display:flex;gap:12px;align-items:center}
+.dose .ph{width:56px;height:56px;border-radius:14px;background:var(--pri2);display:grid;place-items:center;font-size:1.8rem;flex:none;overflow:hidden}
+.dose .ph img{width:100%;height:100%;object-fit:cover}
+.dose .info{flex:1;min-width:0}
+.dose .nm{font-weight:700;font-size:1.05rem}
+.dose .meta{color:var(--muted);font-size:.88rem}
+.who{display:inline-block;font-size:.78rem;font-weight:700;padding:2px 8px;border-radius:999px;color:#fff;margin-bottom:3px}
+.take{background:var(--pri);color:#fff;border-radius:12px;padding:11px 12px;font-weight:700;flex:none}
+.done{opacity:.6}
+.done .take{background:var(--pri2);color:var(--pri)}
+.miss{border-color:var(--bad);background:var(--bad2)}
+.miss .take{background:var(--bad)}
+.banner{border-radius:14px;padding:12px 14px;margin:10px 0;font-size:.93rem}
+.banner.w{background:var(--warn2);color:#8a4b0f}
+.banner.b{background:var(--bad2);color:#8d2323}
+.banner.g{background:var(--pri2);color:#0b5e4b}
+.empty{text-align:center;padding:40px 20px;color:var(--muted)}
+.empty .e{font-size:3rem}
+/* simple mode */
+body.simple{--r:22px}
+body.simple .dose .ph{width:84px;height:84px;font-size:2.6rem}
+body.simple .dose{flex-wrap:wrap}
+body.simple .dose .nm{font-size:1.5rem}
+body.simple .dose .meta{font-size:1.1rem}
+body.simple .take{width:100%;padding:20px;font-size:1.5rem;border-radius:18px;margin-top:6px}
+.bigclock{font-size:2.6rem;font-weight:800;text-align:center;margin:8px 0 0}
+.bigdate{text-align:center;color:var(--muted);font-size:1.1rem}
+/* onboarding */
+.ob{padding:calc(24px + env(safe-area-inset-top)) 18px 24px}
+.ob h2{font-size:1.5rem;margin:8px 0 6px}
+.dots{display:flex;gap:6px;justify-content:center;margin:6px 0 16px}
+.dots i{width:8px;height:8px;border-radius:9px;background:var(--line)}
+.dots i.on{background:var(--pri);width:22px}
+.choice{display:flex;gap:14px;align-items:center;background:#fff;border:2px solid var(--line);border-radius:18px;padding:16px;margin:10px 0;width:100%;text-align:left}
+.choice.on{border-color:var(--pri);background:var(--pri2)}
+.choice .e{font-size:2rem}
+.choice b{display:block;font-size:1.05rem}
+.disc{background:#fff;border:1px solid var(--line);border-radius:16px;padding:6px 16px;max-height:52vh;overflow:auto;font-size:.95rem}
+.disc li{margin:8px 0}
+.check{display:flex;gap:12px;align-items:center;margin:16px 0;font-weight:600}
+.check input{width:26px;height:26px;accent-color:var(--pri)}
+.logo{font-size:3.5rem;text-align:center}
+/* modal */
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:flex-end;justify-content:center;z-index:50}
+.sheet{background:var(--bg);width:100%;max-width:560px;border-radius:22px 22px 0 0;padding:18px;max-height:90vh;overflow:auto}
+.pinpad{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.pinpad button{background:#fff;border:1px solid var(--line);border-radius:14px;padding:16px;font-size:1.4rem;font-weight:700}
+.pindots{display:flex;gap:14px;justify-content:center;margin:14px 0}
+.pindots i{width:16px;height:16px;border-radius:9px;border:2px solid var(--pri)}
+.pindots i.on{background:var(--pri)}
+.toast{position:fixed;left:50%;bottom:100px;transform:translateX(-50%);background:#1d2b2a;color:#fff;padding:12px 18px;border-radius:14px;z-index:60;font-weight:600;max-width:90%;text-align:center}
+.stars{display:flex;gap:10px}
+.stars .card{flex:1;text-align:center;margin:6px 0}
+.stars .n{font-size:1.6rem;font-weight:800}
+.badge{display:inline-block;background:#fff4cc;color:#7a5a00;border-radius:999px;padding:3px 10px;font-weight:700;font-size:.85rem}
+.plist .pp{display:flex;gap:12px;align-items:center}
+.av{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-size:1.5rem;flex:none}
+.hday summary{list-style:none;display:flex;align-items:center;gap:10px;cursor:pointer}
+.bar{height:8px;border-radius:9px;background:var(--line);overflow:hidden;flex:1}
+.bar i{display:block;height:100%;background:var(--pri)}
+.perm{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line)}
+.perm:last-child{border:0}
+.perm .s{flex:1}
+.perm button{background:var(--pri2);color:var(--pri);border-radius:10px;padding:8px 12px;font-weight:700}
+.tline{display:flex;gap:8px;margin:6px 0}
+.tline .inp{flex:1}
+.x{background:var(--bad2);color:var(--bad);border-radius:12px;width:48px;font-size:1.1rem}
+.seg{display:flex;background:#e9efee;border-radius:12px;padding:4px;gap:4px}
+.seg button{flex:1;background:none;padding:10px 4px;border-radius:9px;font-size:.9rem}
+.seg button.on{background:#fff;font-weight:700;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid var(--line);width:100%;background:none;text-align:left}
+.setrow:last-child{border:0}
+.fire{font-size:1.1rem;font-weight:800;color:#e0621a}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<div id="modal"></div>
+<input type="file" id="fpick" accept="image/*" style="display:none">
+<script>
+"use strict";
+/* ================= Native bridge (Android) yoki brauzer ================= */
+const N = window.Native || null;
+const mockFiles = {};
+const photoCache = {};
+
+/* ================= Tillar ================= */
+const UZ = {
+  appName:"Dori vaqti",
+  chooseLang:"Tilni tanlang",
+  next:"Davom etish", back:"Orqaga", save:"Saqlash", cancel:"Bekor qilish", del:"O'chirish", close:"Yopish", edit:"Tahrirlash", add:"Qo'shish", yes:"Ha", no:"Yo'q",
+  discTitle:"Diqqat! Iltimos, o'qib chiqing",
+  disc:[
+    "\"Dori vaqti\" faqat eslatuvchi yordamchi. U shifokor yoki farmatsevt o'rnini bosmaydi.",
+    "Ilova dori tanlamaydi, miqdorini hisoblamaydi va davolash bo'yicha maslahat bermaydi. Dori nomi, miqdori va vaqtini foydalanuvchi o'zi kiritadi va ularning to'g'riligiga o'zi javob beradi.",
+    "Dorini faqat shifokor ko'rsatmasi va dori yo'riqnomasiga muvofiq iching.",
+    "Telefon o'chib qolishi, ovozi o'chirilgani yoki batareya tejash rejimi sababli eslatma kechikishi yoki kelmasligi mumkin. Muhim dorilarni boshqa usulda ham nazorat qiling.",
+    "Bolalar va yordamga muhtoj odamlarning dorisini katta yoshdagi mas'ul shaxs nazorat qilishi shart.",
+    "Dorini noto'g'ri qabul qilish, eslatma kelmay qolishi yoki shunga o'xshash holatlar natijasida yuzaga kelgan oqibatlar uchun ilova va uning muallifi javobgar emas.",
+    "Ahvolingiz yomonlashsa, darhol shifokorga murojaat qiling yoki 103 raqamiga qo'ng'iroq qiling."
+  ],
+  agree:"O'qidim, tushundim va roziman",
+  whoTitle:"Kim uchun sozlayapsiz?",
+  forSelf:"O'zim uchun", forSelfD:"Telefon meniki, o'zim ishlataman",
+  forOther:"Boshqa odam uchun", forOtherD:"Ota-onam, buvim yoki boshqa yaqinimning telefonini sozlayapman",
+  ownerTitleSelf:"Siz haqingizda", ownerTitleOther:"Telefon egasi haqida",
+  ownerHint:"Ilovaning ko'rinishi shu odamning yoshiga qarab tanlanadi",
+  name:"Ism", namePh:"Masalan: Shahzoda", birthYear:"Tug'ilgan yil", yearPh:"Masalan: 1985",
+  badYear:"Tug'ilgan yilni to'g'ri kiriting",
+  needName:"Ismni kiriting",
+  modeTitle:"Sizga mos ko'rinish",
+  modeFor:"%1 yosh uchun tanlandi. Xohlasangiz o'zgartiring:",
+  m_simple:"Oddiy", m_simpleD:"Juda katta yozuv, faqat «Ichdim» tugmasi. Keksalar uchun qulay",
+  m_teen:"Yengil", m_teenD:"Zamonaviy ko'rinish, yulduzcha va ketma-ket kunlar 🔥",
+  m_full:"To'liq", m_fullD:"Barcha imkoniyatlar: oila, tarix, sozlamalar",
+  personsTitle:"Dorini kim ichadi?",
+  personsHint:"Bitta telefonda butun oilaning dorisini kuzatish mumkin. Har bir odam o'z yoshiga mos profil oladi.",
+  addPerson:"+ Odam qo'shish", ownerToo:"%1 (telefon egasi)",
+  needPerson:"Kamida bitta odam qo'shing",
+  pinTitle:"Himoya PIN-kodi",
+  pinHint:"PIN qo'yilsa, dori qo'shish, o'zgartirish va sozlamalar faqat PIN bilan ochiladi. «Ichdim» tugmasi esa doim ishlaydi.",
+  pinRec:"Keksa odam yoki bola uchun tavsiya etiladi",
+  setPin:"PIN qo'yish", skip:"Hozircha kerak emas",
+  enterPin:"PIN-kodni kiriting", newPin:"Yangi 4 xonali PIN", repeatPin:"PIN-ni qayta kiriting", pinWrong:"PIN noto'g'ri", pinMismatch:"PIN-lar mos kelmadi", pinSet:"PIN o'rnatildi", pinRemoved:"PIN olib tashlandi",
+  permTitle:"Eslatma to'g'ri ishlashi uchun",
+  permHint:"Quyidagi ruxsatlarni bering, aks holda eslatma kelmasligi mumkin.",
+  p_notif:"Bildirishnomalar", p_exact:"Aniq vaqtda eslatish", p_full:"Butun ekranli eslatma", p_battery:"Batareya tejashdan ozod qilish",
+  allow:"Ruxsat berish", granted:"✓ Berilgan",
+  start:"Boshlash",
+  browserNote:"Brauzerda ochilgan: eslatmalar faqat telefondagi ilovada ishlaydi.",
+  today:"Bugun", meds:"Dorilar", family:"Oila", history:"Tarix", settings:"Sozlamalar",
+  addMed:"+ Dori", addMedT:"Dori qo'shish", editMedT:"Dorini tahrirlash",
+  noDoses:"Bugun ichiladigan dori yo'q", noDosesHint:"Dori qo'shish uchun «+ Dori» tugmasini bosing",
+  take:"Ichdim ✓", give:"Berdim ✓", taken:"✓ Ichildi", given:"✓ Berildi", missed:"O'tkazib yuborildi",
+  undo:"Bekor qilish",
+  stockLow:"%1: dori %2 kunga yetadi. Sotib oling!", stockOut:"%1: dori tugadi!",
+  starPlus:"⭐ +1! Barakalla!", hero:"🏆 Qahramon! 7 kun uzluksiz!",
+  stars:"yulduzcha", streak:"kun ketma-ket",
+  forWho:"Kim uchun", medName:"Dori nomi", medNamePh:"Masalan: Paratsetamol",
+  type:"Turi", amount:"Bir martalik miqdor", unit:"O'lchov",
+  food:"Ovqatga nisbatan", f_before:"Ovqatdan oldin", f_after:"Ovqatdan keyin", f_with:"Ovqat bilan", f_any:"Farqi yo'q",
+  sched:"Qachon ichiladi", s_daily:"Har kuni", s_other:"Kun ora", s_week:"Hafta kunlari", s_int:"Har N soatda",
+  times:"Soatlar", addTime:"+ Soat qo'shish", perDay:"Kuniga %1 marta",
+  everyH:"Har necha soatda", firstAt:"Birinchi qabul",
+  startDate:"Boshlanish sanasi", duration:"Necha kun ichiladi", durPh:"Bo'sh qoldirsangiz: doimiy", forever:"doimiy", days:"kun",
+  stock:"Qutida qancha bor (ixtiyoriy)", stockPh:"Tugashini ogohlantirish uchun",
+  photo:"Dori qutisining rasmi", takePhoto:"📷 Rasmga olish", pickPhoto:"🖼 Galereyadan", removePhoto:"Rasmni olib tashlash",
+  needMedName:"Dori nomini kiriting", needTime:"Kamida bitta soat kiriting", needDays:"Hafta kunini tanlang",
+  medSaved:"Saqlandi", delMedQ:"Bu dorini o'chirasizmi?",
+  paused:"to'xtatilgan", pause:"To'xtatish", resume:"Davom ettirish",
+  t_tablet:"Tabletka", t_capsule:"Kapsula", t_syrup:"Sirop", t_drops:"Tomchi", t_injection:"Ukol", t_cream:"Surtma", t_inhaler:"Ingalyator", t_vitamin:"Vitamin", t_other:"Boshqa",
+  u_pcs:"dona", u_ml:"ml", u_spoon:"choy qoshiq", u_drop:"tomchi", u_times:"marta", u_puff:"puflash",
+  noMeds:"Hali dori qo'shilmagan",
+  ageG_child:"Bola", ageG_teen:"O'smir", ageG_adult:"Katta yosh", ageG_senior:"Keksa",
+  age:"%1 yosh",
+  personT:"Odam qo'shish", personEditT:"Profilni tahrirlash", avatar:"Belgi", color:"Rang",
+  voice:"Ovozli eslatma", voiceHint:"Yaqin odam ovozini yozib qo'ying, masalan: «Onajon, dori ichish vaqti bo'ldi». Eslatma shu ovozda chalinadi.",
+  rec:"🎙 Ovoz yozish", stopRec:"⏹ To'xtatish", play:"▶ Eshitish", recording:"Yozilmoqda... gapiring",
+  voiceSaved:"Ovoz saqlandi", noVoiceBrowser:"Ovoz yozish faqat telefondagi ilovada ishlaydi",
+  delPersonQ:"Bu odam va uning barcha dorilari o'chiriladi. Davom etasizmi?",
+  childNote:"Bola profili: eslatma shu telefonga keladi, dorini katta odam beradi",
+  hist14:"Oxirgi 14 kun", nothing:"Dori yo'q",
+  language:"Til", viewMode:"Ko'rinish", auto:"Avtomatik", fontSize:"Yozuv o'lchami",
+  f_n:"Oddiy", f_l:"Katta", f_xl:"Juda katta",
+  pin:"PIN-kod", pinOn:"O'rnatilgan", pinOff:"O'rnatilmagan", changePin:"PIN o'rnatish / o'zgartirish", removePin:"PIN-ni olib tashlash",
+  perms:"Ruxsatlar", testAlarm:"🔔 Eslatmani sinab ko'rish (5 soniya)", testSent:"5 soniyadan keyin eslatma chiqadi",
+  discView:"Javobgarlik haqida ogohlantirish", resetAll:"Barcha ma'lumotni o'chirish", resetQ:"Barcha ma'lumot o'chiriladi. Ishonchingiz komilmi?",
+  owner:"Telefon egasi", caretakerExit:"🔒 Qulflash",
+  openSettings:"⚙ Sozlamalar", version:"Versiya 1.0",
+  installTitle:"Bosh ekranga qo'shing",
+  installHint:"Safari'da pastdagi «Ulashish» ⬆️ tugmasini bosing, so'ng «Bosh ekranga qo'shish» ni tanlang. Ilova oddiy ilova kabi ochiladi va internetsiz ishlaydi.",
+  calTitle:"Eslatma iPhone kalendari orqali",
+  calHint:"Veb-ilova o'zi eslatma yubora olmaydi. Shuning uchun dori vaqtlarini telefon kalendariga qo'shing: telefon o'zi ovoz bilan eslatadi, ilova yopiq bo'lsa ham.",
+  calBtn:"📅 Kalendarga qo'shish", calAll:"📅 Barcha dorilarni kalendarga qo'shish",
+  calDone:"Ochilgan oynada «Hammasini qo'shish» ni bosing",
+  calNeed:"%1 hali kalendarga qo'shilmagan. Eslatma kelishi uchun qo'shing",
+  calChanged:"%1 o'zgardi. Kalendardagi eski yozuvni o'chirib, qaytadan qo'shing",
+  calAdded:"📅 Kalendarda",
+  calEvent:"Dori vaqti",
+  wd:["Du","Se","Cho","Pa","Ju","Sha","Ya"],
+  months:["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"],
+  wdl:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
+};
+const RU = {
+  appName:"Время лекарств",
+  chooseLang:"Выберите язык",
+  next:"Продолжить", back:"Назад", save:"Сохранить", cancel:"Отмена", del:"Удалить", close:"Закрыть", edit:"Изменить", add:"Добавить", yes:"Да", no:"Нет",
+  discTitle:"Внимание! Пожалуйста, прочитайте",
+  disc:[
+    "«Время лекарств» — только помощник-напоминалка. Оно не заменяет врача или фармацевта.",
+    "Приложение не подбирает лекарства, не рассчитывает дозировку и не даёт советов по лечению. Название, дозу и время приёма вводит сам пользователь и сам отвечает за их правильность.",
+    "Принимайте лекарства только по назначению врача и согласно инструкции.",
+    "Из-за выключенного телефона, отключённого звука или режима экономии батареи напоминание может опоздать или не прийти. Контролируйте важные лекарства и другими способами.",
+    "Приём лекарств детьми и людьми, нуждающимися в помощи, обязательно должен контролировать ответственный взрослый.",
+    "Приложение и его автор не несут ответственности за последствия неправильного приёма лекарств, непришедших напоминаний и подобных ситуаций.",
+    "При ухудшении самочувствия немедленно обратитесь к врачу или позвоните 103."
+  ],
+  agree:"Я прочитал(а), понял(а) и согласен(на)",
+  whoTitle:"Для кого вы настраиваете?",
+  forSelf:"Для себя", forSelfD:"Это мой телефон, пользуюсь сам(а)",
+  forOther:"Для другого человека", forOtherD:"Настраиваю телефон родителей, бабушки или другого близкого",
+  ownerTitleSelf:"О вас", ownerTitleOther:"О владельце телефона",
+  ownerHint:"Вид приложения подбирается по возрасту этого человека",
+  name:"Имя", namePh:"Например: Шахзода", birthYear:"Год рождения", yearPh:"Например: 1985",
+  badYear:"Введите правильный год рождения", needName:"Введите имя",
+  modeTitle:"Подходящий вид",
+  modeFor:"Выбрано для возраста %1. Можно изменить:",
+  m_simple:"Простой", m_simpleD:"Очень крупный шрифт, только кнопка «Принял». Удобно пожилым",
+  m_teen:"Лёгкий", m_teenD:"Современный вид, звёздочки и дни подряд 🔥",
+  m_full:"Полный", m_fullD:"Все возможности: семья, история, настройки",
+  personsTitle:"Кто принимает лекарства?",
+  personsHint:"На одном телефоне можно следить за лекарствами всей семьи. Каждый получает профиль по своему возрасту.",
+  addPerson:"+ Добавить человека", ownerToo:"%1 (владелец телефона)",
+  needPerson:"Добавьте хотя бы одного человека",
+  pinTitle:"Защитный PIN-код",
+  pinHint:"С PIN-кодом добавление, изменение лекарств и настройки открываются только по PIN. Кнопка «Принял» работает всегда.",
+  pinRec:"Рекомендуется для пожилого человека или ребёнка",
+  setPin:"Установить PIN", skip:"Пока не нужно",
+  enterPin:"Введите PIN-код", newPin:"Новый 4-значный PIN", repeatPin:"Повторите PIN", pinWrong:"Неверный PIN", pinMismatch:"PIN-коды не совпали", pinSet:"PIN установлен", pinRemoved:"PIN удалён",
+  permTitle:"Чтобы напоминания работали",
+  permHint:"Дайте разрешения ниже, иначе напоминание может не прийти.",
+  p_notif:"Уведомления", p_exact:"Напоминание в точное время", p_full:"Полноэкранное напоминание", p_battery:"Без ограничений батареи",
+  allow:"Разрешить", granted:"✓ Есть",
+  start:"Начать",
+  browserNote:"Открыто в браузере: напоминания работают только в приложении на телефоне.",
+  today:"Сегодня", meds:"Лекарства", family:"Семья", history:"История", settings:"Настройки",
+  addMed:"+ Лекарство", addMedT:"Добавить лекарство", editMedT:"Изменить лекарство",
+  noDoses:"Сегодня лекарств нет", noDosesHint:"Нажмите «+ Лекарство», чтобы добавить",
+  take:"Принял ✓", give:"Дал ✓", taken:"✓ Принято", given:"✓ Дано", missed:"Пропущено",
+  undo:"Отменить",
+  stockLow:"%1: лекарства хватит на %2 дн. Купите!", stockOut:"%1: лекарство закончилось!",
+  starPlus:"⭐ +1! Молодец!", hero:"🏆 Герой! 7 дней подряд!",
+  stars:"звёзд", streak:"дн. подряд",
+  forWho:"Для кого", medName:"Название", medNamePh:"Например: Парацетамол",
+  type:"Вид", amount:"Доза за раз", unit:"Единица",
+  food:"Относительно еды", f_before:"До еды", f_after:"После еды", f_with:"Во время еды", f_any:"Неважно",
+  sched:"Когда принимать", s_daily:"Каждый день", s_other:"Через день", s_week:"Дни недели", s_int:"Каждые N часов",
+  times:"Время", addTime:"+ Добавить время", perDay:"%1 раз в день",
+  everyH:"Каждые сколько часов", firstAt:"Первый приём",
+  startDate:"Дата начала", duration:"Сколько дней", durPh:"Пусто — постоянно", forever:"постоянно", days:"дн.",
+  stock:"Сколько осталось (необязательно)", stockPh:"Чтобы предупредить об окончании",
+  photo:"Фото упаковки", takePhoto:"📷 Сфотографировать", pickPhoto:"🖼 Из галереи", removePhoto:"Убрать фото",
+  needMedName:"Введите название", needTime:"Добавьте хотя бы одно время", needDays:"Выберите дни недели",
+  medSaved:"Сохранено", delMedQ:"Удалить это лекарство?",
+  paused:"приостановлено", pause:"Приостановить", resume:"Возобновить",
+  t_tablet:"Таблетка", t_capsule:"Капсула", t_syrup:"Сироп", t_drops:"Капли", t_injection:"Укол", t_cream:"Мазь", t_inhaler:"Ингалятор", t_vitamin:"Витамин", t_other:"Другое",
+  u_pcs:"шт", u_ml:"мл", u_spoon:"ч. ложка", u_drop:"кап.", u_times:"раз", u_puff:"вдох",
+  noMeds:"Лекарства ещё не добавлены",
+  ageG_child:"Ребёнок", ageG_teen:"Подросток", ageG_adult:"Взрослый", ageG_senior:"Пожилой",
+  age:"%1 лет",
+  personT:"Добавить человека", personEditT:"Изменить профиль", avatar:"Значок", color:"Цвет",
+  voice:"Голосовое напоминание", voiceHint:"Запишите голос близкого, например: «Мама, пора принять лекарство». Напоминание прозвучит этим голосом.",
+  rec:"🎙 Записать", stopRec:"⏹ Стоп", play:"▶ Прослушать", recording:"Идёт запись... говорите",
+  voiceSaved:"Голос сохранён", noVoiceBrowser:"Запись голоса работает только в приложении на телефоне",
+  delPersonQ:"Человек и все его лекарства будут удалены. Продолжить?",
+  childNote:"Детский профиль: напоминание приходит на этот телефон, лекарство даёт взрослый",
+  hist14:"Последние 14 дней", nothing:"Нет лекарств",
+  language:"Язык", viewMode:"Вид", auto:"Автоматически", fontSize:"Размер шрифта",
+  f_n:"Обычный", f_l:"Крупный", f_xl:"Очень крупный",
+  pin:"PIN-код", pinOn:"Установлен", pinOff:"Не установлен", changePin:"Установить / сменить PIN", removePin:"Удалить PIN",
+  perms:"Разрешения", testAlarm:"🔔 Проверить напоминание (5 секунд)", testSent:"Через 5 секунд появится напоминание",
+  discView:"Предупреждение об ответственности", resetAll:"Удалить все данные", resetQ:"Все данные будут удалены. Вы уверены?",
+  owner:"Владелец телефона", caretakerExit:"🔒 Заблокировать",
+  openSettings:"⚙ Настройки", version:"Версия 1.0",
+  installTitle:"Добавьте на экран «Домой»",
+  installHint:"В Safari нажмите кнопку «Поделиться» ⬆️ внизу и выберите «На экран Домой». Приложение будет открываться как обычное и работать без интернета.",
+  calTitle:"Напоминания через календарь iPhone",
+  calHint:"Веб-приложение не может само присылать напоминания. Поэтому добавьте время приёма в календарь телефона — телефон сам напомнит со звуком, даже если приложение закрыто.",
+  calBtn:"📅 Добавить в календарь", calAll:"📅 Добавить все лекарства в календарь",
+  calDone:"В открывшемся окне нажмите «Добавить все»",
+  calNeed:"%1 ещё не добавлено в календарь. Добавьте, чтобы приходили напоминания",
+  calChanged:"%1 изменено. Удалите старую запись в календаре и добавьте заново",
+  calAdded:"📅 В календаре",
+  calEvent:"Время лекарства",
+  wd:["Пн","Вт","Ср","Чт","Пт","Сб","Вс"],
+  months:["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"],
+  wdl:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
+};
+/* Lotin -> Kirill (o'zbek) */
+function toCyr(s){
+  const map={a:"а",b:"б",d:"д",e:"е",f:"ф",g:"г",h:"ҳ",i:"и",j:"ж",k:"к",l:"л",m:"м",n:"н",o:"о",p:"п",q:"қ",r:"р",s:"с",t:"т",u:"у",v:"в",x:"х",y:"й",z:"з",c:"с"};
+  const isL=ch=>/[A-Za-z]/.test(ch);
+  let out="",i=0;
+  const up=(src,res)=> src===src.toUpperCase()&&src!==src.toLowerCase()? res.charAt(0).toUpperCase()+res.slice(1):res;
+  while(i<s.length){
+    const c=s[i], c2=s.substr(i,2), lc2=c2.toLowerCase(), nx=s[i+1]||"";
+    if(c==="%"&&/\d/.test(nx)){out+=c+nx;i+=2;continue}
+    const prev=i>0?s[i-1]:"";
+    const wordStart=!isL(prev)&&prev!=="'";
+    if((lc2==="o'"||lc2==="o‘"||lc2==="oʻ")){out+=up(c,"ў");i+=2;continue}
+    if((lc2==="g'"||lc2==="g‘"||lc2==="gʻ")){out+=up(c,"ғ");i+=2;continue}
+    if(lc2==="sh"){out+=up(c,"ш");i+=2;continue}
+    if(lc2==="ch"){out+=up(c,"ч");i+=2;continue}
+    if(lc2==="yo"){out+=up(c,"ё");i+=2;continue}
+    if(lc2==="yu"){out+=up(c,"ю");i+=2;continue}
+    if(lc2==="ya"){out+=up(c,"я");i+=2;continue}
+    if(lc2==="ye"){out+=up(c,"е");i+=2;continue}
+    if(lc2==="ts"&&!wordStart){out+=up(c,"ц");i+=2;continue}
+    const lc=c.toLowerCase();
+    if(lc==="e"&&wordStart){out+=up(c,"э");i++;continue}
+    if((c==="'"||c==="’")&&isL(prev)&&isL(nx)){out+="ъ";i++;continue}
+    if(map[lc]){out+=up(c,map[lc]);i++;continue}
+    out+=c;i++;
+  }
+  return out;
+}
+function deepCyr(o){ if(typeof o==="string") return toCyr(o); if(Array.isArray(o)) return o.map(deepCyr); const r={}; for(const k in o) r[k]=deepCyr(o[k]); return r; }
+const UZC = deepCyr(UZ);
+UZC.appName="Дори вақти";
+UZC.disc[0]="«Дори вақти» фақат эслатувчи ёрдамчи. У шифокор ёки фармацевт ўрнини босмайди.";
+UZC.disc[5]="Дорини нотўғри қабул қилиш, эслатма келмай қолиши ёки шунга ўхшаш ҳолатлар натижасида юзага келган оқибатлар учун илова ва унинг муаллифи жавобгар эмас.";
+const LANGS={uz:UZ,uzc:UZC,ru:RU};
+function T(k,...a){ const L=LANGS[D.lang]||UZ; let s=(k in L)?L[k]:(UZ[k]??k); if(typeof s==="string") a.forEach((v,i)=>{s=s.split("%"+(i+1)).join(v)}); return s; }
+
+/* ================= Ma'lumot ================= */
+function fresh(){ return {v:1, lang:"uz", agreed:false, setupDone:false, setupFor:"self", owner:null, modeAuto:true, mode:"full", font:0, pin:"", persons:[], meds:[], log:{}, stars:{}, heroes:{}}; }
+function load(){
+  try{ const s = N ? N.load() : localStorage.getItem("doriVaqti"); if(s){ const o=JSON.parse(s); return Object.assign(fresh(), o);} }catch(e){}
+  return fresh();
+}
+let D = load();
+function save(){ const s=JSON.stringify(D); if(N){ try{N.save(s)}catch(e){} } else { try{localStorage.setItem("doriVaqti",s)}catch(e){} } }
+window.onNativeResume = function(){ D = load(); render(); };
+
+/* ================= Yordamchilar ================= */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const pad=n=>String(n).padStart(2,"0");
+const ds=(d=new Date())=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const parseD=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
+const addDays=(s,n)=>{const d=parseD(s);d.setDate(d.getDate()+n);return ds(d)};
+const diffDays=(a,b)=>Math.round((parseD(a)-parseD(b))/86400000);
+const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+const nowMin=()=>{const d=new Date();return d.getHours()*60+d.getMinutes()};
+const tMin=t=>{const [h,m]=t.split(":").map(Number);return h*60+m};
+const curYear=()=>new Date().getFullYear();
+const ageOf=y=>curYear()-Number(y);
+function ageGroup(y){ const a=ageOf(y); if(a<=12) return "child"; if(a<=17) return "teen"; if(a<=59) return "adult"; return "senior"; }
+function modeForAge(y){ const g=ageGroup(y); return g==="senior"?"simple":(g==="adult"?"full":"teen"); }
+function uiMode(){ if(!D.owner) return "full"; return D.modeAuto? modeForAge(D.owner.year) : D.mode; }
+function fmtDate(s){ const d=parseD(s); const L=LANGS[D.lang]; return d.getDate()+"-"+L.months[d.getMonth()]+(D.lang==="ru"?"":""); }
+function fmtDateLong(s){ const d=parseD(s); const L=LANGS[D.lang]; return L.wdl[d.getDay()]+", "+(D.lang==="ru"? d.getDate()+" "+L.months[d.getMonth()] : d.getDate()+"-"+L.months[d.getMonth()]); }
+function toast(msg,ms=2200){ const t=document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),ms); }
+const COLORS=["#0f8b6f","#2f6fd6","#c2410c","#9333ea","#db2777","#0891b2","#65a30d","#b45309"];
+const AVATARS=["🧑","👨","👩","👦","👧","👶","👴","👵","🧔","👱‍♀️"];
+const TYPES=[
+  {k:"tablet",e:"💊",u:["pcs"]},{k:"capsule",e:"🟡",u:["pcs"]},{k:"syrup",e:"🧴",u:["ml","spoon"]},
+  {k:"drops",e:"💧",u:["drop"]},{k:"injection",e:"💉",u:["ml","pcs"]},{k:"cream",e:"🩹",u:["times"]},
+  {k:"inhaler",e:"🌬️",u:["puff"]},{k:"vitamin",e:"🍊",u:["pcs"]},{k:"other",e:"➕",u:["pcs","ml","times"]}
+];
+const typeOf=k=>TYPES.find(t=>t.k===k)||TYPES[0];
+const personOf=id=>D.persons.find(p=>p.id===id);
+
+/* Dori shu kuni ichiladimi */
+function isDue(m,day){
+  if(m.paused) return false;
+  if(day<m.startDate) return false;
+  const dd=diffDays(day,m.startDate);
+  if(m.days>0 && dd>=m.days) return false;
+  if(m.kind==="other" && dd%2!==0) return false;
+  if(m.kind==="week"){ let w=parseD(day).getDay(); w=w===0?7:w; if(!(m.wd||[]).includes(w)) return false; }
+  return true;
+}
+function dosesOn(day){
+  const out=[];
+  for(const m of D.meds){ if(!personOf(m.personId)||!isDue(m,day)) continue;
+    for(const t of m.times) out.push({m,t,key:m.id+"@"+t,taken:!!(D.log[day]&&D.log[day][m.id+"@"+t])}); }
+  out.sort((a,b)=>a.t.localeCompare(b.t)||a.m.name.localeCompare(b.m.name));
+  return out;
+}
+function perDayAmount(m){ return (m.times.length||1)*(Number(m.amount)||1)*(m.kind==="other"?0.5:1); }
+function daysLeft(m){ if(m.stock==null||m.stock==="") return null; return Math.floor(Number(m.stock)/perDayAmount(m)); }
+function streakOf(pid){
+  let n=0, day=ds();
+  const todayDoses=dosesOn(day).filter(x=>x.m.personId===pid);
+  if(todayDoses.length && todayDoses.every(x=>x.taken)) n=1;
+  for(let i=1;i<60;i++){ const d=addDays(ds(),-i); const xs=dosesOn(d).filter(x=>x.m.personId===pid);
+    if(!xs.length) { if(i>30) break; continue; }
+    if(xs.every(x=>x.taken)) n++; else break; }
+  return n;
+}
+function markTaken(day,dose,on){
+  D.log[day]=D.log[day]||{};
+  const m=dose.m, p=personOf(m.personId);
+  if(on){
+    D.log[day][dose.key]=Date.now();
+    if(m.stock!=null&&m.stock!=="") m.stock=Math.max(0,Number(m.stock)-(Number(m.amount)||1));
+    const g=p?ageGroup(p.year):"adult";
+    if(g==="child"||g==="teen"){ D.stars[p.id]=(D.stars[p.id]||0)+1; toast(T("starPlus")); }
+    save();
+    if(p&&(g==="child"||g==="teen")){ const s=streakOf(p.id); if(s>=7&&D.heroes[p.id]!==ds()){ D.heroes[p.id]=ds(); save(); setTimeout(()=>toast(T("hero"),3500),900);} }
+  } else {
+    delete D.log[day][dose.key];
+    if(m.stock!=null&&m.stock!=="") m.stock=Number(m.stock)+(Number(m.amount)||1);
+    if(p&&D.stars[p.id]>0){ const g=ageGroup(p.year); if(g==="child"||g==="teen") D.stars[p.id]--; }
+    save();
+  }
+  render();
+}
+
+/* ================= PIN ================= */
+let unlockedUntil=0;
+function guard(fn){
+  if(!D.pin || Date.now()<unlockedUntil) return fn();
+  pinPad(T("enterPin"), v=>{ if(v===D.pin){ unlockedUntil=Date.now()+10*60*1000; closeModal(); fn(); } else { toast(T("pinWrong")); return false; } });
+}
+function pinPad(title,onDone){
+  let v="";
+  const draw=()=>{
+    $("#modal").innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><div class="sheet">
+      <h3 style="text-align:center;margin:6px 0">${esc(title)}</h3>
+      <div class="pindots">${[0,1,2,3].map(i=>`<i class="${i<v.length?"on":""}"></i>`).join("")}</div>
+      <div class="pinpad">${[1,2,3,4,5,6,7,8,9].map(n=>`<button data-n="${n}">${n}</button>`).join("")}
+      <button data-n="x">✕</button><button data-n="0">0</button><button data-n="b">⌫</button></div></div></div>`;
+    $("#modal").querySelectorAll("[data-n]").forEach(b=>b.onclick=()=>{
+      const n=b.dataset.n;
+      if(n==="x") return closeModal();
+      if(n==="b") v=v.slice(0,-1); else if(v.length<4) v+=n;
+      draw();
+      if(v.length===4){ setTimeout(()=>{ const r=onDone(v); if(r===false){ v=""; draw(); } },120); }
+    });
+  };
+  draw();
+}
+function setNewPin(after){
+  pinPad(T("newPin"), a=>{ pinPad(T("repeatPin"), b=>{ if(a!==b){ toast(T("pinMismatch")); closeModal(); return; } D.pin=a; save(); closeModal(); toast(T("pinSet")); after&&after(); }); });
+}
+function closeModal(){ $("#modal").innerHTML=""; }
+function confirmBox(msg,onYes){
+  $("#modal").innerHTML=`<div class="modal"><div class="sheet"><p style="font-size:1.1rem;font-weight:600">${esc(msg)}</p>
+  <div class="row mt"><button class="btn ghost" id="cN">${T("no")}</button><button class="btn bad" id="cY">${T("yes")}</button></div></div></div>`;
+  $("#cN").onclick=closeModal; $("#cY").onclick=()=>{closeModal();onYes();};
+}
+
+/* ================= Native natijalar ================= */
+let pendingPhoto=null;
+window.nativeCb=function(type,data){
+  if(type==="photo"&&pendingPhoto){ delete photoCache[data]; pendingPhoto(data); pendingPhoto=null; }
+  if(type==="resume"){ window.onNativeResume(); }
+};
+function photoURL(name){
+  if(!name) return "";
+  if(!N){ if(!(name in mockFiles)){ try{ mockFiles[name]=localStorage.getItem("dvPhoto_"+name)||""; }catch(e){ mockFiles[name]=""; } } return mockFiles[name]; }
+  if(!(name in photoCache)){ try{ photoCache[name]=N.photo(name)||""; }catch(e){ photoCache[name]=""; } }
+  return photoCache[name];
+}
+function getPhoto(camera,cb){
+  const name="photo_"+uid()+".jpg";
+  if(N){ pendingPhoto=cb; camera? N.takePhoto(name) : N.pickPhoto(name); return; }
+  const f=$("#fpick"); f.value="";
+  if(camera) f.setAttribute("capture","environment"); else f.removeAttribute("capture");
+  f.onchange=()=>{ const file=f.files[0]; if(!file) return;
+    const r=new FileReader(); r.onload=()=>{ const img=new Image(); img.onload=()=>{
+      const max=480, sc=Math.min(1,max/Math.max(img.width,img.height)); const c=document.createElement("canvas");
+      c.width=Math.round(img.width*sc); c.height=Math.round(img.height*sc); c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+      const url=c.toDataURL("image/jpeg",0.75); mockFiles[name]=url; try{ localStorage.setItem("dvPhoto_"+name,url); }catch(e){} cb(name); };
+      img.src=r.result; }; r.readAsDataURL(file); };
+  f.click();
+}
+function perms(){ if(!N) return null; try{ return JSON.parse(N.perms()); }catch(e){ return null; } }
+
+/* ================= Holat va render ================= */
+let R = {scr: D.setupDone?"home":"ob", step: D.setupDone?0:0};
+let OB = {persons:[]};
+function go(scr,extra={}){ R=Object.assign({scr},extra); render(); window.scrollTo(0,0); }
+
+function render(){
+  const mode=uiMode();
+  document.body.className = (R.scr==="home"&&mode==="simple"&&!R.care)?"simple":"";
+  const fs = D.font || (mode==="simple"?3:1);
+  document.documentElement.style.fontSize = ({1:16,2:18,3:21}[fs]||16)+"px";
+  document.documentElement.lang = D.lang==="ru"?"ru":"uz";
+  const a=$("#app");
+  if(!D.setupDone) { a.innerHTML=renderOB(); bindOB(); return; }
+  if(mode==="simple" && !R.care) { a.innerHTML=renderSimple(); bindDoses(); return; }
+  let h="";
+  if(R.scr==="home") h=renderHome();
+  else if(R.scr==="meds") h=renderMeds();
+  else if(R.scr==="med") h=renderMedForm();
+  else if(R.scr==="family") h=renderFamily();
+  else if(R.scr==="person") h=renderPersonForm();
+  else if(R.scr==="hist") h=renderHist();
+  else if(R.scr==="set") h=renderSettings();
+  else if(R.scr==="disc") h=renderDiscView();
+  const showNav=["home","meds","family","hist","set"].includes(R.scr);
+  a.innerHTML=h+(showNav?renderNav():"");
+  bindAll();
+}
+function renderNav(){
+  const it=[["home","🗓",T("today")],["meds","💊",T("meds")],["family","👨‍👩‍👧",T("family")],["hist","📊",T("history")],["set","⚙️",T("settings")]];
+  return `<nav class="nav"><div>${it.map(([k,e,l])=>`<button class="${R.scr===k?"on":""}" data-go="${k}"><span class="e">${e}</span>${esc(l)}</button>`).join("")}</div></nav>`;
+}
+
+/* ---------- Ro'yxatdan o'tish ---------- */
+function dots(n,tot){ return `<div class="dots">${Array.from({length:tot},(_,i)=>`<i class="${i===n?"on":""}"></i>`).join("")}</div>`; }
+function renderOB(){
+  const s=R.step, TOT=8;
+  let h=`<div class="ob">`+dots(s,TOT);
+  if(s===0){
+    h+=`<div class="logo">💊⏰</div><h2 style="text-align:center">Dori vaqti · Дори вақти</h2>
+    <p class="muted" style="text-align:center">Tilni tanlang · Тилни танланг · Выберите язык</p>
+    ${[["uz","🇺🇿","O'zbekcha (lotin)"],["uzc","🇺🇿","Ўзбекча (кирилл)"],["ru","🇷🇺","Русский"]].map(([k,f,l])=>`<button class="choice ${D.lang===k?"on":""}" data-lang="${k}"><span class="e">${f}</span><b>${l}</b></button>`).join("")}
+    <button class="btn mt2" data-next>${T("next")}</button>`;
+  }
+  if(s===1){
+    h+=`<h2>⚠️ ${T("discTitle")}</h2><div class="disc"><ol>${T("disc").map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>
+    <label class="check"><input type="checkbox" id="agree" ${D.agreed?"checked":""}> ${T("agree")}</label>
+    <button class="btn" id="discNext" ${D.agreed?"":"disabled"}>${T("next")}</button>
+    <button class="btn ghost mt" data-prev>${T("back")}</button>`;
+  }
+  if(s===2){
+    h+=`<h2>${T("whoTitle")}</h2>
+    <button class="choice ${D.setupFor==="self"?"on":""}" data-for="self"><span class="e">🙋</span><span><b>${T("forSelf")}</b><span class="muted small">${T("forSelfD")}</span></span></button>
+    <button class="choice ${D.setupFor==="other"?"on":""}" data-for="other"><span class="e">👵</span><span><b>${T("forOther")}</b><span class="muted small">${T("forOtherD")}</span></span></button>
+    <button class="btn mt2" data-next>${T("next")}</button><button class="btn ghost mt" data-prev>${T("back")}</button>`;
+  }
+  if(s===3){
+    const o=D.owner||{};
+    h+=`<h2>${D.setupFor==="self"?T("ownerTitleSelf"):T("ownerTitleOther")}</h2><p class="muted">${T("ownerHint")}</p>
+    <label class="f">${T("name")}</label><input class="inp" id="oName" value="${esc(o.name||"")}" placeholder="${esc(T("namePh"))}">
+    <label class="f">${T("birthYear")}</label><input class="inp" id="oYear" inputmode="numeric" maxlength="4" value="${esc(o.year||"")}" placeholder="${esc(T("yearPh"))}">
+    <button class="btn mt2" id="ownNext">${T("next")}</button><button class="btn ghost mt" data-prev>${T("back")}</button>`;
+  }
+  if(s===4){
+    const auto=modeForAge(D.owner.year), cur=D.modeAuto?auto:D.mode;
+    h+=`<h2>${T("modeTitle")}</h2><p class="muted">${T("modeFor",ageOf(D.owner.year))}</p>
+    ${[["simple","👓"],["teen","⭐"],["full","📋"]].map(([k,e])=>`<button class="choice ${cur===k?"on":""}" data-mode="${k}"><span class="e">${e}</span><span><b>${T("m_"+k)}${k===auto?" ✓":""}</b><span class="muted small">${T("m_"+k+"D")}</span></span></button>`).join("")}
+    <button class="btn mt2" data-next>${T("next")}</button><button class="btn ghost mt" data-prev>${T("back")}</button>`;
+  }
+  if(s===5){
+    h+=`<h2>${T("personsTitle")}</h2><p class="muted">${T("personsHint")}</p>
+    <label class="choice ${OB.ownerTakes?"on":""}" style="cursor:pointer"><input type="checkbox" id="ownTakes" ${OB.ownerTakes?"checked":""} style="width:24px;height:24px;accent-color:var(--pri)"><span><b>${esc(T("ownerToo",D.owner.name))}</b><span class="muted small">${T("age",ageOf(D.owner.year))} · ${T("ageG_"+ageGroup(D.owner.year))}</span></span></label>
+    ${OB.persons.map((p,i)=>`<div class="choice on"><span class="av" style="background:${p.color}22">${p.avatar}</span><span style="flex:1"><b>${esc(p.name)}</b><span class="muted small">${T("age",ageOf(p.year))} · ${T("ageG_"+ageGroup(p.year))}</span></span><button class="x" style="height:44px" data-delp="${i}">✕</button></div>`).join("")}
+    <button class="btn sec mt" id="obAddP">${T("addPerson")}</button>
+    <button class="btn mt2" id="persNext">${T("next")}</button><button class="btn ghost mt" data-prev>${T("back")}</button>`;
+  }
+  if(s===6){
+    const rec = D.setupFor==="other" || uiMode()==="simple" || OB.persons.some(p=>ageGroup(p.year)==="child");
+    h+=`<div class="logo">🔒</div><h2>${T("pinTitle")}</h2><p class="muted">${T("pinHint")}</p>
+    ${rec?`<div class="banner g">👍 ${T("pinRec")}</div>`:""}
+    ${D.pin?`<div class="banner g">✓ ${T("pinSet")}</div><button class="btn mt2" data-next>${T("next")}</button>`:
+      `<button class="btn mt2" id="obPin">${T("setPin")}</button><button class="btn ghost mt" data-next>${T("skip")}</button>`}
+    <button class="btn ghost mt" data-prev>${T("back")}</button>`;
+  }
+  if(s===7){
+    h+= N? `<div class="logo">🔔</div><h2>${T("permTitle")}</h2><p class="muted">${T("permHint")}</p>${renderPerms()}`
+      : `<div class="logo">📱</div><h2>${T("installTitle")}</h2>${isStandalone()?"":`<div class="banner g">${T("installHint")}</div>`}${renderPerms()}`;
+    h+=`
+    <button class="btn mt2" id="obFinish">${T("start")}</button><button class="btn ghost mt" data-prev>${T("back")}</button>`;
+  }
+  return h+`</div>`;
+}
+function renderPerms(){
+  const p=perms();
+  if(!p) return `<div class="banner g"><b>📅 ${T("calTitle")}</b><br>${T("calHint")}</div>`;
+  return `<div class="card">${[["notif","🔔"],["exact","⏰"],["full","📱"],["battery","🔋"]].map(([k,e])=>`<div class="perm"><span style="font-size:1.4rem">${e}</span><span class="s">${T("p_"+k)}</span>${p[k]?`<span style="color:var(--pri);font-weight:700">${T("granted")}</span>`:`<button data-perm="${k}">${T("allow")}</button>`}</div>`).join("")}</div>`;
+}
+function bindOB(){
+  const a=$("#app");
+  a.querySelectorAll("[data-next]").forEach(b=>b.onclick=()=>{R.step++;render();scrollTo(0,0)});
+  a.querySelectorAll("[data-prev]").forEach(b=>b.onclick=()=>{R.step--;render();scrollTo(0,0)});
+  a.querySelectorAll("[data-lang]").forEach(b=>b.onclick=()=>{D.lang=b.dataset.lang;save();render()});
+  a.querySelectorAll("[data-for]").forEach(b=>b.onclick=()=>{D.setupFor=b.dataset.for;save();render()});
+  a.querySelectorAll("[data-mode]").forEach(b=>b.onclick=()=>{const m=b.dataset.mode; D.modeAuto=(m===modeForAge(D.owner.year)); D.mode=m; save(); render();});
+  const ag=$("#agree"); if(ag) ag.onchange=()=>{D.agreed=ag.checked; D.agreedAt=ag.checked?new Date().toISOString():null; save(); $("#discNext").disabled=!ag.checked;};
+  const dn=$("#discNext"); if(dn) dn.onclick=()=>{ if(D.agreed){R.step++;render();scrollTo(0,0);} };
+  const on=$("#ownNext"); if(on) on.onclick=()=>{
+    const name=$("#oName").value.trim(), y=Number($("#oYear").value.trim());
+    if(!name) return toast(T("needName"));
+    if(!(y>=1900&&y<=curYear())) return toast(T("badYear"));
+    const changed=!D.owner||D.owner.year!==y;
+    D.owner={name,year:y}; if(changed) D.modeAuto=true;
+    if(OB.ownerTakes===undefined) OB.ownerTakes = true;
+    save(); R.step++; render(); scrollTo(0,0);
+  };
+  const ot=$("#ownTakes"); if(ot) ot.onchange=()=>{OB.ownerTakes=ot.checked;render()};
+  a.querySelectorAll("[data-delp]").forEach(b=>b.onclick=()=>{OB.persons.splice(Number(b.dataset.delp),1);render()});
+  const ap=$("#obAddP"); if(ap) ap.onclick=()=>personSheet(null,p=>{OB.persons.push(p);render()});
+  const pn=$("#persNext"); if(pn) pn.onclick=()=>{ if(!OB.ownerTakes&&!OB.persons.length) return toast(T("needPerson")); R.step++; render(); scrollTo(0,0); };
+  const op=$("#obPin"); if(op) op.onclick=()=>setNewPin(()=>render());
+  a.querySelectorAll("[data-perm]").forEach(b=>b.onclick=()=>askPerm(b.dataset.perm));
+  const fin=$("#obFinish"); if(fin) fin.onclick=()=>{
+    const ps=[];
+    if(OB.ownerTakes) ps.push({id:uid(),name:D.owner.name,year:D.owner.year,avatar:ageGroup(D.owner.year)==="senior"?"👵":"🧑",color:COLORS[0],isOwner:true});
+    OB.persons.forEach((p,i)=>ps.push(Object.assign({},p,{color:p.color||COLORS[(i+1)%COLORS.length]})));
+    D.persons=ps; D.setupDone=true; save(); go("home");
+  };
+}
+function askPerm(k){ if(!N) return; try{ N.askPerm(k); }catch(e){} setTimeout(render,600); }
+
+/* ---------- Odam qo'shish oynasi ---------- */
+function personSheet(p,onSave){
+  const x=Object.assign({name:"",year:"",avatar:"🧒",color:COLORS[1]},p||{});
+  if(x.avatar==="🧒") x.avatar="🧑";
+  const draw=()=>{
+    $("#modal").innerHTML=`<div class="modal"><div class="sheet">
+      <h3>${p?T("personEditT"):T("personT")}</h3>
+      <label class="f">${T("name")}</label><input class="inp" id="pN" value="${esc(x.name)}" placeholder="${esc(T("namePh"))}">
+      <label class="f">${T("birthYear")}</label><input class="inp" id="pY" inputmode="numeric" maxlength="4" value="${esc(x.year)}" placeholder="${esc(T("yearPh"))}">
+      <div id="pAge" class="muted small mt"></div>
+      <label class="f">${T("avatar")}</label><div class="chips">${AVATARS.map(a=>`<button class="chip ${x.avatar===a?"on":""}" data-av="${a}" style="font-size:1.4rem;padding:6px 10px">${a}</button>`).join("")}</div>
+      <label class="f">${T("color")}</label><div class="chips">${COLORS.map(c=>`<button data-col="${c}" style="width:38px;height:38px;border-radius:50%;background:${c};border:${x.color===c?"4px solid #1d2b2a":"0"}"></button>`).join("")}</div>
+      <div class="row mt2"><button class="btn ghost" id="pC">${T("cancel")}</button><button class="btn" id="pS">${T("save")}</button></div>
+    </div></div>`;
+    const upd=()=>{ const y=Number($("#pY").value); $("#pAge").innerHTML=(y>=1900&&y<=curYear())? `${T("age",ageOf(y))} · <b>${T("ageG_"+ageGroup(y))}</b>`+(ageGroup(y)==="child"?`<br>👶 ${T("childNote")}`:""):""; };
+    $("#pY").oninput=upd; upd();
+    $("#modal").querySelectorAll("[data-av]").forEach(b=>b.onclick=()=>{x.name=$("#pN").value;x.year=$("#pY").value;x.avatar=b.dataset.av;draw()});
+    $("#modal").querySelectorAll("[data-col]").forEach(b=>b.onclick=()=>{x.name=$("#pN").value;x.year=$("#pY").value;x.color=b.dataset.col;draw()});
+    $("#pC").onclick=closeModal;
+    $("#pS").onclick=()=>{ const name=$("#pN").value.trim(), y=Number($("#pY").value);
+      if(!name) return toast(T("needName")); if(!(y>=1900&&y<=curYear())) return toast(T("badYear"));
+      closeModal(); onSave(Object.assign({},x,{id:x.id||uid(),name,year:y})); };
+  };
+  draw();
+}
+
+/* ---------- Bugun (to'liq / yengil) ---------- */
+function doseCard(x,day,big){
+  const m=x.m, p=personOf(m.personId), ty=typeOf(m.type), ph=photoURL(m.photo);
+  const g=p?ageGroup(p.year):"adult";
+  const late = day===ds() && !x.taken && nowMin()-tMin(x.t)>60;
+  const care = g==="child" || (p && !p.isOwner);
+  const btn = x.taken? (care?T("given"):T("taken")) : (care?T("give"):T("take"));
+  return `<div class="card dose ${x.taken?"done":""} ${late?"miss":""}">
+    <div class="ph">${ph?`<img src="${ph}">`:ty.e}</div>
+    <div class="info">${D.persons.length>1||care?`<span class="who" style="background:${p.color}">${p.avatar} ${esc(p.name)}</span><br>`:""}
+      <div class="nm">${esc(m.name)}</div>
+      <div class="meta">${esc(fmtAmt(m))} · ${T("f_"+m.food)}${late?` · <b style="color:var(--bad)">${T("missed")}</b>`:""}</div></div>
+    <button class="take" data-dose="${esc(x.key)}" data-day="${day}">${btn}</button></div>`;
+}
+function fmtAmt(m){ return (m.amount||1)+" "+T("u_"+m.unit); }
+function stockBanners(){
+  return D.meds.filter(m=>!m.paused&&personOf(m.personId)).map(m=>{ const dl=daysLeft(m); if(dl===null) return "";
+    if(Number(m.stock)<=0) return `<div class="banner b">⚠️ ${esc(T("stockOut",m.name))}</div>`;
+    if(dl<=3) return `<div class="banner w">🛒 ${esc(T("stockLow",m.name,dl))}</div>`; return ""; }).join("");
+}
+function renderHome(){
+  const day=ds(), xs=dosesOn(day);
+  const mode=uiMode();
+  let h=`<div class="top"><h1>${T("today")}<div class="sub">${fmtDateLong(day)}</div></h1>${R.care?`<button class="iconbtn" id="lockBtn" title="lock">🔒</button>`:""}</div><div class="wrap">`;
+  if(!N) h+=calBanners();
+  const pm=perms(); if(pm&&(!pm.notif||!pm.exact)) h+=`<div class="banner b">🔔 ${T("permHint")} <button class="chip" data-go="set" style="margin-top:6px">${T("perms")}</button></div>`;
+  const kids=D.persons.filter(p=>["child","teen"].includes(ageGroup(p.year)));
+  if(kids.length||mode==="teen"){
+    const list = kids.length? kids : D.persons.slice(0,1);
+    h+=`<div class="stars">${list.map(p=>{const st=streakOf(p.id);return `<div class="card"><div class="small muted">${p.avatar} ${esc(p.name)}</div><div class="n">⭐ ${D.stars[p.id]||0}</div><div class="fire">🔥 ${st} <span class="small muted" style="font-weight:500">${T("streak")}</span></div>${st>=7?`<span class="badge">🏆 ${T("hero").split("!")[0].replace("🏆","").trim()}</span>`:""}</div>`}).join("")}</div>`;
+  }
+  h+=stockBanners();
+  if(!xs.length) h+=`<div class="empty"><div class="e">🌿</div><p><b>${T("noDoses")}</b></p><p>${T("noDosesHint")}</p></div>`;
+  let last="";
+  for(const x of xs){ if(x.t!==last){ h+=`<div class="tgroup">⏰ ${x.t}</div>`; last=x.t; } h+=doseCard(x,day); }
+  h+=`</div><button class="fab" id="fabAdd">${T("addMed")}</button>`;
+  return h;
+}
+function bindDoses(){
+  document.querySelectorAll("[data-dose]").forEach(b=>b.onclick=()=>{
+    const day=b.dataset.day, x=dosesOn(day).find(d=>d.key===b.dataset.dose); if(!x) return;
+    if(x.taken) { guardIfSimple(()=>markTaken(day,x,false)); } else markTaken(day,x,true);
+  });
+  const os=$("#openSet"); if(os) os.onclick=()=>guard(()=>{ R={scr:"home",care:true}; render(); });
+}
+function guardIfSimple(fn){ if(uiMode()==="simple"&&!R.care) guard(fn); else fn(); }
+
+/* ---------- Oddiy rejim ---------- */
+function renderSimple(){
+  const day=ds(), xs=dosesOn(day);
+  const d=new Date();
+  let h=`<div class="wrap" style="padding-top:18px"><div class="bigclock">${pad(d.getHours())}:${pad(d.getMinutes())}</div><div class="bigdate">${fmtDateLong(day)}</div>`;
+  h+=stockBanners();
+  const pending=xs.filter(x=>!x.taken), done=xs.filter(x=>x.taken);
+  if(!xs.length) h+=`<div class="empty"><div class="e">🌿</div><p style="font-size:1.3rem"><b>${T("noDoses")}</b></p></div>`;
+  let last="";
+  for(const x of pending){ if(x.t!==last){ h+=`<div class="tgroup" style="font-size:1.4rem">⏰ ${x.t}</div>`; last=x.t; } h+=doseCard(x,day,true); }
+  if(done.length){ h+=`<div class="tgroup" style="font-size:1.2rem">✓</div>`; for(const x of done) h+=doseCard(x,day,true); }
+  h+=`<button class="btn ghost mt2" id="openSet" style="font-size:1rem">${T("openSettings")}</button></div>`;
+  return h;
+}
+
+/* ---------- Dorilar ro'yxati ---------- */
+function schedText(m){
+  let s = m.kind==="other"?T("s_other"):m.kind==="week"?(m.wd||[]).map(w=>LANGS[D.lang].wd[w-1]).join(", "):m.kind==="int"?T("s_int").replace("N",m.every):T("s_daily");
+  return s+" · "+m.times.join(", ");
+}
+function renderMeds(){
+  let h=`<div class="top"><h1>${T("meds")}</h1></div><div class="wrap">`;
+  if(!D.meds.length) h+=`<div class="empty"><div class="e">💊</div><p>${T("noMeds")}</p></div>`;
+  for(const p of D.persons){ const ms=D.meds.filter(m=>m.personId===p.id); if(!ms.length) continue;
+    h+=`<div class="tgroup">${p.avatar} ${esc(p.name)}</div>`;
+    for(const m of ms){ const ty=typeOf(m.type), ph=photoURL(m.photo), dl=daysLeft(m);
+      const end = m.days>0? addDays(m.startDate,m.days-1):null;
+      h+=`<div class="card dose ${m.paused?"done":""}" data-med="${m.id}" style="cursor:pointer"><div class="ph">${ph?`<img src="${ph}">`:ty.e}</div>
+      <div class="info"><div class="nm">${esc(m.name)}${m.paused?` <span class="small muted">(${T("paused")})</span>`:""}</div>
+      <div class="meta">${esc(fmtAmt(m))} · ${T("f_"+m.food)}</div><div class="meta">${esc(schedText(m))}</div>
+      <div class="meta">${end?("→ "+fmtDate(end)):T("forever")}${dl!==null?` · 📦 ${m.stock} ${T("u_"+m.unit)}`:""}</div>
+      ${!N&&!m.paused?(m.calAt&&!m.calDirty?`<div class="small" style="color:var(--pri);font-weight:700;margin-top:4px">${T("calAdded")}</div>`:`<button class="chip mt" data-cal="${m.id}" style="margin-top:6px">${T("calBtn")}</button>`):""}</div><span class="muted">›</span></div>`; } }
+  h+=`</div><button class="fab" id="fabAdd">${T("addMed")}</button>`;
+  return h;
+}
+
+/* ---------- Dori formasi ---------- */
+let F=null;
+function openMed(id){
+  guard(()=>{
+    const m=id?D.meds.find(x=>x.id===id):null;
+    F = m? JSON.parse(JSON.stringify(m)) : {id:null,personId:(D.persons[0]||{}).id,name:"",type:"tablet",amount:1,unit:"pcs",food:"after",kind:"daily",times:["08:00"],wd:[1,2,3,4,5,6,7],every:8,first:"08:00",startDate:ds(),days:"",stock:"",photo:null,paused:false};
+    if(F.days===0) F.days="";
+    if(F.stock===null) F.stock="";
+    go("med",{back:R.scr==="med"?"meds":R.scr, care:R.care});
+  });
+}
+function readForm(){
+  const v=id=>{const e=$("#"+id);return e?e.value:undefined};
+  if($("#mName")) F.name=v("mName");
+  if($("#mAmt")) F.amount=v("mAmt");
+  if($("#mDays")) F.days=v("mDays");
+  if($("#mStock")) F.stock=v("mStock");
+  if($("#mStart")) F.startDate=v("mStart")||ds();
+  if($("#mFirst")) F.first=v("mFirst");
+  document.querySelectorAll("[data-ti]").forEach(e=>{F.times[Number(e.dataset.ti)]=e.value});
+}
+function genInterval(){ const st=tMin(F.first||"08:00"), ev=Number(F.every)||8, out=[]; for(let t=st;t<st+1440;t+=ev*60){ const mm=t%1440; out.push(pad(Math.floor(mm/60))+":"+pad(mm%60)); } F.times=[...new Set(out)].sort(); }
+function renderMedForm(){
+  const ty=typeOf(F.type);
+  if(!ty.u.includes(F.unit)) F.unit=ty.u[0];
+  const ph=photoURL(F.photo);
+  let h=`<div class="top"><button class="iconbtn" id="mBack">←</button><h1>${F.id?T("editMedT"):T("addMedT")}</h1></div><div class="wrap">`;
+  h+=`<label class="f">${T("forWho")}</label><div class="chips">${D.persons.map(p=>`<button class="chip ${F.personId===p.id?"on":""}" data-fp="${p.id}">${p.avatar} ${esc(p.name)}</button>`).join("")}</div>`;
+  h+=`<label class="f">${T("medName")}</label><input class="inp" id="mName" value="${esc(F.name)}" placeholder="${esc(T("medNamePh"))}">`;
+  h+=`<label class="f">${T("type")}</label><div class="grid3">${TYPES.map(t=>`<button class="tile ${F.type===t.k?"on":""}" data-ft="${t.k}"><span class="e">${t.e}</span>${T("t_"+t.k)}</button>`).join("")}</div>`;
+  h+=`<label class="f">${T("amount")}</label><div class="row"><input class="inp" id="mAmt" inputmode="decimal" value="${esc(F.amount)}" style="flex:1">
+      <div class="chips" style="flex:2">${ty.u.map(u=>`<button class="chip ${F.unit===u?"on":""}" data-fu="${u}">${T("u_"+u)}</button>`).join("")}</div></div>`;
+  h+=`<label class="f">${T("food")}</label><div class="chips">${["before","after","with","any"].map(k=>`<button class="chip ${F.food===k?"on":""}" data-ff="${k}">${T("f_"+k)}</button>`).join("")}</div>`;
+  h+=`<label class="f">${T("sched")}</label><div class="seg">${[["daily","s_daily"],["other","s_other"],["week","s_week"],["int","s_int"]].map(([k,l])=>`<button class="${F.kind===k?"on":""}" data-fk="${k}">${T(l)}</button>`).join("")}</div>`;
+  if(F.kind==="week") h+=`<div class="chips mt">${LANGS[D.lang].wd.map((w,i)=>`<button class="chip ${F.wd.includes(i+1)?"on":""}" data-fw="${i+1}">${w}</button>`).join("")}</div>`;
+  if(F.kind==="int"){
+    h+=`<div class="row mt"><div><label class="f" style="margin-top:0">${T("everyH")}</label><div class="chips">${[4,6,8,12].map(n=>`<button class="chip ${Number(F.every)===n?"on":""}" data-fe="${n}">${n}</button>`).join("")}</div></div></div>
+    <label class="f">${T("firstAt")}</label><input class="inp" type="time" id="mFirst" value="${esc(F.first||"08:00")}">
+    <div class="card small">${T("times")}: <b>${F.times.join(", ")}</b></div>`;
+  } else {
+    h+=`<label class="f">${T("times")} <span class="muted small">(${T("perDay",F.times.length)})</span></label>
+    <div class="chips" style="margin-bottom:8px">${[[1,["08:00"]],[2,["08:00","20:00"]],[3,["08:00","14:00","20:00"]],[4,["08:00","12:00","16:00","20:00"]]].map(([n,ts])=>`<button class="chip" data-preset='${JSON.stringify(ts)}'>${n}×</button>`).join("")}</div>
+    ${F.times.map((t,i)=>`<div class="tline"><input class="inp" type="time" data-ti="${i}" value="${t}">${F.times.length>1?`<button class="x" data-tx="${i}">✕</button>`:""}</div>`).join("")}
+    <button class="chip" id="tAdd">${T("addTime")}</button>`;
+  }
+  h+=`<div class="row"><div><label class="f">${T("startDate")}</label><input class="inp" type="date" id="mStart" value="${esc(F.startDate)}"></div>
+      <div><label class="f">${T("duration")}</label><input class="inp" id="mDays" inputmode="numeric" value="${esc(F.days)}" placeholder="${esc(T("forever"))}"></div></div>
+      <div class="muted small" style="margin-top:4px">${T("durPh")}</div>`;
+  h+=`<label class="f">${T("stock")}</label><input class="inp" id="mStock" inputmode="decimal" value="${esc(F.stock)}" placeholder="${esc(T("stockPh"))}">`;
+  h+=`<label class="f">${T("photo")}</label>${ph?`<img src="${ph}" style="width:100%;max-height:220px;object-fit:cover;border-radius:16px">`:""}
+     <div class="row mt"><button class="btn sec" id="phCam">${T("takePhoto")}</button><button class="btn sec" id="phGal">${T("pickPhoto")}</button></div>
+     ${ph?`<button class="btn ghost mt" id="phDel">${T("removePhoto")}</button>`:""}`;
+  h+=`<button class="btn mt2" id="mSave">${T("save")}</button>`;
+  if(F.id) h+=`<button class="btn sec mt" id="mPause">${F.paused?T("resume"):T("pause")}</button><button class="btn bad mt" id="mDel">${T("del")}</button>`;
+  h+=`<div style="height:30px"></div></div>`;
+  return h;
+}
+function bindMedForm(){
+  const a=$("#app");
+  const re=()=>{readForm();render();};
+  $("#mBack").onclick=()=>go(R.back||"meds",{care:R.care});
+  a.querySelectorAll("[data-fp]").forEach(b=>b.onclick=()=>{readForm();F.personId=b.dataset.fp;render()});
+  a.querySelectorAll("[data-ft]").forEach(b=>b.onclick=()=>{readForm();F.type=b.dataset.ft;F.unit=typeOf(F.type).u[0];render()});
+  a.querySelectorAll("[data-fu]").forEach(b=>b.onclick=()=>{readForm();F.unit=b.dataset.fu;render()});
+  a.querySelectorAll("[data-ff]").forEach(b=>b.onclick=()=>{readForm();F.food=b.dataset.ff;render()});
+  a.querySelectorAll("[data-fk]").forEach(b=>b.onclick=()=>{readForm();F.kind=b.dataset.fk;if(F.kind==="int")genInterval();render()});
+  a.querySelectorAll("[data-fw]").forEach(b=>b.onclick=()=>{readForm();const w=Number(b.dataset.fw);F.wd=F.wd.includes(w)?F.wd.filter(x=>x!==w):[...F.wd,w].sort();render()});
+  a.querySelectorAll("[data-fe]").forEach(b=>b.onclick=()=>{readForm();F.every=Number(b.dataset.fe);genInterval();render()});
+  const mf=$("#mFirst"); if(mf) mf.onchange=()=>{readForm();genInterval();render()};
+  a.querySelectorAll("[data-preset]").forEach(b=>b.onclick=()=>{readForm();F.times=JSON.parse(b.dataset.preset);render()});
+  a.querySelectorAll("[data-tx]").forEach(b=>b.onclick=()=>{readForm();F.times.splice(Number(b.dataset.tx),1);render()});
+  const ta=$("#tAdd"); if(ta) ta.onclick=()=>{readForm();F.times.push("12:00");render()};
+  $("#phCam").onclick=()=>{readForm();getPhoto(true,n=>{F.photo=n;render()})};
+  $("#phGal").onclick=()=>{readForm();getPhoto(false,n=>{F.photo=n;render()})};
+  const pd=$("#phDel"); if(pd) pd.onclick=()=>{readForm();F.photo=null;render()};
+  $("#mSave").onclick=()=>{
+    readForm();
+    F.name=F.name.trim(); if(!F.name) return toast(T("needMedName"));
+    F.times=[...new Set(F.times.filter(t=>/^\d\d:\d\d$/.test(t)))].sort();
+    if(!F.times.length) return toast(T("needTime"));
+    if(F.kind==="week"&&!F.wd.length) return toast(T("needDays"));
+    const m=Object.assign({},F);
+    m.amount=Number(String(m.amount).replace(",","."))||1;
+    m.days=Number(m.days)||0;
+    m.stock = String(m.stock).trim()===""? null : (Number(String(m.stock).replace(",","."))||0);
+    if(!m.id){ m.id=uid(); D.meds.push(m); } else { const i=D.meds.findIndex(x=>x.id===m.id); const old=D.meds[i]; if(old.calAt&&calSig(old)!==calSig(m)) m.calDirty=true; D.meds[i]=m; }
+    save(); toast(T("medSaved")); go(R.back==="home"?"home":"meds",{care:R.care});
+  };
+  const mp=$("#mPause"); if(mp) mp.onclick=()=>{ const m=D.meds.find(x=>x.id===F.id); m.paused=!m.paused; save(); go("meds",{care:R.care}); };
+  const md=$("#mDel"); if(md) md.onclick=()=>confirmBox(T("delMedQ"),()=>{ D.meds=D.meds.filter(x=>x.id!==F.id); save(); go("meds",{care:R.care}); });
+}
+
+/* ---------- Oila ---------- */
+let recOn=false;
+function renderFamily(){
+  let h=`<div class="top"><h1>${T("family")}</h1></div><div class="wrap plist">`;
+  for(const p of D.persons){ const g=ageGroup(p.year), n=D.meds.filter(m=>m.personId===p.id).length;
+    const hasV = N? (()=>{try{return N.hasFile("voice_"+p.id+".m4a")}catch(e){return false}})() : false;
+    h+=`<div class="card"><div class="pp"><span class="av" style="background:${p.color}22;border:2px solid ${p.color}">${p.avatar}</span>
+      <div style="flex:1"><b>${esc(p.name)}</b>${p.isOwner?` <span class="badge" style="background:var(--pri2);color:var(--pri)">${T("owner")}</span>`:""}<div class="muted small">${T("age",ageOf(p.year))} · ${T("ageG_"+g)} · 💊 ${n}</div></div>
+      <button class="chip" data-pe="${p.id}">✏️</button></div>
+      ${g==="child"?`<div class="muted small mt">👶 ${T("childNote")}</div>`:""}
+      ${N?`<div class="mt"><div class="small"><b>🔊 ${T("voice")}</b>${hasV?" ✓":""}</div>
+      <div class="chips mt"><button class="chip" data-rec="${p.id}">${recOn===p.id?T("stopRec"):T("rec")}</button>${hasV?`<button class="chip" data-play="${p.id}">${T("play")}</button><button class="chip" data-vdel="${p.id}">✕</button>`:""}</div>
+      ${recOn===p.id?`<div class="banner b mt">🔴 ${T("recording")}</div>`:""}</div>`:""}</div>`; }
+  h+=`${N?`<p class="muted small">${T("voiceHint")}</p>`:""}<button class="btn sec" id="famAdd">${T("addPerson")}</button></div>`;
+  return h;
+}
+function bindFamily(){
+  const a=$("#app");
+  const fa=$("#famAdd"); if(fa) fa.onclick=()=>guard(()=>personSheet(null,p=>{p.color=p.color||COLORS[D.persons.length%COLORS.length]; D.persons.push(p); save(); render();}));
+  a.querySelectorAll("[data-pe]").forEach(b=>b.onclick=()=>guard(()=>{ const p=personOf(b.dataset.pe);
+    personSheet(p,np=>{ Object.assign(p,np); if(p.isOwner){ D.owner={name:p.name,year:p.year}; } save(); render(); });
+    const sh=$("#modal .sheet"); if(sh&&!p.isOwner){ const del=document.createElement("button"); del.className="btn bad mt"; del.textContent=T("del"); del.onclick=()=>confirmBox(T("delPersonQ"),()=>{ D.meds=D.meds.filter(m=>m.personId!==p.id); D.persons=D.persons.filter(x=>x.id!==p.id); save(); render(); }); sh.appendChild(del); }
+  }));
+  a.querySelectorAll("[data-rec]").forEach(b=>b.onclick=()=>{
+    if(!N) return toast(T("noVoiceBrowser"));
+    const pid=b.dataset.rec;
+    if(recOn===pid){ try{N.stopRec()}catch(e){} recOn=false; toast(T("voiceSaved")); render(); return; }
+    guard(()=>{ let r="no"; try{ r=N.startRec("voice_"+pid+".m4a"); }catch(e){} if(r==="ok"){ recOn=pid; render(); } });
+  });
+  a.querySelectorAll("[data-play]").forEach(b=>b.onclick=()=>{ try{N.play("voice_"+b.dataset.play+".m4a")}catch(e){} });
+  a.querySelectorAll("[data-vdel]").forEach(b=>b.onclick=()=>guard(()=>{ try{N.deleteFile("voice_"+b.dataset.vdel+".m4a")}catch(e){} render(); }));
+}
+
+/* ---------- Tarix ---------- */
+function renderHist(){
+  let h=`<div class="top"><h1>${T("history")}<div class="sub">${T("hist14")}</div></h1></div><div class="wrap">`;
+  for(let i=0;i<14;i++){ const day=addDays(ds(),-i), xs=dosesOn(day).filter(x=>i>0||tMin(x.t)<=nowMin()||x.taken);
+    const tk=xs.filter(x=>x.taken).length, pct=xs.length?Math.round(tk/xs.length*100):0;
+    h+=`<details class="card hday"><summary><b style="min-width:120px">${i===0?T("today"):fmtDateLong(day)}</b><span class="bar"><i style="width:${pct}%;background:${pct===100?"var(--pri)":pct>=50?"var(--warn)":"var(--bad)"}"></i></span><span class="small">${xs.length?tk+"/"+xs.length:"—"}</span></summary>
+      ${xs.length?xs.map(x=>{const p=personOf(x.m.personId);const tm=x.taken&&D.log[day][x.key];const at=typeof tm==="number"?new Date(tm):null;return `<div class="small" style="padding:6px 0;border-top:1px solid var(--line)">${x.taken?"✅":"❌"} <b>${x.t}</b> · ${p.avatar} ${esc(p.name)} · ${esc(x.m.name)} ${esc(fmtAmt(x.m))}${at?` <span class="muted">(${pad(at.getHours())}:${pad(at.getMinutes())})</span>`:""}</div>`}).join(""):`<div class="muted small">${T("nothing")}</div>`}</details>`; }
+  return h+`</div>`;
+}
+
+/* ---------- Sozlamalar ---------- */
+function renderSettings(){
+  const auto=D.owner?modeForAge(D.owner.year):"full";
+  let h=`<div class="top"><h1>${T("settings")}</h1>${R.care?`<button class="iconbtn" id="lockBtn">🔒</button>`:""}</div><div class="wrap">`;
+  h+=`<div class="card"><label class="f" style="margin-top:0">${T("language")}</label><div class="seg">${[["uz","O'zbek"],["uzc","Ўзбек"],["ru","Русский"]].map(([k,l])=>`<button class="${D.lang===k?"on":""}" data-sl="${k}">${l}</button>`).join("")}</div>
+    <label class="f">${T("viewMode")}</label><div class="seg">${["simple","teen","full"].map(k=>`<button class="${uiMode()===k?"on":""}" data-sm="${k}">${T("m_"+k)}${k===auto?" ✓":""}</button>`).join("")}</div>
+    <div class="muted small" style="margin-top:6px">${T("m_"+uiMode()+"D")}</div>
+    <label class="f">${T("fontSize")}</label><div class="seg">${[[1,"f_n"],[2,"f_l"],[3,"f_xl"]].map(([k,l])=>`<button class="${(D.font||(uiMode()==="simple"?3:1))===k?"on":""}" data-sf="${k}">${T(l)}</button>`).join("")}</div></div>`;
+  h+=`<div class="card"><div class="setrow" style="padding-top:0"><span>🔒 <b>${T("pin")}</b></span><span class="muted">${D.pin?T("pinOn"):T("pinOff")}</span></div>
+    <button class="setrow" id="sPin">${T("changePin")} <span>›</span></button>${D.pin?`<button class="setrow" id="sPinDel">${T("removePin")} <span>›</span></button>`:""}</div>`;
+  h+=`<div class="card"><b>${T("perms")}</b>${renderPerms()}${N?`<button class="btn sec mt" id="sTest">${T("testAlarm")}</button>`:(D.meds.length?`<button class="btn sec mt" id="sCalAll">${T("calAll")}</button>`:"")}</div>`;
+  h+=`<div class="card"><button class="setrow" id="sDisc">⚠️ ${T("discView")} <span>›</span></button><button class="setrow" id="sReset" style="color:var(--bad)">${T("resetAll")} <span>›</span></button></div>
+    <p class="muted small" style="text-align:center">${T("appName")} · ${T("version")}</p></div>`;
+  return h;
+}
+function bindSettings(){
+  const a=$("#app");
+  a.querySelectorAll("[data-sl]").forEach(b=>b.onclick=()=>{D.lang=b.dataset.sl;save();render()});
+  a.querySelectorAll("[data-sm]").forEach(b=>b.onclick=()=>guard(()=>{const m=b.dataset.sm; D.modeAuto=(D.owner&&m===modeForAge(D.owner.year)); D.mode=m; save(); if(m==="simple") R.care=true; render();}));
+  a.querySelectorAll("[data-sf]").forEach(b=>b.onclick=()=>{D.font=Number(b.dataset.sf);save();render()});
+  $("#sPin").onclick=()=>guard(()=>setNewPin(render));
+  const pd=$("#sPinDel"); if(pd) pd.onclick=()=>guard(()=>{D.pin="";save();toast(T("pinRemoved"));render()});
+  a.querySelectorAll("[data-perm]").forEach(b=>b.onclick=()=>askPerm(b.dataset.perm));
+  const ca=$("#sCalAll"); if(ca) ca.onclick=()=>exportCal(D.meds.filter(m=>!m.paused&&personOf(m.personId)));
+  const st=$("#sTest"); if(st) st.onclick=()=>{ try{N.testAlarm()}catch(e){} toast(T("testSent")); };
+  $("#sDisc").onclick=()=>go("disc",{care:R.care});
+  $("#sReset").onclick=()=>guard(()=>confirmBox(T("resetQ"),()=>{ const lang=D.lang; D=fresh(); D.lang=lang; save(); OB={persons:[]}; R={scr:"ob",step:0}; render(); }));
+}
+function renderDiscView(){
+  return `<div class="top"><button class="iconbtn" id="dBack">←</button><h1>⚠️</h1></div><div class="wrap"><h2>${T("discTitle")}</h2><div class="disc" style="max-height:none"><ol>${T("disc").map(x=>`<li>${esc(x)}</li>`).join("")}</ol></div>
+  ${D.agreedAt?`<p class="muted small">✓ ${T("agree")}: ${esc(D.agreedAt.slice(0,10))}</p>`:""}</div>`;
+}
+
+/* ---------- Umumiy bog'lash ---------- */
+function bindAll(){
+  const a=$("#app");
+  a.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>go(b.dataset.go,{care:R.care}));
+  const fab=$("#fabAdd"); if(fab) fab.onclick=()=>openMed(null);
+  const lk=$("#lockBtn"); if(lk) lk.onclick=()=>{ unlockedUntil=0; R={scr:"home"}; render(); };
+  a.querySelectorAll("[data-med]").forEach(b=>b.onclick=()=>openMed(b.dataset.med));
+  a.querySelectorAll("[data-cal]").forEach(b=>b.onclick=e=>{ e.stopPropagation(); const m=D.meds.find(x=>x.id===b.dataset.cal); if(m) exportCal([m]); });
+  if(R.scr==="home") bindDoses();
+  if(R.scr==="med") bindMedForm();
+  if(R.scr==="family") bindFamily();
+  if(R.scr==="set") bindSettings();
+  const db=$("#dBack"); if(db) db.onclick=()=>go("set",{care:R.care});
+  if(uiMode()==="simple"&&R.care&&R.scr==="home"&&!$("#lockBtn")){}
+}
+/* ================= iPhone kalendari (.ics) ================= */
+function isStandalone(){ return (window.matchMedia&&matchMedia("(display-mode: standalone)").matches)||window.navigator.standalone===true; }
+function calSig(m){ return JSON.stringify([m.name,m.amount,m.unit,m.kind,m.times,m.wd,m.startDate,m.days,m.paused,m.personId,m.food]); }
+function calBanners(){
+  return D.meds.filter(m=>!m.paused&&personOf(m.personId)).map(m=>{
+    if(!m.calAt) return `<div class="banner w">📅 ${esc(T("calNeed",m.name))}<br><button class="chip" data-cal="${m.id}" style="margin-top:8px">${T("calBtn")}</button></div>`;
+    if(m.calDirty) return `<div class="banner w">📅 ${esc(T("calChanged",m.name))}<br><button class="chip" data-cal="${m.id}" style="margin-top:8px">${T("calBtn")}</button></div>`;
+    return ""; }).join("");
+}
+function icsEsc(s){ return String(s).replace(/\\/g,"\\\\").replace(/;/g,"\\;").replace(/,/g,"\\,").replace(/\n/g,"\\n"); }
+function exportCal(meds){
+  if(!meds.length) return;
+  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Dori vaqti//UZ","CALSCALE:GREGORIAN","METHOD:PUBLISH"];
+  const stamp=new Date().toISOString().replace(/[-:]/g,"").slice(0,15)+"Z";
+  const BY=["MO","TU","WE","TH","FR","SA","SU"];
+  for(const m of meds){ const p=personOf(m.personId);
+    for(const t of m.times){
+      let start=m.startDate;
+      if(m.kind==="week"){ for(let i=0;i<7;i++){ const d=addDays(m.startDate,i); let w=parseD(d).getDay(); w=w===0?7:w; if((m.wd||[]).includes(w)){ start=d; break; } } }
+      const dt=start.replace(/-/g,"")+"T"+t.replace(":","")+"00";
+      let rr = m.kind==="other"? "FREQ=DAILY;INTERVAL=2" : m.kind==="week"? "FREQ=WEEKLY;BYDAY="+(m.wd||[]).map(w=>BY[w-1]).join(",") : "FREQ=DAILY";
+      if(m.days>0) rr+=";UNTIL="+addDays(m.startDate,m.days-1).replace(/-/g,"")+"T235959";
+      const title="💊 "+(p&&D.persons.length>1?p.name+": ":"")+m.name+" — "+fmtAmt(m);
+      const food=m.food!=="any"?T("f_"+m.food):"";
+      L.push("BEGIN:VEVENT","UID:dv-"+m.id+"-"+t.replace(":","")+"@dorivaqti","DTSTAMP:"+stamp,"DTSTART:"+dt,"DURATION:PT10M","RRULE:"+rr,
+        "SUMMARY:"+icsEsc(title),"DESCRIPTION:"+icsEsc(T("calEvent")+(food?" · "+food:"")),
+        "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+icsEsc(title),"TRIGGER:PT0M","END:VALARM",
+        "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+icsEsc(title),"TRIGGER:PT10M","END:VALARM","END:VEVENT");
+    } }
+  L.push("END:VCALENDAR");
+  const text=L.join("\r\n");
+  const blob=new Blob([text],{type:"text/calendar;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a"); a.href=url; a.download="dori-vaqti.ics"; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000);
+  meds.forEach(m=>{ const x=D.meds.find(y=>y.id===m.id); if(x){ x.calAt=Date.now(); x.calDirty=false; } });
+  save(); toast(T("calDone"),3500); render();
+}
+if(!N && "serviceWorker" in navigator && location.protocol==="https:"){ navigator.serviceWorker.register("sw.js").catch(()=>{}); }
+
+window.handleBack=function(){
+  if($("#modal").innerHTML){ closeModal(); return true; }
+  if(!D.setupDone){ if(R.step>0){ R.step--; render(); return true; } return false; }
+  if(R.scr==="med"){ go(R.back||"meds",{care:R.care}); return true; }
+  if(R.scr==="disc"){ go("set",{care:R.care}); return true; }
+  if(R.scr!=="home"){ go("home",{care:R.care}); return true; }
+  if(R.care&&uiMode()==="simple"){ unlockedUntil=0; R={scr:"home"}; render(); return true; }
+  return false;
+};
+document.addEventListener("visibilitychange",()=>{ if(!document.hidden){ D=load(); if(D.setupDone) render(); } });
+setInterval(()=>{ if(D.setupDone&&R.scr==="home"&&!$("#modal").innerHTML) render(); }, 60000);
+render();
+</script>
+</body>
+</html>
