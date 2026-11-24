@@ -102,7 +102,9 @@ let NOTES = LS.get("notes", {});      // {appKey:[{t,done,at}]}
 let PLAY = LS.get("play", {});        // {appKey:{itemKey:true}}
 let PLAY_GLOBAL = LS.get("playG", {}); // umumiy (dasturchi akkaunti)
 let CACHE = LS.get("cache", null);    // {at, repos:[...]}
-const saveCfg=()=>LS.set("cfg",CFG), saveNotes=()=>LS.set("notes",NOTES), savePlay=()=>{LS.set("play",PLAY);LS.set("playG",PLAY_GLOBAL)};
+const N=window.Native||null;
+function syncNative(){ if(N){ try{ N.sync(JSON.stringify({token:CFG.token,owner:CFG.owner,hidden:CFG.hidden,watch:CFG.watch!==false})); }catch(e){} } }
+const saveCfg=()=>{LS.set("cfg",CFG);syncNative();}, saveNotes=()=>LS.set("notes",NOTES), savePlay=()=>{LS.set("play",PLAY);LS.set("playG",PLAY_GLOBAL)};
 
 /* Ma'lum dasturlar: chiroyli nom va belgi */
 const KNOWN = {
@@ -388,8 +390,15 @@ function renderSettings(){
     h+=`<div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">👁 Qaysi repolar ko'rinsin</div><p class="muted small">Dastur bo'lmagan repolarni yashirishingiz mumkin</p>
       ${all.map(r=>{const k=keyOf(r),m=metaOf(r);return `<label class="chk"><input type="checkbox" data-vis="${esc(k)}" ${CFG.hidden.includes(k)?"":"checked"}><span style="flex:1">${m.emoji} ${esc(r.name)} ${r.private?"🔒":""}</span><span class="muted small">${esc(m.name)}</span></label>`}).join("")}</div>`;
   }
+  if(N){ const on=CFG.watch!==false;
+    h+=`<div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">🔔 Bildirishnomalar</div>
+      <p class="small muted">Ilova yopiq bo'lsa ham har 3 soatda GitHub'ni tekshiradi va xabar beradi: yig'ilish xatosi ❌, yangi versiya ✅, yangi yuklab olishlar ⬇️</p>
+      <label class="chk"><input type="checkbox" id="wOn" ${on?"checked":""}><span>Fonda kuzatish yoqilgan</span></label>
+      <div class="btns"><button class="btn sec" id="wNow">🔄 Hozir tekshirish</button></div></div>`;
+  } else {
   h+=`<div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">📲 Telefonga o'rnatish</div>
-    <p class="small"><b>iPhone:</b> Safari'da «Ulashish» ⬆️ → «Bosh ekranga qo'shish».<br><b>Android:</b> Chrome'da ⋮ menyu → «Bosh ekranga qo'shish».</p></div>
+    <p class="small"><b>iPhone:</b> Safari'da «Ulashish» ⬆️ → «Bosh ekranga qo'shish».<br><b>Android:</b> Chrome'da ⋮ menyu → «Bosh ekranga qo'shish».</p></div>`; }
+  h+=`
     <div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">💾 Zaxira nusxa</div><p class="muted small">Vazifalar va Play ro'yxatlari shu qurilmada saqlanadi. Boshqa qurilmaga ko'chirish uchun:</p>
     <div class="btns"><button class="btn sec" id="exp">⬆️ Nusxa olish</button><button class="btn sec" id="imp">⬇️ Nusxani tiklash</button></div></div>`;
   return h;
@@ -399,6 +408,8 @@ function bindSettings(){
   const ts=$("#tSave"); if(ts) ts.onclick=()=>{ const v=$("#tIn").value.trim(); if(!/^(github_pat_|ghp_)[A-Za-z0-9_]+$/.test(v)) return toast("Kalit «github_pat_» bilan boshlanishi kerak"); CFG.token=v; saveCfg(); go("home"); refresh(); };
   const td=$("#tDel"); if(td) td.onclick=()=>{ if(confirm("Kalit o'chirilsinmi?")){ CFG.token=""; saveCfg(); render(); } };
   document.querySelectorAll("[data-vis]").forEach(c=>c.onchange=()=>{ const k=c.dataset.vis; CFG.hidden=c.checked?CFG.hidden.filter(x=>x!==k):[...CFG.hidden,k]; saveCfg(); });
+  const wo=$("#wOn"); if(wo) wo.onchange=()=>{ CFG.watch=wo.checked; saveCfg(); if(wo.checked){ try{N.askNotif()}catch(e){} } toast(wo.checked?"Kuzatish yoqildi":"Kuzatish o'chirildi"); };
+  const wn=$("#wNow"); if(wn) wn.onclick=()=>{ try{N.checkNow()}catch(e){} toast("Tekshirilmoqda… natija bildirishnoma bo'lib keladi"); };
   $("#exp").onclick=async()=>{ const s=JSON.stringify({notes:NOTES,play:PLAY,playG:PLAY_GLOBAL,custom:CFG.custom,hidden:CFG.hidden});
     try{ await navigator.clipboard.writeText(s); toast("Nusxa olindi. Uni boshqa qurilmada «Nusxani tiklash» ga qo'ying"); }catch(e){ prompt("Shu matnni nusxalang:",s); } };
   $("#imp").onclick=()=>{ const s=prompt("Nusxa matnini qo'ying:"); if(!s) return; try{ const o=JSON.parse(s); NOTES=o.notes||{}; PLAY=o.play||{}; PLAY_GLOBAL=o.playG||{}; CFG.custom=o.custom||{}; CFG.hidden=o.hidden||[]; saveNotes(); savePlay(); saveCfg(); toast("Tiklandi ✓"); render(); }catch(e){ toast("Matn noto'g'ri"); } };
@@ -406,6 +417,8 @@ function bindSettings(){
 
 /* ================== Ishga tushirish ================== */
 if("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("sw.js").catch(()=>{});
+syncNative();
+if(N && CFG.token && CFG.watch!==false){ try{N.askNotif()}catch(e){} }
 render();
 if(!window.__NO_AUTO) refresh();
 document.addEventListener("visibilitychange",()=>{ if(!document.hidden && CACHE && Date.now()-new Date(CACHE.at)>5*60000) refresh(); });
