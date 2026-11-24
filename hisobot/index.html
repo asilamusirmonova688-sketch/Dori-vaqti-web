@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f3f5fb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Dasturlarim">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" href="icon-192.png">
+<title>Mening dasturlarim</title>
+<style>
+:root{--bg:#f3f5fb;--card:#fff;--ink:#18213a;--muted:#6b7590;--line:#e4e8f2;--pri:#4f46e5;--pri2:#eceafd;--ok:#0f9d6b;--ok2:#e2f6ee;--bad:#dc3d3d;--bad2:#fdeaea;--warn:#d98216;--warn2:#fdf2e2;--r:18px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.4}
+button{font:inherit;cursor:pointer;border:0;color:inherit}
+input,textarea{font:inherit;color:inherit}
+a{color:var(--pri);text-decoration:none}
+#app{max-width:1100px;margin:0 auto;padding:calc(14px + env(safe-area-inset-top)) 16px calc(40px + env(safe-area-inset-bottom))}
+.hdr{display:flex;align-items:center;gap:12px;margin:6px 0 16px}
+.hdr h1{margin:0;font-size:1.5rem;flex:1}
+.hdr .sub{display:block;font-size:.85rem;color:var(--muted);font-weight:500}
+.ib{background:var(--card);border:1px solid var(--line);border-radius:14px;min-width:46px;height:46px;display:grid;place-items:center;font-size:1.2rem;padding:0 12px}
+.ib.spin span{display:inline-block;animation:sp 1s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px}
+.kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.kpi .v{font-size:1.9rem;font-weight:800;letter-spacing:-.5px}
+.kpi .l{color:var(--muted);font-size:.85rem}
+.kpi .e{font-size:1.3rem}
+.sec{font-weight:800;font-size:1.05rem;margin:22px 2px 10px;display:flex;align-items:center;gap:8px}
+.sec .muted{font-weight:500}
+.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+.app{cursor:pointer;transition:transform .1s}
+.app:active{transform:scale(.99)}
+.ah{display:flex;gap:12px;align-items:center}
+.emo{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:1.8rem;flex:none}
+.an{font-weight:800;font-size:1.15rem}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:3px}
+.tag{font-size:.75rem;font-weight:700;padding:3px 8px;border-radius:999px;background:#eef1f8;color:#465072}
+.tag.ok{background:var(--ok2);color:var(--ok)}.tag.bad{background:var(--bad2);color:var(--bad)}.tag.run{background:var(--warn2);color:var(--warn)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:14px 0 10px}
+.st{background:var(--bg);border-radius:12px;padding:8px 10px}
+.st b{display:block;font-size:1.05rem}
+.st span{font-size:.75rem;color:var(--muted)}
+.last{font-size:.88rem;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:9px}
+.row{display:flex;gap:10px;align-items:center}
+.muted{color:var(--muted)}.small{font-size:.85rem}
+.btn{background:var(--pri);color:#fff;border-radius:12px;padding:12px 16px;font-weight:700;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.sec{background:var(--pri2);color:var(--pri)}
+.btn.ghost{background:transparent;border:1px solid var(--line);color:var(--muted)}
+.btn.bad{background:var(--bad2);color:var(--bad)}
+.btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.btns .btn{padding:9px 12px;font-size:.9rem;line-height:1.2;white-space:nowrap;align-self:center}
+.alert{border-radius:14px;padding:12px 14px;margin:10px 0;font-size:.92rem;display:flex;gap:10px;align-items:center}
+.alert.bad{background:var(--bad2);color:#8d2020}.alert.warn{background:var(--warn2);color:#83500c}.alert.ok{background:var(--ok2);color:#0b6142}.alert.info{background:var(--pri2);color:#3730a3}
+.alert a{font-weight:700}
+.chart{width:100%;height:auto;display:block}
+.legend{display:flex;flex-wrap:wrap;gap:10px;font-size:.8rem;color:var(--muted);margin-top:8px}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:4px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:2fr 1fr;gap:14px}
+.list .it{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.list .it:last-child{border:0}
+.dot{width:10px;height:10px;border-radius:50%;margin-top:6px;flex:none}
+.inp{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;font-size:1rem}
+.inp:focus{outline:2px solid var(--pri);border-color:transparent}
+.chk{display:flex;gap:12px;align-items:center;padding:11px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.chk:last-child{border:0}
+.chk input{width:22px;height:22px;accent-color:var(--ok);flex:none}
+.chk.done span{color:var(--muted);text-decoration:line-through}
+.tabs{display:flex;gap:6px;background:#e7eaf3;border-radius:14px;padding:4px;margin:14px 0}
+.tabs button{flex:1;padding:10px 4px;border-radius:10px;font-size:.88rem;background:none}
+.tabs button.on{background:#fff;font-weight:800;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.toast{position:fixed;left:50%;bottom:calc(30px + env(safe-area-inset-bottom));transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 18px;border-radius:14px;z-index:60;font-weight:600;max-width:90%;text-align:center}
+.steps li{margin:8px 0}
+code{background:#eef1f8;padding:2px 6px;border-radius:6px;font-size:.88em}
+.empty{text-align:center;padding:30px 10px;color:var(--muted)}
+.skel{background:linear-gradient(90deg,#eceff6,#f6f7fb,#eceff6);background-size:200% 100%;animation:sk 1.2s infinite;border-radius:12px}
+@keyframes sk{to{background-position:-200% 0}}
+.ring{position:relative;width:64px;height:64px;flex:none}
+.ring b{position:absolute;inset:0;display:grid;place-items:center;font-size:.9rem}
+.hidden-list .it{opacity:.6}
+@media (max-width:760px){.kpis{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.kpi .v{font-size:1.6rem}}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+"use strict";
+/* ================== Sozlamalar va saqlash ================== */
+const OWNER_DEFAULT = "asilamusirmonova688-sketch";
+const LS = {
+  get(k,d){ try{ const v=localStorage.getItem("hp_"+k); return v==null?d:JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem("hp_"+k, JSON.stringify(v)); }catch(e){} }
+};
+let CFG = LS.get("cfg", {token:"", owner:OWNER_DEFAULT, custom:{}, hidden:[]});
+let NOTES = LS.get("notes", {});      // {appKey:[{t,done,at}]}
+let PLAY = LS.get("play", {});        // {appKey:{itemKey:true}}
+let PLAY_GLOBAL = LS.get("playG", {}); // umumiy (dasturchi akkaunti)
+let CACHE = LS.get("cache", null);    // {at, repos:[...]}
+const saveCfg=()=>LS.set("cfg",CFG), saveNotes=()=>LS.set("notes",NOTES), savePlay=()=>{LS.set("play",PLAY);LS.set("playG",PLAY_GLOBAL)};
+
+/* Ma'lum dasturlar: chiroyli nom va belgi */
+const KNOWN = {
+  "matemiks":        {group:"matemiks", name:"Matemiks", emoji:"🧮", color:"#7c3aed"},
+  "dori-vaqti":      {group:"dori", name:"Dori vaqti", emoji:"💊", color:"#0f8b6f"},
+  "dori-vaqti-web":  {group:"dori", name:"Dori vaqti", emoji:"💊", color:"#0f8b6f"},
+  "oila-byudjeti":   {group:"oila", name:"Oila byudjeti", emoji:"💰", color:"#d97706"},
+  "oilabyudjeti_v1.1":{group:"oila", name:"Oila byudjeti", emoji:"💰", color:"#d97706"},
+  "tugilgan-kunlar": {group:"tugilgan", name:"Tug'ilgan kunlar", emoji:"🎂", color:"#db2777"}
+};
+const PALETTE=["#4f46e5","#0891b2","#16a34a","#ea580c","#9333ea","#e11d48","#0d9488","#ca8a04"];
+const PLAY_ITEMS = [
+  ["icon","Ilova belgisi (512×512)"],["shots","Skrinshotlar (kamida 2 ta)"],["feature","Banner rasm (1024×500)"],
+  ["desc","Qisqa va to'liq tavsif"],["privacy","Maxfiylik siyosati sahifasi"],["aab","Imzolangan AAB fayl"],
+  ["rating","Yosh reytingi anketasi"],["datasafety","Ma'lumotlar xavfsizligi bo'limi"],["test","14 kunlik yopiq sinov (12+ sinovchi)"]
+];
+
+/* ================== Yordamchilar ================== */
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const MONTHS=["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"];
+function fmtDate(iso){ const d=new Date(iso); return d.getDate()+"-"+MONTHS[d.getMonth()]+(d.getFullYear()!==new Date().getFullYear()?" "+d.getFullYear():""); }
+function fmtTime(iso){ const d=new Date(iso); return String(d.getHours()).padStart(2,"0")+":"+String(d.getMinutes()).padStart(2,"0"); }
+function ago(iso){
+  if(!iso) return "—";
+  const s=(Date.now()-new Date(iso))/1000;
+  if(s<60) return "hozirgina"; if(s<3600) return Math.floor(s/60)+" daqiqa oldin";
+  if(s<86400) return Math.floor(s/3600)+" soat oldin"; if(s<86400*2) return "kecha";
+  if(s<86400*30) return Math.floor(s/86400)+" kun oldin"; return fmtDate(iso);
+}
+function toast(m,ms=2400){ const t=document.createElement("div"); t.className="toast"; t.textContent=m; document.body.appendChild(t); setTimeout(()=>t.remove(),ms); }
+const keyOf=r=>r.name.toLowerCase();
+function metaOf(repo){
+  const k=keyOf(repo), c=CFG.custom[k]||{}, kn=KNOWN[k]||{};
+  return { group:c.group||kn.group||k, name:c.name||kn.name||repo.name.replace(/[-_]/g," "), emoji:c.emoji||kn.emoji||"📦", color:kn.color };
+}
+
+/* ================== GitHub API ================== */
+async function gh(path){
+  const h={"Accept":"application/vnd.github+json"};
+  if(CFG.token) h["Authorization"]="Bearer "+CFG.token;
+  const r=await fetch("https://api.github.com"+path,{headers:h,cache:"no-store"});
+  if(r.status===401) throw new Error("TOKEN");
+  if(r.status===403||r.status===429){ const rem=r.headers.get("x-ratelimit-remaining"); if(rem==="0") throw new Error("LIMIT"); }
+  if(r.status===404||r.status===409) return null;
+  if(!r.ok) throw new Error("HTTP "+r.status);
+  return r.json();
+}
+let loading=false, lastErr="";
+async function refresh(){
+  if(loading) return; loading=true; lastErr=""; render();
+  try{
+    const owner=CFG.owner||OWNER_DEFAULT;
+    let repos = CFG.token ? await gh("/user/repos?per_page=100&affiliation=owner&sort=pushed") : await gh(`/users/${owner}/repos?per_page=100&sort=pushed`);
+    repos=(repos||[]).filter(r=>!r.fork && !r.archived);
+    const since=new Date(Date.now()-120*86400000).toISOString();
+    const out=await Promise.all(repos.map(async r=>{
+      const full=r.full_name;
+      const [rel,runs,commits]=await Promise.all([
+        gh(`/repos/${full}/releases?per_page=30`).catch(()=>[]),
+        gh(`/repos/${full}/actions/runs?per_page=5`).catch(()=>null),
+        gh(`/repos/${full}/commits?per_page=100&since=${since}`).catch(()=>[])
+      ]);
+      const run=runs&&runs.workflow_runs&&runs.workflow_runs[0];
+      return {
+        full, name:r.name, private:r.private, html:r.html_url, pushed:r.pushed_at, created:r.created_at, desc:r.description||"",
+        pages: r.has_pages ? `https://${r.owner.login.toLowerCase()}.github.io/${r.name}/` : "",
+        size:r.size, lang:r.language||"",
+        releases:(rel||[]).map(x=>({tag:x.tag_name,name:x.name||x.tag_name,date:x.published_at||x.created_at,html:x.html_url,
+          assets:(x.assets||[]).map(a=>({name:a.name,url:a.browser_download_url,count:a.download_count,size:a.size}))})),
+        run: run? {status:run.status,conclusion:run.conclusion,date:run.created_at,html:run.html_url,title:run.display_title||run.name}:null,
+        commits:(commits||[]).map(c=>({sha:c.sha.slice(0,7),msg:(c.commit.message||"").split("\n")[0],date:c.commit.author&&c.commit.author.date||c.commit.committer.date,html:c.html_url}))
+      };
+    }));
+    CACHE={at:new Date().toISOString(),repos:out}; LS.set("cache",CACHE);
+  }catch(e){
+    lastErr = e.message==="TOKEN" ? "Kalit (token) noto'g'ri yoki muddati tugagan. Sozlamalardan yangisini kiriting." :
+              e.message==="LIMIT" ? "GitHub so'rovlar chegarasiga yetildi. Kalit (token) kiriting yoki 1 soatdan keyin urinib ko'ring." :
+              "Internetga ulanib bo'lmadi. Oxirgi saqlangan ma'lumot ko'rsatilmoqda.";
+  }
+  loading=false; render();
+}
+
+/* ================== Ma'lumotni dasturlarga yig'ish ================== */
+function buildApps(){
+  if(!CACHE) return [];
+  const map={};
+  CACHE.repos.forEach(r=>{
+    if(CFG.hidden.includes(keyOf(r))) return;
+    const m=metaOf(r);
+    const a=map[m.group]||(map[m.group]={key:m.group,name:m.name,emoji:m.emoji,color:m.color,repos:[]});
+    a.repos.push(r);
+  });
+  const apps=Object.values(map);
+  apps.forEach((a,i)=>{
+    if(!a.color) a.color=PALETTE[i%PALETTE.length];
+    const rels=a.repos.flatMap(r=>r.releases.map(x=>Object.assign({repo:r.name,priv:r.private},x))).sort((x,y)=>new Date(y.date)-new Date(x.date));
+    a.releases=rels; a.latest=rels[0]||null;
+    a.downloads=rels.reduce((s,x)=>s+x.assets.reduce((t,as)=>t+as.count,0),0);
+    a.commits=a.repos.flatMap(r=>r.commits.map(c=>Object.assign({repo:r.name},c))).sort((x,y)=>new Date(y.date)-new Date(x.date));
+    a.pushed=a.repos.map(r=>r.pushed).sort().pop();
+    a.created=a.repos.map(r=>r.created).sort()[0];
+    const plats=new Set();
+    rels.forEach(x=>x.assets.forEach(as=>{ const n=as.name.toLowerCase(); if(n.endsWith(".apk")||n.endsWith(".aab")) plats.add("Android"); if(n.endsWith(".exe")||n.endsWith(".msi")) plats.add("Windows"); }));
+    a.repos.forEach(r=>{ if(r.pages) plats.add("iPhone / Veb"); });
+    a.platforms=[...plats];
+    const runs=a.repos.map(r=>r.run).filter(Boolean);
+    a.failed=runs.filter(r=>r.status==="completed"&&r.conclusion==="failure");
+    a.running=runs.filter(r=>r.status!=="completed");
+    a.build = !runs.length? "none" : a.failed.length? "bad" : a.running.length? "run" : "ok";
+    a.apk=null; for(const x of rels){ const as=x.assets.find(s=>/\.apk$/i.test(s.name)); if(as){ a.apk={url:as.url,tag:x.tag,priv:x.priv}; break; } }
+    a.site=(a.repos.find(r=>r.pages)||{}).pages||"";
+    a.play=playPct(a.key);
+    a.openNotes=(NOTES[a.key]||[]).filter(n=>!n.done).length;
+  });
+  apps.sort((x,y)=>new Date(y.pushed)-new Date(x.pushed));
+  return apps;
+}
+function playPct(key){ const p=PLAY[key]||{}; const done=PLAY_ITEMS.filter(([k])=>p[k]).length+(PLAY_GLOBAL.account?1:0); return Math.round(done/(PLAY_ITEMS.length+1)*100); }
+function weekStart(d){ const x=new Date(d); x.setHours(0,0,0,0); const w=(x.getDay()+6)%7; x.setDate(x.getDate()-w); return x; }
+
+/* ================== Ekranlar ================== */
+let R={scr:"home"};
+function go(scr,extra={}){ R=Object.assign({scr},extra); render(); window.scrollTo(0,0); }
+function render(){
+  const a=$("#app");
+  if(R.scr==="settings"){ a.innerHTML=renderSettings(); bindSettings(); return; }
+  if(R.scr==="app"){ const app=buildApps().find(x=>x.key===R.key); if(!app){ go("home"); return; } a.innerHTML=renderApp(app); bindApp(app); return; }
+  a.innerHTML=renderHome(); bindHome();
+}
+
+function header(title,sub,left="",right=""){
+  return `<div class="hdr">${left}<h1>${title}<span class="sub">${sub}</span></h1>${right}</div>`;
+}
+function statusTag(a){
+  if(a.build==="ok") return `<span class="tag ok">✅ Yig'ildi</span>`;
+  if(a.build==="bad") return `<span class="tag bad">❌ Xato</span>`;
+  if(a.build==="run") return `<span class="tag run">⏳ Yig'ilmoqda</span>`;
+  return "";
+}
+
+function renderHome(){
+  const apps=buildApps();
+  let h=header("👨‍💻 Mening dasturlarim", CACHE? "Yangilandi: "+ago(CACHE.at) : "GitHub hisoboti", "",
+    `<button class="ib ${loading?"spin":""}" id="rf" title="Yangilash"><span>🔄</span></button><button class="ib" id="st" title="Sozlamalar">⚙️</button>`);
+  if(lastErr) h+=`<div class="alert bad">⚠️ ${esc(lastErr)}</div>`;
+  if(!CFG.token) h+=`<div class="alert info">🔑 Yopiq dasturlaringiz (Matemiks, Dori vaqti Android) ko'rinishi uchun GitHub kalitini kiriting. <a href="#" id="toTok">Kiritish →</a></div>`;
+  if(!CACHE){
+    h+= loading? `<div class="kpis">${[1,2,3,4].map(()=>`<div class="skel" style="height:96px"></div>`).join("")}</div><div class="apps" style="margin-top:20px">${[1,2,3].map(()=>`<div class="skel" style="height:230px"></div>`).join("")}</div>`
+      : `<div class="empty"><div style="font-size:3rem">📊</div><p>Hali ma'lumot yo'q. «🔄» tugmasini bosing.</p></div>`;
+    return h;
+  }
+  // KPI
+  const now=new Date(), mStart=new Date(now.getFullYear(),now.getMonth(),1);
+  const monthCommits=apps.reduce((s,a)=>s+a.commits.filter(c=>new Date(c.date)>=mStart).length,0);
+  const totalDl=apps.reduce((s,a)=>s+a.downloads,0);
+  const okBuilds=apps.filter(a=>a.build==="ok").length, withBuild=apps.filter(a=>a.build!=="none").length;
+  h+=`<div class="kpis">
+    <div class="card kpi"><div class="e">📱</div><div class="v">${apps.length}</div><div class="l">Dasturlar</div></div>
+    <div class="card kpi"><div class="e">✏️</div><div class="v">${monthCommits}</div><div class="l">Bu oy yangilanishlar</div></div>
+    <div class="card kpi"><div class="e">⬇️</div><div class="v">${totalDl}</div><div class="l">Jami yuklab olishlar</div></div>
+    <div class="card kpi"><div class="e">🛠</div><div class="v">${withBuild?okBuilds+"/"+withBuild:"—"}</div><div class="l">Muvaffaqiyatli yig'ilish</div></div></div>`;
+  // Ogohlantirishlar
+  apps.filter(a=>a.build==="bad").forEach(a=>{ h+=`<div class="alert bad">❌ <span><b>${esc(a.name)}</b>: oxirgi yig'ilish xato bilan tugadi (${ago(a.failed[0].date)}). <a href="${esc(a.failed[0].html)}" target="_blank">Ko'rish</a></span></div>`; });
+  apps.filter(a=>a.build==="run").forEach(a=>{ h+=`<div class="alert warn">⏳ <span><b>${esc(a.name)}</b> hozir yig'ilmoqda…</span></div>`; });
+  const stale=apps.filter(a=>Date.now()-new Date(a.pushed)>30*86400000);
+  if(stale.length) h+=`<div class="alert info">💤 30 kundan beri o'zgarmagan: ${stale.map(a=>esc(a.name)).join(", ")}</div>`;
+
+  // Faollik + Play
+  h+=`<div class="two" style="margin-top:14px"><div class="card"><div class="sec" style="margin-top:0">📈 Faollik <span class="muted small">oxirgi 12 hafta, yangilanishlar soni</span></div>${activityChart(apps)}</div>
+    <div class="card"><div class="sec" style="margin-top:0">🏪 Play Market'ga tayyorlik</div>
+    ${apps.filter(a=>a.platforms.includes("Android")).map(a=>`<div style="margin:10px 0"><div class="row small"><span style="flex:1">${a.emoji} ${esc(a.name)}</span><b>${a.play}%</b></div><div class="bar"><i style="width:${a.play}%;background:${a.play>=100?"var(--ok)":a.play>=50?"var(--warn)":"var(--pri)"}"></i></div></div>`).join("")||`<p class="muted small">Android dasturlari yo'q</p>`}
+    <label class="chk ${PLAY_GLOBAL.account?"done":""}" style="border-top:1px solid var(--line);margin-top:8px"><input type="checkbox" id="pgAcc" ${PLAY_GLOBAL.account?"checked":""}><span class="small">Google Play dasturchi akkaunti (25$, bir marta)</span></label></div></div>`;
+
+  // Dasturlar
+  h+=`<div class="sec">📱 Dasturlar <span class="muted small">(${apps.length})</span></div><div class="apps">`;
+  for(const a of apps){
+    h+=`<div class="card app" data-app="${esc(a.key)}">
+      <div class="ah"><div class="emo" style="background:${a.color}1f">${a.emoji}</div>
+        <div style="flex:1;min-width:0"><div class="an">${esc(a.name)}</div><div class="tags">${a.platforms.map(p=>`<span class="tag">${p==="Android"?"🤖":p==="Windows"?"🪟":"🍏"} ${p}</span>`).join("")}${statusTag(a)}</div></div></div>
+      <div class="stats"><div class="st"><b>${a.latest?esc(a.latest.tag):"—"}</b><span>Versiya</span></div><div class="st"><b>${a.downloads}</b><span>Yuklab olish</span></div><div class="st"><b>${a.commits.length}</b><span>O'zgarish (4 oy)</span></div></div>
+      <div class="last">🕒 ${ago(a.pushed)}${a.commits[0]?" · "+esc(a.commits[0].msg):""}</div>
+      ${a.openNotes?`<div class="small" style="margin-top:6px">📝 ${a.openNotes} ta vazifa qolgan</div>`:""}
+      <div class="btns">${a.apk?`<a class="btn sec" href="${esc(a.apk.url)}" target="_blank" data-stop>⬇️ APK</a>`:""}${a.site?`<a class="btn sec" href="${esc(a.site)}" target="_blank" data-stop>🌐 Sayt</a>`:""}<span class="btn ghost">Batafsil →</span></div>
+    </div>`;
+  }
+  h+=`</div><p class="muted small" style="text-align:center;margin-top:24px">Ma'lumot GitHub'dan olinadi · ${CFG.owner}</p>`;
+  return h;
+}
+function activityChart(apps){
+  const weeks=[], ws=weekStart(new Date());
+  for(let i=11;i>=0;i--){ const d=new Date(ws); d.setDate(d.getDate()-7*i); weeks.push(d); }
+  const data=weeks.map(w=>{ const e=new Date(w); e.setDate(e.getDate()+7); return apps.map(a=>a.commits.filter(c=>{const t=new Date(c.date);return t>=w&&t<e}).length); });
+  const max=Math.max(1,...data.map(v=>v.reduce((s,x)=>s+x,0)));
+  const W=600,H=200,pl=28,pb=24,bw=(W-pl)/12*0.62,gap=(W-pl)/12;
+  let svg=`<svg class="chart" viewBox="0 0 ${W} ${H}" role="img">`;
+  const ticks=[0,Math.ceil(max/2),max];
+  ticks.forEach(t=>{ const y=H-pb-(t/max)*(H-pb-10); svg+=`<line x1="${pl}" x2="${W}" y1="${y}" y2="${y}" stroke="#e4e8f2"/><text x="${pl-6}" y="${y+4}" font-size="11" text-anchor="end" fill="#6b7590">${t}</text>`; });
+  data.forEach((v,i)=>{ let y=H-pb; const x=pl+i*gap+(gap-bw)/2;
+    v.forEach((n,j)=>{ if(!n) return; const hh=n/max*(H-pb-10); y-=hh; svg+=`<rect x="${x}" y="${y}" width="${bw}" height="${hh}" fill="${apps[j].color}" rx="3"><title>${esc(apps[j].name)}: ${n}</title></rect>`; });
+    if(i%2===1||i===11) svg+=`<text x="${x+bw/2}" y="${H-6}" font-size="11" text-anchor="middle" fill="#6b7590">${weeks[i].getDate()}.${String(weeks[i].getMonth()+1).padStart(2,"0")}</text>`;
+  });
+  svg+=`</svg>`;
+  return svg+`<div class="legend">${apps.map(a=>`<span><i style="background:${a.color}"></i>${esc(a.name)}</span>`).join("")}</div>`;
+}
+function bindHome(){
+  $("#rf").onclick=refresh; $("#st").onclick=()=>go("settings");
+  const tt=$("#toTok"); if(tt) tt.onclick=e=>{e.preventDefault();go("settings")};
+  document.querySelectorAll("[data-app]").forEach(c=>c.onclick=()=>go("app",{key:c.dataset.app,tab:"info"}));
+  document.querySelectorAll("[data-stop]").forEach(b=>b.addEventListener("click",e=>e.stopPropagation()));
+  const pg=$("#pgAcc"); if(pg) pg.onchange=()=>{ PLAY_GLOBAL.account=pg.checked; savePlay(); render(); };
+}
+
+/* ---------- Dastur tafsilotlari ---------- */
+function renderApp(a){
+  let h=header(`${a.emoji} ${esc(a.name)}`, a.repos.map(r=>esc(r.name)+(r.private?" 🔒":"")).join(" · "), `<button class="ib" id="bk">←</button>`, `<button class="ib" id="ed" title="Tahrirlash">✏️</button>`);
+  h+=`<div class="kpis"><div class="card kpi"><div class="v" style="font-size:1.4rem">${a.latest?esc(a.latest.tag):"—"}</div><div class="l">Versiya${a.latest?" · "+fmtDate(a.latest.date):""}</div></div>
+    <div class="card kpi"><div class="v">${a.downloads}</div><div class="l">Yuklab olishlar</div></div>
+    <div class="card kpi"><div class="v">${a.releases.length}</div><div class="l">Chiqarilgan versiyalar</div></div>
+    <div class="card kpi"><div class="v" style="font-size:1.2rem">${a.created?fmtDate(a.created):"—"}</div><div class="l">Boshlangan sana</div></div></div>`;
+  if(a.build==="bad") h+=`<div class="alert bad">❌ Oxirgi yig'ilish xato bilan tugadi. <a href="${esc(a.failed[0].html)}" target="_blank">Xatoni ko'rish</a></div>`;
+  h+=`<div class="btns">${a.apk?`<a class="btn" href="${esc(a.apk.url)}" target="_blank">⬇️ APK yuklab olish (${esc(a.apk.tag)})</a>`:""}${a.site?`<a class="btn sec" href="${esc(a.site)}" target="_blank">🌐 Saytni ochish</a>`:""}${a.repos.map(r=>`<a class="btn ghost" href="${esc(r.html)}" target="_blank">GitHub: ${esc(r.name)}</a>`).join("")}</div>`;
+  if(a.apk&&a.apk.priv) h+=`<p class="muted small">🔒 Repo yopiq: APK'ni yuklash uchun GitHub'ga kirgan bo'lish kerak.</p>`;
+  const tabs=[["info","🕒 O'zgarishlar"],["rel","📦 Versiyalar"],["notes",`📝 Vazifalar${a.openNotes?" ("+a.openNotes+")":""}`],["play",`🏪 Play ${a.play}%`]];
+  h+=`<div class="tabs">${tabs.map(([k,l])=>`<button class="${R.tab===k?"on":""}" data-tab="${k}">${l}</button>`).join("")}</div>`;
+  if(R.tab==="info"){
+    h+=`<div class="card list">${a.commits.slice(0,30).map(c=>`<div class="it"><span class="dot" style="background:${a.color}"></span><div style="flex:1;min-width:0"><div>${esc(c.msg)}</div><div class="muted small">${fmtDate(c.date)}, ${fmtTime(c.date)} · ${esc(c.repo)} · <a href="${esc(c.html)}" target="_blank">${c.sha}</a></div></div></div>`).join("")||`<div class="empty">Oxirgi 4 oyda o'zgarish yo'q</div>`}</div>`;
+  }
+  if(R.tab==="rel"){
+    h+=`<div class="card list">${a.releases.map(x=>`<div class="it"><span style="font-size:1.3rem">📦</span><div style="flex:1"><b>${esc(x.name)}</b> <span class="muted small">${fmtDate(x.date)} · ${esc(x.repo)}</span>
+      ${x.assets.map(as=>`<div class="small"><a href="${esc(as.url)}" target="_blank">${esc(as.name)}</a> · ${(as.size/1048576).toFixed(1)} MB · ⬇️ ${as.count}</div>`).join("")}</div></div>`).join("")||`<div class="empty">Hali versiya chiqarilmagan</div>`}</div>`;
+  }
+  if(R.tab==="notes"){
+    const ns=NOTES[a.key]||[];
+    h+=`<div class="card"><div class="row"><input class="inp" id="nIn" placeholder="Yangi vazifa, masalan: yangi o'yin qo'shish"><button class="btn" id="nAdd">+</button></div>
+      <div style="margin-top:8px">${ns.map((n,i)=>`<label class="chk ${n.done?"done":""}"><input type="checkbox" data-nd="${i}" ${n.done?"checked":""}><span style="flex:1">${esc(n.t)}</span><button class="btn bad" style="padding:6px 10px" data-nx="${i}">✕</button></label>`).join("")||`<div class="empty">Vazifa yo'q 🎉</div>`}</div></div>`;
+  }
+  if(R.tab==="play"){
+    const p=PLAY[a.key]||{};
+    h+=`<div class="card"><div class="row" style="margin-bottom:8px">${ring(a.play,a.color)}<div><b>Play Market'ga chiqarish tayyorligi</b><div class="muted small">Har bir bajarilgan bandni belgilang</div></div></div>
+      <label class="chk ${PLAY_GLOBAL.account?"done":""}"><input type="checkbox" id="pAcc" ${PLAY_GLOBAL.account?"checked":""}><span>Google Play dasturchi akkaunti (25$) <span class="muted small">· barcha dasturlar uchun</span></span></label>
+      ${PLAY_ITEMS.map(([k,l])=>`<label class="chk ${p[k]?"done":""}"><input type="checkbox" data-pi="${k}" ${p[k]?"checked":""}><span>${l}</span></label>`).join("")}</div>`;
+  }
+  return h;
+}
+function ring(pct,color){ const r=27,c=2*Math.PI*r; return `<div class="ring"><svg width="64" height="64"><circle cx="32" cy="32" r="${r}" stroke="#e4e8f2" stroke-width="7" fill="none"/><circle cx="32" cy="32" r="${r}" stroke="${color}" stroke-width="7" fill="none" stroke-linecap="round" stroke-dasharray="${c*pct/100} ${c}" transform="rotate(-90 32 32)"/></svg><b>${pct}%</b></div>`; }
+function bindApp(a){
+  $("#bk").onclick=()=>go("home");
+  $("#ed").onclick=()=>editApp(a);
+  document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{R.tab=b.dataset.tab;render()});
+  const add=$("#nAdd"); if(add){ const doAdd=()=>{ const v=$("#nIn").value.trim(); if(!v) return; (NOTES[a.key]=NOTES[a.key]||[]).unshift({t:v,done:false,at:Date.now()}); saveNotes(); render(); $("#nIn")&&$("#nIn").focus(); };
+    add.onclick=doAdd; $("#nIn").onkeydown=e=>{ if(e.key==="Enter") doAdd(); }; }
+  document.querySelectorAll("[data-nd]").forEach(c=>c.onchange=()=>{ NOTES[a.key][+c.dataset.nd].done=c.checked; saveNotes(); render(); });
+  document.querySelectorAll("[data-nx]").forEach(b=>b.onclick=e=>{ e.preventDefault(); NOTES[a.key].splice(+b.dataset.nx,1); saveNotes(); render(); });
+  document.querySelectorAll("[data-pi]").forEach(c=>c.onchange=()=>{ (PLAY[a.key]=PLAY[a.key]||{})[c.dataset.pi]=c.checked; savePlay(); render(); });
+  const pa=$("#pAcc"); if(pa) pa.onchange=()=>{ PLAY_GLOBAL.account=pa.checked; savePlay(); render(); };
+}
+function editApp(a){
+  const name=prompt("Dastur nomi:",a.name); if(name===null) return;
+  const emoji=prompt("Belgi (emoji):",a.emoji); if(emoji===null) return;
+  a.repos.forEach(r=>{ const k=keyOf(r); CFG.custom[k]=Object.assign({},CFG.custom[k],{name:name.trim()||a.name,emoji:emoji.trim()||a.emoji,group:a.key}); });
+  saveCfg(); render();
+}
+
+/* ---------- Sozlamalar ---------- */
+function renderSettings(){
+  let h=header("⚙️ Sozlamalar","Kalit va ko'rinish",`<button class="ib" id="bk">←</button>`);
+  h+=`<div class="card"><div class="sec" style="margin-top:0">🔑 GitHub kaliti (token)</div>
+    ${CFG.token?`<div class="alert ok">✓ Kalit kiritilgan: <code>${esc(CFG.token.slice(0,11))}…</code></div><button class="btn bad" id="tDel">Kalitni o'chirish</button>`:
+    `<p class="small">Kalit faqat shu qurilmada saqlanadi va hech kimga yuborilmaydi (faqat GitHub'ga). Unga <b>faqat o'qish</b> huquqi beriladi: kalit bilan hech narsani o'zgartirib bo'lmaydi.</p>
+    <ol class="steps small">
+      <li>Kompyuterda GitHub'ga kiring → o'ng yuqoridagi rasmingiz → <b>Settings</b></li>
+      <li>Chap menyuning eng pastida <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b></li>
+      <li><b>Token name:</b> <code>Hisobot</code> · <b>Expiration:</b> <code>1 year</code> (yoki <code>No expiration</code>)</li>
+      <li><b>Repository access:</b> <b>All repositories</b></li>
+      <li><b>Permissions → Repository permissions</b> bo'limida uchtasini <b>Read-only</b> qiling: <code>Actions</code>, <code>Contents</code>, <code>Metadata</code></li>
+      <li>Pastdagi <b>Generate token</b> → chiqqan <code>github_pat_…</code> matnini nusxalang va quyiga qo'ying</li>
+    </ol>
+    <input class="inp" id="tIn" placeholder="github_pat_..." autocomplete="off"><button class="btn" id="tSave" style="margin-top:10px;width:100%">Saqlash va yangilash</button>`}
+  </div>`;
+  const all=(CACHE&&CACHE.repos)||[];
+  if(all.length){
+    h+=`<div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">👁 Qaysi repolar ko'rinsin</div><p class="muted small">Dastur bo'lmagan repolarni yashirishingiz mumkin</p>
+      ${all.map(r=>{const k=keyOf(r),m=metaOf(r);return `<label class="chk"><input type="checkbox" data-vis="${esc(k)}" ${CFG.hidden.includes(k)?"":"checked"}><span style="flex:1">${m.emoji} ${esc(r.name)} ${r.private?"🔒":""}</span><span class="muted small">${esc(m.name)}</span></label>`}).join("")}</div>`;
+  }
+  h+=`<div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">📲 Telefonga o'rnatish</div>
+    <p class="small"><b>iPhone:</b> Safari'da «Ulashish» ⬆️ → «Bosh ekranga qo'shish».<br><b>Android:</b> Chrome'da ⋮ menyu → «Bosh ekranga qo'shish».</p></div>
+    <div class="card" style="margin-top:14px"><div class="sec" style="margin-top:0">💾 Zaxira nusxa</div><p class="muted small">Vazifalar va Play ro'yxatlari shu qurilmada saqlanadi. Boshqa qurilmaga ko'chirish uchun:</p>
+    <div class="btns"><button class="btn sec" id="exp">⬆️ Nusxa olish</button><button class="btn sec" id="imp">⬇️ Nusxani tiklash</button></div></div>`;
+  return h;
+}
+function bindSettings(){
+  $("#bk").onclick=()=>go("home");
+  const ts=$("#tSave"); if(ts) ts.onclick=()=>{ const v=$("#tIn").value.trim(); if(!/^(github_pat_|ghp_)[A-Za-z0-9_]+$/.test(v)) return toast("Kalit «github_pat_» bilan boshlanishi kerak"); CFG.token=v; saveCfg(); go("home"); refresh(); };
+  const td=$("#tDel"); if(td) td.onclick=()=>{ if(confirm("Kalit o'chirilsinmi?")){ CFG.token=""; saveCfg(); render(); } };
+  document.querySelectorAll("[data-vis]").forEach(c=>c.onchange=()=>{ const k=c.dataset.vis; CFG.hidden=c.checked?CFG.hidden.filter(x=>x!==k):[...CFG.hidden,k]; saveCfg(); });
+  $("#exp").onclick=async()=>{ const s=JSON.stringify({notes:NOTES,play:PLAY,playG:PLAY_GLOBAL,custom:CFG.custom,hidden:CFG.hidden});
+    try{ await navigator.clipboard.writeText(s); toast("Nusxa olindi. Uni boshqa qurilmada «Nusxani tiklash» ga qo'ying"); }catch(e){ prompt("Shu matnni nusxalang:",s); } };
+  $("#imp").onclick=()=>{ const s=prompt("Nusxa matnini qo'ying:"); if(!s) return; try{ const o=JSON.parse(s); NOTES=o.notes||{}; PLAY=o.play||{}; PLAY_GLOBAL=o.playG||{}; CFG.custom=o.custom||{}; CFG.hidden=o.hidden||[]; saveNotes(); savePlay(); saveCfg(); toast("Tiklandi ✓"); render(); }catch(e){ toast("Matn noto'g'ri"); } };
+}
+
+/* ================== Ishga tushirish ================== */
+if("serviceWorker" in navigator && location.protocol==="https:") navigator.serviceWorker.register("sw.js").catch(()=>{});
+render();
+if(!window.__NO_AUTO) refresh();
+document.addEventListener("visibilitychange",()=>{ if(!document.hidden && CACHE && Date.now()-new Date(CACHE.at)>5*60000) refresh(); });
+</script>
+</body>
+</html>
