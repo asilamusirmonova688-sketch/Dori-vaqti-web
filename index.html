@@ -282,7 +282,7 @@ const UZ = {
   perms:"Ruxsatlar", testAlarm:"🔔 Eslatmani sinab ko'rish (5 soniya)", testSent:"5 soniyadan keyin eslatma chiqadi",
   discView:"Javobgarlik haqida ogohlantirish", resetAll:"Barcha ma'lumotni o'chirish", resetQ:"Barcha ma'lumot o'chiriladi. Ishonchingiz komilmi?",
   owner:"Telefon egasi", caretakerExit:"🔒 Qulflash",
-  openSettings:"⚙ Sozlamalar", version:"Versiya 1.3",
+  openSettings:"⚙ Sozlamalar", version:"Versiya 1.4",
   installTitle:"Bosh ekranga qo'shing",
   installHint:"Safari'da pastdagi «Ulashish» ⬆️ tugmasini bosing, so'ng «Bosh ekranga qo'shish» ni tanlang. Ilova oddiy ilova kabi ochiladi va internetsiz ishlaydi.",
   calTitle:"Eslatma iPhone kalendari orqali",
@@ -320,6 +320,15 @@ const UZ = {
   upcoming:"Kelgusi", past:"O'tgan", noAppts:"Qabul yozilmagan", needTitle:"Nima ekanini yozing", apptSoon:"%1: %2, soat %3", todayW:"bugun", tomorrowW:"ertaga", delQ:"O'chirilsinmi?",
   rx:"Retsept rasmi", rxHint:"Shifokor bergan retsept qog'ozini rasmga olib qo'ying", rxShow:"📄 Retsept",
   sugTitle:"Taklif:"
+,
+  travel:"✈️ Sayohat rejimi", tz_local:"Mahalliy vaqt", tz_home:"Uy vaqti",
+  tzHint:"«Mahalliy vaqt»: boshqa shaharga borsangiz, dorilar o'sha joy soati bo'yicha eslatiladi (08:00 = u yerdagi 08:00). «Uy vaqti»: dorilar uydagi soat bo'yicha eslatiladi. Qat'iy oraliqda ichiladigan dorilar (masalan, insulin) uchun qulay.",
+  tzZone:"Uy mintaqasi", tzBanner:"✈️ Uy vaqti (%1): %2. Dorilar shu vaqt bo'yicha eslatiladi",
+  tg:"📨 Yaqin odamga Telegram xabar", tgOn:"Yoqilgan", tgHint:"Dori 30 daqiqa ichilmasa, farzandingiz yoki yaqiningizga Telegram'da xabar boradi. Internet kerak.",
+  tgSteps:["Telegram'da @BotFather ni oching va /newbot deb yozing","Botga nom bering (masalan: Onam dori vaqti) va manzil (masalan: onam_dori_bot)","BotFather bergan uzun kalitni (token) nusxalab, quyiga qo'ying","Xabar oladigan odam (masalan, siz yoki farzandingiz) shu botni ochib, «Start» ni bossin","«Qabul qiluvchini topish» tugmasini bosing"],
+  tgToken:"Bot kaliti (token)", tgFind:"🔍 Qabul qiluvchini topish", tgNoChat:"Hech kim topilmadi. Bot ochilib, «Start» bosilganini tekshiring", tgBadToken:"Kalit noto'g'ri", tgNet:"Internetga ulanib bo'lmadi",
+  tgTo:"Kimga", tgMissed:"Dori 30 daqiqa ichilmasa xabar berish", tgTakenOpt:"Dori ichilganda ham xabar berish", tgTest:"✉️ Sinov xabari", tgTestText:"Sinov xabari: hammasi ishlayapti 👍", tgSent:"Xabar yuborildi ✓", tgTakenMsg:"ichildi",
+  privacy:"🔒 Maxfiylik siyosati"
 ,
   wd:["Du","Se","Cho","Pa","Ju","Sha","Ya"],
   months:["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"],
@@ -405,7 +414,7 @@ const RU = {
   perms:"Разрешения", testAlarm:"🔔 Проверить напоминание (5 секунд)", testSent:"Через 5 секунд появится напоминание",
   discView:"Предупреждение об ответственности", resetAll:"Удалить все данные", resetQ:"Все данные будут удалены. Вы уверены?",
   owner:"Владелец телефона", caretakerExit:"🔒 Заблокировать",
-  openSettings:"⚙ Настройки", version:"Версия 1.3",
+  openSettings:"⚙ Настройки", version:"Версия 1.4",
   installTitle:"Добавьте на экран «Домой»",
   installHint:"В Safari нажмите кнопку «Поделиться» ⬆️ внизу и выберите «На экран Домой». Приложение будет открываться как обычное и работать без интернета.",
   calTitle:"Напоминания через календарь iPhone",
@@ -443,6 +452,15 @@ const RU = {
   upcoming:"Предстоящие", past:"Прошедшие", noAppts:"Приёмов нет", needTitle:"Напишите, что это", apptSoon:"%1: %2, в %3", todayW:"сегодня", tomorrowW:"завтра", delQ:"Удалить?",
   rx:"Фото рецепта", rxHint:"Сфотографируйте рецепт, который дал врач", rxShow:"📄 Рецепт",
   sugTitle:"Подсказка:"
+,
+  travel:"✈️ Режим путешествия", tz_local:"Местное время", tz_home:"Домашнее время",
+  tzHint:"«Местное время»: в другом городе напоминания приходят по местным часам (08:00 = 08:00 там). «Домашнее время»: напоминания по времени дома. Удобно для лекарств со строгим интервалом (например, инсулин).",
+  tzZone:"Домашний часовой пояс", tzBanner:"✈️ Домашнее время (%1): %2. Напоминания идут по нему",
+  tg:"📨 Сообщение близкому в Telegram", tgOn:"Включено", tgHint:"Если лекарство не принято 30 минут, ребёнку или близкому придёт сообщение в Telegram. Нужен интернет.",
+  tgSteps:["Откройте в Telegram @BotFather и напишите /newbot","Дайте боту имя (например: Мама лекарства) и адрес (например: mama_lekarstva_bot)","Скопируйте длинный ключ (токен) от BotFather и вставьте ниже","Человек, который будет получать сообщения, открывает бота и нажимает «Start»","Нажмите «Найти получателя»"],
+  tgToken:"Ключ бота (токен)", tgFind:"🔍 Найти получателя", tgNoChat:"Никто не найден. Проверьте, что бот открыт и нажат «Start»", tgBadToken:"Неверный ключ", tgNet:"Нет подключения к интернету",
+  tgTo:"Кому", tgMissed:"Сообщать, если не принято за 30 минут", tgTakenOpt:"Сообщать и о приёме", tgTest:"✉️ Тестовое сообщение", tgTestText:"Тестовое сообщение: всё работает 👍", tgSent:"Сообщение отправлено ✓", tgTakenMsg:"принято",
+  privacy:"🔒 Политика конфиденциальности"
 ,
   wd:["Пн","Вт","Ср","Чт","Пт","Сб","Вс"],
   months:["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"],
@@ -528,7 +546,7 @@ const EN = {
   perms:"Permissions", testAlarm:"🔔 Test a reminder (5 seconds)", testSent:"A reminder will appear in 5 seconds",
   discView:"Liability disclaimer", resetAll:"Delete all data", resetQ:"All data will be deleted. Are you sure?",
   owner:"Phone owner", caretakerExit:"🔒 Lock",
-  openSettings:"⚙ Settings", version:"Version 1.3",
+  openSettings:"⚙ Settings", version:"Version 1.4",
   installTitle:"Add to Home Screen",
   installHint:"In Safari tap «Share» ⬆️ at the bottom, then «Add to Home Screen». The app will open like a normal app and work offline.",
   calTitle:"Reminders via iPhone Calendar",
@@ -566,6 +584,15 @@ const EN = {
   upcoming:"Upcoming", past:"Past", noAppts:"No appointments", needTitle:"Write what it is", apptSoon:"%1: %2 at %3", todayW:"today", tomorrowW:"tomorrow", delQ:"Delete?",
   rx:"Prescription photo", rxHint:"Take a photo of the prescription your doctor gave you", rxShow:"📄 Prescription",
   sugTitle:"Suggestion:",
+  travel:"✈️ Travel mode", tz_local:"Local time", tz_home:"Home time",
+  tzHint:"«Local time»: in another city reminders follow the local clock (08:00 = 08:00 there). «Home time»: reminders follow your home clock. Useful for medicines with a strict interval (e.g. insulin).",
+  tzZone:"Home time zone", tzBanner:"✈️ Home time (%1): %2. Reminders follow it",
+  tg:"📨 Telegram message to a loved one", tgOn:"On", tgHint:"If a medicine isn't taken within 30 minutes, your child or a relative gets a Telegram message. Needs internet.",
+  tgSteps:["Open @BotFather in Telegram and send /newbot","Give the bot a name (e.g. Mom's pills) and a username (e.g. moms_pills_bot)","Copy the long key (token) from BotFather and paste it below","The person who should receive messages opens the bot and taps «Start»","Tap «Find recipient»"],
+  tgToken:"Bot key (token)", tgFind:"🔍 Find recipient", tgNoChat:"No one found. Make sure the bot was opened and «Start» was tapped", tgBadToken:"Wrong key", tgNet:"No internet connection",
+  tgTo:"Send to", tgMissed:"Notify if not taken within 30 minutes", tgTakenOpt:"Also notify when taken", tgTest:"✉️ Test message", tgTestText:"Test message: everything works 👍", tgSent:"Message sent ✓", tgTakenMsg:"taken",
+  privacy:"🔒 Privacy policy"
+,
   wd:["Mo","Tu","We","Th","Fr","Sa","Su"],
   months:["January","February","March","April","May","June","July","August","September","October","November","December"],
   wdl:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
@@ -620,12 +647,12 @@ window.onNativeResume = function(){ D = load(); render(); };
 const $ = s=>document.querySelector(s);
 const esc = s=>String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const pad=n=>String(n).padStart(2,"0");
-const ds=(d=new Date())=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+const ds=(d=nowD())=>d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
 const parseD=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d)};
 const addDays=(s,n)=>{const d=parseD(s);d.setDate(d.getDate()+n);return ds(d)};
 const diffDays=(a,b)=>Math.round((parseD(a)-parseD(b))/86400000);
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-const nowMin=()=>{const d=new Date();return d.getHours()*60+d.getMinutes()};
+const nowMin=()=>{const d=nowD();return d.getHours()*60+d.getMinutes()};
 const tMin=t=>{const [h,m]=t.split(":").map(Number);return h*60+m};
 const curYear=()=>new Date().getFullYear();
 const ageOf=y=>curYear()-Number(y);
@@ -682,6 +709,7 @@ function markTaken(day,dose,on){
     if(m.stock!=null&&m.stock!=="") m.stock=Math.max(0,Number(m.stock)-(Number(m.amount)||1));
     const g=p?ageGroup(p.year):"adult";
     celebrate(g==="child"||g==="teen");
+    if(N&&N.tgNotify&&D.tg&&D.tg.on&&D.tg.taken&&D.tg.chat){ try{ N.tgNotify("✅ "+(p?p.name+": ":"")+m.name+" ("+dose.t+") — "+T("tgTakenMsg")); }catch(e){} }
     if(g==="child"||g==="teen"){ D.stars[p.id]=(D.stars[p.id]||0)+1; toast(T("starPlus")); }
     save();
     if(p&&(g==="child"||g==="teen")){ const s=streakOf(p.id); if(s>=7&&D.heroes[p.id]!==ds()){ D.heroes[p.id]=ds(); save(); setTimeout(()=>toast(T("hero"),3500),900);} }
@@ -943,7 +971,7 @@ function renderHome(){
   const mode=uiMode();
   let h=`<div class="top"><h1>${T("today")}<div class="sub">${fmtDateLong(day)}</div></h1>${R.care?`<button class="iconbtn" id="lockBtn" title="lock">🔒</button>`:""}</div><div class="wrap">`;
   if(xs.length) h+=progressCard(xs);
-  h+=toolsRow();
+  h+=tzBanner()+toolsRow();
   if(!N) h+=calBanners();
   const pm=perms(); if(pm&&(!pm.notif||!pm.exact)) h+=`<div class="banner b">🔔 ${T("permHint")} <button class="chip" data-go="set" style="margin-top:6px">${T("perms")}</button></div>`;
   const kids=D.persons.filter(p=>["child","teen"].includes(ageGroup(p.year)));
@@ -971,7 +999,7 @@ function guardIfSimple(fn){ if(uiMode()==="simple"&&!R.care) guard(fn); else fn(
 /* ---------- Oddiy rejim ---------- */
 function renderSimple(){
   const day=ds(), xs=dosesOn(day);
-  const d=new Date();
+  const d=nowD();
   let h=`<div class="wrap" style="padding-top:18px"><div class="bigclock">${pad(d.getHours())}:${pad(d.getMinutes())}</div><div class="bigdate">${fmtDateLong(day)}</div>`;
   h+=stockBanners();
   const pending=xs.filter(x=>!x.taken), done=xs.filter(x=>x.taken);
@@ -1161,6 +1189,7 @@ function renderSettings(){
   h+=`<div class="card"><div class="setrow" style="padding-top:0"><span>🔒 <b>${T("pin")}</b></span><span class="muted">${D.pin?T("pinOn"):T("pinOff")}</span></div>
     <button class="setrow" id="sPin">${T("changePin")} <span>›</span></button>${D.pin?`<button class="setrow" id="sPinDel">${T("removePin")} <span>›</span></button>`:""}</div>`;
   h+=`<div class="card"><b>${T("perms")}</b>${renderPerms()}${N?`<button class="btn sec mt" id="sTest">${T("testAlarm")}</button>`:(D.meds.length?`<button class="btn sec mt" id="sCalAll">${T("calAll")}</button>`:"")}</div>`;
+  h+=settingsExtra();
   h+=`<div class="card"><b>${T("backup")}</b><p class="muted small">${T("backupHint")}</p><div class="row"><button class="btn sec" id="bExp">${T("exportB")}</button><button class="btn sec" id="bImp">${T("importB")}</button></div><p class="muted small">${T("backupNoVoice")}</p></div>`;
   h+=`<div class="card"><button class="setrow" id="sDisc">⚠️ ${T("discView")} <span>›</span></button><button class="setrow" id="sReset" style="color:var(--bad)">${T("resetAll")} <span>›</span></button></div>
     <p class="muted small" style="text-align:center">${T("appName")} · ${T("version")}</p></div>`;
@@ -1171,6 +1200,7 @@ function bindSettings(){
   a.querySelectorAll("[data-sl]").forEach(b=>b.onclick=()=>{D.lang=b.dataset.sl;save();render()});
   a.querySelectorAll("[data-sm]").forEach(b=>b.onclick=()=>guard(()=>{const m=b.dataset.sm; D.modeAuto=(D.owner&&m===modeForAge(D.owner.year)); D.mode=m; save(); if(m==="simple") R.care=true; render();}));
   a.querySelectorAll("[data-th]").forEach(b=>b.onclick=()=>{D.theme=b.dataset.th;save();render()});
+  bindSettingsExtra();
   $("#bExp").onclick=()=>exportBackup();
   $("#bImp").onclick=()=>guard(()=>importBackup());
   a.querySelectorAll("[data-sf]").forEach(b=>b.onclick=()=>{D.font=Number(b.dataset.sf);save();render()});
@@ -1579,6 +1609,54 @@ function bindTools(){
 function rxView(name){
   const u=photoURL(name); if(!u) return;
   $("#modal").innerHTML=`<div class="modal" onclick="closeModal()"><div class="sheet" style="text-align:center"><img src="${u}" style="max-width:100%;max-height:75vh;border-radius:12px"><button class="btn ghost mt">${T("close")}</button></div></div>`;
+}
+
+
+/* ================= v1.4: sayohat rejimi, Telegram ================= */
+function nowD(){
+  try{ if(D&&D.tz&&D.tz.mode==="home"&&D.tz.home) return new Date(new Date().toLocaleString("en-US",{timeZone:D.tz.home})); }catch(e){}
+  return new Date();
+}
+function deviceZone(){ try{ return N&&N.deviceZone? N.deviceZone() : Intl.DateTimeFormat().resolvedOptions().timeZone; }catch(e){ return "Asia/Tashkent"; } }
+const ZONES=["Asia/Tashkent","Asia/Samarkand","Asia/Almaty","Asia/Bishkek","Asia/Dushanbe","Europe/Moscow","Europe/Istanbul","Asia/Dubai","Asia/Seoul","Europe/Berlin","Europe/London","America/New_York"];
+function tzBanner(){
+  if(!D.tz||D.tz.mode!=="home") return "";
+  if(D.tz.home===deviceZone()) return "";
+  const n=nowD(); return `<div class="banner g">${esc(T("tzBanner",D.tz.home.split("/").pop().replace(/_/g," "),pad(n.getHours())+":"+pad(n.getMinutes())))}</div>`;
+}
+const PRIVACY_URL="https://asilamusirmonova688-sketch.github.io/Dori-vaqti-web/privacy.html";
+function settingsExtra(){
+  const tz=D.tz||{mode:"local"};
+  let h=`<div class="card"><b>${T("travel")}</b><div class="seg mt">${["local","home"].map(k=>`<button class="${(tz.mode||"local")===k?"on":""}" data-tz="${k}">${T("tz_"+k)}</button>`).join("")}</div>
+    ${tz.mode==="home"?`<label class="f">${T("tzZone")}</label><select class="inp" id="tzSel">${[...new Set([tz.home,deviceZone()].concat(ZONES))].filter(Boolean).map(z=>`<option ${z===tz.home?"selected":""}>${esc(z)}</option>`).join("")}</select>`:""}
+    <p class="muted small">${T("tzHint")}</p></div>`;
+  if(N&&N.tgFind){ const tg=D.tg||{};
+    h+=`<div class="card"><b>${T("tg")}</b><p class="muted small">${T("tgHint")}</p>
+      <label class="check" style="margin:8px 0"><input type="checkbox" id="tgOn" ${tg.on?"checked":""}> ${T("tgOn")}</label>
+      ${tg.on?`<ol class="small" style="padding-left:18px">${T("tgSteps").map(x=>`<li style="margin:4px 0">${esc(x)}</li>`).join("")}</ol>
+      <label class="f">${T("tgToken")}</label><input class="inp" id="tgTok" autocomplete="off" value="${esc(tg.token||"")}" placeholder="123456789:AA...">
+      <button class="btn sec mt" id="tgFindB">${T("tgFind")}</button><div id="tgChats"></div>
+      ${tg.chat?`<div class="banner g">✓ ${T("tgTo")}: <b>${esc(tg.chatName||tg.chat)}</b></div>`:""}
+      <label class="check" style="margin:8px 0"><input type="checkbox" id="tgMiss" ${tg.missed!==false?"checked":""}> ${T("tgMissed")}</label>
+      <label class="check" style="margin:8px 0"><input type="checkbox" id="tgTk" ${tg.taken?"checked":""}> ${T("tgTakenOpt")}</label>
+      ${tg.chat?`<button class="btn sec" id="tgTestB">${T("tgTest")}</button>`:""}`:""}</div>`; }
+  h+=`<div class="card"><a class="setrow" href="${PRIVACY_URL}" target="_blank" style="color:var(--ink);text-decoration:none">${T("privacy")} <span>›</span></a></div>`;
+  return h;
+}
+function bindSettingsExtra(){
+  document.querySelectorAll("[data-tz]").forEach(b=>b.onclick=()=>{ D.tz=D.tz||{}; D.tz.mode=b.dataset.tz; if(D.tz.mode==="home"&&!D.tz.home) D.tz.home=deviceZone(); save(); render(); });
+  const ts=$("#tzSel"); if(ts) ts.onchange=()=>{ D.tz.home=ts.value; save(); render(); };
+  const tgOn=$("#tgOn"); if(!tgOn) return;
+  const tgSave=()=>{ D.tg=D.tg||{}; const t=$("#tgTok"); if(t) D.tg.token=t.value.trim(); const m=$("#tgMiss"); if(m) D.tg.missed=m.checked; const k=$("#tgTk"); if(k) D.tg.taken=k.checked; save(); };
+  tgOn.onchange=()=>{ D.tg=D.tg||{}; D.tg.on=tgOn.checked; if(D.tg.missed===undefined) D.tg.missed=true; save(); render(); };
+  ["tgTok","tgMiss","tgTk"].forEach(id=>{ const e=$("#"+id); if(e) e.onchange=tgSave; });
+  const fb=$("#tgFindB"); if(fb) fb.onclick=()=>{ tgSave(); if(!D.tg.token) return toast(T("tgBadToken"));
+    let r={}; try{ r=JSON.parse(N.tgFind(D.tg.token)); }catch(e){}
+    if(r.net) return toast(T("tgNet")); if(!r.ok) return toast(T("tgBadToken"));
+    if(!r.chats||!r.chats.length) return toast(T("tgNoChat"),3500);
+    $("#tgChats").innerHTML=r.chats.map(c=>`<button class="choice" data-chat="${esc(c.id)}" data-cn="${esc(c.name)}" style="padding:12px 16px"><span class="e">👤</span><b>${esc(c.name||c.id)}</b></button>`).join("");
+    document.querySelectorAll("[data-chat]").forEach(b=>b.onclick=()=>{ D.tg.chat=b.dataset.chat; D.tg.chatName=b.dataset.cn; save(); render(); }); };
+  const tb=$("#tgTestB"); if(tb) tb.onclick=()=>{ tgSave(); let r="net"; try{ r=N.tgTest(D.tg.token,D.tg.chat,"💊 "+T("tgTestText")); }catch(e){} toast(r==="ok"?T("tgSent"):r==="net"?T("tgNet"):r,3000); };
 }
 
 window.handleBack=function(){
