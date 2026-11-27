@@ -166,6 +166,25 @@ body{transition:background .3s}
 @keyframes popin{0%{transform:scale(.2);opacity:0}35%{transform:scale(1.08);opacity:1}70%{transform:scale(1)}100%{transform:scale(1);opacity:0}}
 .cf{position:fixed;top:-12px;width:9px;height:14px;z-index:69;pointer-events:none;border-radius:2px;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+.tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:10px 0}
+.tool{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 8px;text-align:center;color:var(--ink)}
+.tool .e{font-size:1.6rem;display:block}.tool b{display:block;font-size:.88rem;margin-top:2px}.tool span{display:block;font-size:.72rem;color:var(--muted);margin-top:2px}
+.tap{cursor:pointer}
+.box{display:grid;grid-template-columns:4.6em repeat(7,minmax(0,1fr));gap:3px;margin-top:12px;font-size:.72rem}
+.bh{text-align:center;font-weight:700;color:var(--muted);padding:4px 0}.bh span{font-size:.95rem;color:var(--ink)}
+.bh.today{color:var(--pri)}
+.bp{font-weight:700;color:var(--muted);display:flex;align-items:center;font-size:.66rem;overflow-wrap:anywhere}
+.bc{background:var(--card);border:1px solid var(--line);border-radius:8px;min-height:54px;padding:3px;display:flex;flex-direction:column;gap:3px}
+.bc.today{border-color:var(--pri)}
+.pill{background:var(--pri2);border-radius:6px;padding:2px;text-align:center;line-height:1.1;font-size:.95rem}
+.pill span{display:block;font-size:.58rem;color:var(--ink);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.pill i{display:block;font-size:.55rem;color:var(--muted);font-style:normal}
+.vgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px}
+.vt{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;text-align:left;color:var(--ink)}
+.vt.on{border:2px solid var(--pri);background:var(--pri2)}
+.vt span{display:block;font-size:.82rem;color:var(--muted)}.vt b{display:block;font-size:1.3rem}.vt i{display:block;font-size:.72rem;color:var(--muted);font-style:normal}
+.dbox{flex:none;width:54px;height:58px;border-radius:12px;background:var(--pri2);color:var(--pri);display:grid;place-items:center;text-align:center;line-height:1}
+.dbox b{font-size:1.4rem}.dbox span{font-size:.72rem}
 @media (prefers-reduced-motion:reduce){.pop i,.cf{animation:none;display:none}}
 </style>
 </head>
@@ -263,7 +282,7 @@ const UZ = {
   perms:"Ruxsatlar", testAlarm:"🔔 Eslatmani sinab ko'rish (5 soniya)", testSent:"5 soniyadan keyin eslatma chiqadi",
   discView:"Javobgarlik haqida ogohlantirish", resetAll:"Barcha ma'lumotni o'chirish", resetQ:"Barcha ma'lumot o'chiriladi. Ishonchingiz komilmi?",
   owner:"Telefon egasi", caretakerExit:"🔒 Qulflash",
-  openSettings:"⚙ Sozlamalar", version:"Versiya 1.2",
+  openSettings:"⚙ Sozlamalar", version:"Versiya 1.3",
   installTitle:"Bosh ekranga qo'shing",
   installHint:"Safari'da pastdagi «Ulashish» ⬆️ tugmasini bosing, so'ng «Bosh ekranga qo'shish» ni tanlang. Ilova oddiy ilova kabi ochiladi va internetsiz ishlaydi.",
   calTitle:"Eslatma iPhone kalendari orqali",
@@ -289,6 +308,19 @@ const UZ = {
   theme:"Ko'rinish rangi", th_auto:"Avto (kechasi qorong'i)", th_light:"Yorug'", th_dark:"Qorong'i",
   backup:"💾 Zaxira nusxa", backupHint:"Telefon almashtirsangiz yoki ilova o'chib ketsa, ma'lumotlarni tiklash uchun. Nusxani Telegram'dagi «Saqlangan xabarlar»ga yuborib qo'ying.",
   exportB:"⬆️ Nusxa olish", importB:"⬇️ Nusxadan tiklash", importQ:"Hozirgi ma'lumotlar nusxadagisi bilan almashtiriladi. Davom etasizmi?", importOk:"Ma'lumotlar tiklandi ✓", importBad:"Bu fayl Dori vaqti nusxasi emas", backupNoVoice:"Ovozli eslatmalar nusxaga kirmaydi, ularni qayta yozasiz.",
+  tools:"Foydali bo'limlar", weekBox:"Haftalik quticha", health:"Sog'liq daftari", appts:"Qabullar",
+  weekBoxD:"Du–Ya bo'yicha dorilar", healthD:"Bosim, qand, harorat", apptsD:"Shifokor va tahlillar",
+  part_m:"Ertalab", part_d:"Kunduzi", part_e:"Kechqurun", part_n:"Kechasi", weekNeed:"Shu haftaga kerak", thisWeek:"Shu hafta", nextWeek:"Keyingi hafta",
+  v_bp:"Qon bosimi", v_sugar:"Qand", v_temp:"Harorat", v_weight:"Vazn", v_pulse:"Puls",
+  vu_bp:"mm sim. ust.", vu_sugar:"mmol/l", vu_temp:"°C", vu_weight:"kg", vu_pulse:"zarba/daq",
+  addVital:"+ Yozib qo'yish", vitalT:"O'lchov natijasi", sys:"Yuqori", dia:"Pastki", value:"Qiymat", note:"Izoh", notePh:"Masalan: ovqatdan keyin",
+  when:"Qachon", lastVal:"Oxirgi", noVitals:"Hali yozuv yo'q", needVal:"Qiymatni kiriting", vitalsHint:"Ilova natijalarni baholamaydi. Me'yor haqida shifokoringizdan so'rang.",
+  addAppt:"+ Qabul qo'shish", apptT:"Qabul", apptTitle:"Nima", apptTitlePh:"Masalan: Kardiolog, qon tahlili", place:"Qayerda", placePh:"Masalan: 3-poliklinika, 205-xona",
+  a_doctor:"Shifokor", a_test:"Tahlil", date:"Sana", time:"Soat", remindA:"Eslatish (bir kun oldin va 2 soat oldin)",
+  upcoming:"Kelgusi", past:"O'tgan", noAppts:"Qabul yozilmagan", needTitle:"Nima ekanini yozing", apptSoon:"%1: %2, soat %3", todayW:"bugun", tomorrowW:"ertaga", delQ:"O'chirilsinmi?",
+  rx:"Retsept rasmi", rxHint:"Shifokor bergan retsept qog'ozini rasmga olib qo'ying", rxShow:"📄 Retsept",
+  sugTitle:"Taklif:"
+,
   wd:["Du","Se","Cho","Pa","Ju","Sha","Ya"],
   months:["yanvar","fevral","mart","aprel","may","iyun","iyul","avgust","sentabr","oktabr","noyabr","dekabr"],
   wdl:["Yakshanba","Dushanba","Seshanba","Chorshanba","Payshanba","Juma","Shanba"]
@@ -373,7 +405,7 @@ const RU = {
   perms:"Разрешения", testAlarm:"🔔 Проверить напоминание (5 секунд)", testSent:"Через 5 секунд появится напоминание",
   discView:"Предупреждение об ответственности", resetAll:"Удалить все данные", resetQ:"Все данные будут удалены. Вы уверены?",
   owner:"Владелец телефона", caretakerExit:"🔒 Заблокировать",
-  openSettings:"⚙ Настройки", version:"Версия 1.2",
+  openSettings:"⚙ Настройки", version:"Версия 1.3",
   installTitle:"Добавьте на экран «Домой»",
   installHint:"В Safari нажмите кнопку «Поделиться» ⬆️ внизу и выберите «На экран Домой». Приложение будет открываться как обычное и работать без интернета.",
   calTitle:"Напоминания через календарь iPhone",
@@ -399,9 +431,144 @@ const RU = {
   theme:"Тема", th_auto:"Авто (ночью тёмная)", th_light:"Светлая", th_dark:"Тёмная",
   backup:"💾 Резервная копия", backupHint:"Чтобы восстановить данные при смене телефона. Отправьте копию себе в «Избранное» Telegram.",
   exportB:"⬆️ Сделать копию", importB:"⬇️ Восстановить из копии", importQ:"Текущие данные будут заменены данными из копии. Продолжить?", importOk:"Данные восстановлены ✓", importBad:"Это не копия «Время лекарств»", backupNoVoice:"Голосовые напоминания в копию не входят, их нужно записать заново.",
+  tools:"Полезные разделы", weekBox:"Таблетница на неделю", health:"Дневник здоровья", appts:"Приёмы",
+  weekBoxD:"Лекарства по дням Пн–Вс", healthD:"Давление, сахар, температура", apptsD:"Врачи и анализы",
+  part_m:"Утро", part_d:"День", part_e:"Вечер", part_n:"Ночь", weekNeed:"Нужно на эту неделю", thisWeek:"Эта неделя", nextWeek:"Следующая неделя",
+  v_bp:"Давление", v_sugar:"Сахар", v_temp:"Температура", v_weight:"Вес", v_pulse:"Пульс",
+  vu_bp:"мм рт. ст.", vu_sugar:"ммоль/л", vu_temp:"°C", vu_weight:"кг", vu_pulse:"уд/мин",
+  addVital:"+ Записать", vitalT:"Результат измерения", sys:"Верхнее", dia:"Нижнее", value:"Значение", note:"Заметка", notePh:"Например: после еды",
+  when:"Когда", lastVal:"Последнее", noVitals:"Записей пока нет", needVal:"Введите значение", vitalsHint:"Приложение не оценивает результаты. О норме спросите своего врача.",
+  addAppt:"+ Добавить приём", apptT:"Приём", apptTitle:"Что", apptTitlePh:"Например: кардиолог, анализ крови", place:"Где", placePh:"Например: поликлиника №3, каб. 205",
+  a_doctor:"Врач", a_test:"Анализ", date:"Дата", time:"Время", remindA:"Напомнить (за день и за 2 часа)",
+  upcoming:"Предстоящие", past:"Прошедшие", noAppts:"Приёмов нет", needTitle:"Напишите, что это", apptSoon:"%1: %2, в %3", todayW:"сегодня", tomorrowW:"завтра", delQ:"Удалить?",
+  rx:"Фото рецепта", rxHint:"Сфотографируйте рецепт, который дал врач", rxShow:"📄 Рецепт",
+  sugTitle:"Подсказка:"
+,
   wd:["Пн","Вт","Ср","Чт","Пт","Сб","Вс"],
   months:["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"],
   wdl:["Воскресенье","Понедельник","Вторник","Среда","Четверг","Пятница","Суббота"]
+};
+const EN = {
+  appName:"Pill Time",
+  chooseLang:"Choose a language",
+  next:"Continue", back:"Back", save:"Save", cancel:"Cancel", del:"Delete", close:"Close", edit:"Edit", add:"Add", yes:"Yes", no:"No",
+  discTitle:"Important! Please read",
+  disc:[
+    "\"Pill Time\" is only a reminder assistant. It does not replace a doctor or a pharmacist.",
+    "The app does not choose medicines, calculate doses or give treatment advice. The user enters the name, dose and time of each medicine and is responsible for their accuracy.",
+    "Take medicines only as prescribed by a doctor and according to the leaflet.",
+    "A reminder may be late or may not arrive if the phone is off, muted or in battery-saving mode. Keep track of important medicines in other ways too.",
+    "Medicines for children and people who need help must be supervised by a responsible adult.",
+    "The app and its author are not responsible for consequences of taking medicines incorrectly, missed reminders or similar situations.",
+    "If you feel worse, see a doctor immediately or call your local emergency number (103 in Uzbekistan)."
+  ],
+  agree:"I have read, understood and agree",
+  whoTitle:"Who are you setting this up for?",
+  forSelf:"For myself", forSelfD:"It's my phone and I use it",
+  forOther:"For someone else", forOtherD:"I'm setting up a parent's, grandparent's or relative's phone",
+  ownerTitleSelf:"About you", ownerTitleOther:"About the phone owner",
+  ownerHint:"The app's look is chosen by this person's age",
+  name:"Name", namePh:"For example: Anna", birthYear:"Year of birth", yearPh:"For example: 1985",
+  badYear:"Enter a valid year of birth", needName:"Enter a name",
+  modeTitle:"The right look for you",
+  modeFor:"Chosen for age %1. You can change it:",
+  m_simple:"Simple", m_simpleD:"Very large text, only the «Taken» button. Good for seniors",
+  m_teen:"Light", m_teenD:"Modern look, stars and streaks 🔥",
+  m_full:"Full", m_fullD:"Everything: family, history, settings",
+  personsTitle:"Who takes the medicines?",
+  personsHint:"You can track the whole family's medicines on one phone. Each person gets a profile suited to their age.",
+  addPerson:"+ Add a person", ownerToo:"%1 (phone owner)",
+  needPerson:"Add at least one person",
+  pinTitle:"Protective PIN",
+  pinHint:"With a PIN, adding or changing medicines and the settings open only with the PIN. The «Taken» button always works.",
+  pinRec:"Recommended for a senior or a child",
+  setPin:"Set a PIN", skip:"Not now",
+  enterPin:"Enter PIN", newPin:"New 4-digit PIN", repeatPin:"Repeat the PIN", pinWrong:"Wrong PIN", pinMismatch:"PINs don't match", pinSet:"PIN set", pinRemoved:"PIN removed",
+  permTitle:"For reminders to work",
+  permHint:"Please grant the permissions below, otherwise reminders may not arrive.",
+  p_notif:"Notifications", p_exact:"Exact-time reminders", p_full:"Full-screen reminder", p_battery:"No battery restrictions",
+  allow:"Allow", granted:"✓ Granted",
+  start:"Start",
+  browserNote:"Opened in a browser: reminders work only in the phone app.",
+  today:"Today", meds:"Medicines", family:"Family", history:"History", settings:"Settings",
+  addMed:"+ Medicine", addMedT:"Add a medicine", editMedT:"Edit medicine",
+  noDoses:"No medicines today", noDosesHint:"Tap «+ Medicine» to add one",
+  take:"Taken ✓", give:"Given ✓", taken:"✓ Taken", given:"✓ Given", missed:"Missed",
+  undo:"Undo",
+  stockLow:"%1: enough for %2 days. Buy more!", stockOut:"%1: out of stock!",
+  starPlus:"⭐ +1! Well done!", hero:"🏆 Hero! 7 days in a row!",
+  stars:"stars", streak:"days in a row",
+  forWho:"For whom", medName:"Medicine name", medNamePh:"For example: Paracetamol",
+  type:"Type", amount:"Dose", unit:"Unit",
+  food:"With food", f_before:"Before meals", f_after:"After meals", f_with:"With meals", f_any:"Doesn't matter",
+  sched:"When to take", s_daily:"Every day", s_other:"Every other day", s_week:"Weekdays", s_int:"Every N hours",
+  times:"Times", addTime:"+ Add time", perDay:"%1 times a day",
+  everyH:"Every how many hours", firstAt:"First dose",
+  startDate:"Start date", duration:"For how many days", durPh:"Leave empty: ongoing", forever:"ongoing", days:"days",
+  stock:"How many are left (optional)", stockPh:"To warn when running out",
+  photo:"Photo of the box", takePhoto:"📷 Take a photo", pickPhoto:"🖼 From gallery", removePhoto:"Remove photo",
+  needMedName:"Enter the medicine name", needTime:"Add at least one time", needDays:"Choose the weekdays",
+  medSaved:"Saved", delMedQ:"Delete this medicine?",
+  paused:"paused", pause:"Pause", resume:"Resume",
+  t_tablet:"Tablet", t_capsule:"Capsule", t_syrup:"Syrup", t_drops:"Drops", t_injection:"Injection", t_cream:"Ointment", t_inhaler:"Inhaler", t_vitamin:"Vitamin", t_other:"Other",
+  u_pcs:"pcs", u_ml:"ml", u_spoon:"tsp", u_drop:"drops", u_times:"times", u_puff:"puffs",
+  noMeds:"No medicines added yet",
+  ageG_child:"Child", ageG_teen:"Teen", ageG_adult:"Adult", ageG_senior:"Senior",
+  age:"%1 years",
+  personT:"Add a person", personEditT:"Edit profile", avatar:"Icon", color:"Color",
+  voice:"Voice reminder", voiceHint:"Record a loved one's voice, e.g. «Mom, it's time for your medicine». The reminder will play this voice.",
+  rec:"🎙 Record", stopRec:"⏹ Stop", play:"▶ Play", recording:"Recording... speak now",
+  voiceSaved:"Voice saved", noVoiceBrowser:"Voice recording works only in the phone app",
+  delPersonQ:"This person and all their medicines will be deleted. Continue?",
+  childNote:"Child profile: reminders come to this phone, an adult gives the medicine",
+  hist14:"Last 14 days", nothing:"No medicines",
+  language:"Language", viewMode:"Look", auto:"Automatic", fontSize:"Text size",
+  f_n:"Normal", f_l:"Large", f_xl:"Extra large",
+  pin:"PIN", pinOn:"Set", pinOff:"Not set", changePin:"Set / change PIN", removePin:"Remove PIN",
+  perms:"Permissions", testAlarm:"🔔 Test a reminder (5 seconds)", testSent:"A reminder will appear in 5 seconds",
+  discView:"Liability disclaimer", resetAll:"Delete all data", resetQ:"All data will be deleted. Are you sure?",
+  owner:"Phone owner", caretakerExit:"🔒 Lock",
+  openSettings:"⚙ Settings", version:"Version 1.3",
+  installTitle:"Add to Home Screen",
+  installHint:"In Safari tap «Share» ⬆️ at the bottom, then «Add to Home Screen». The app will open like a normal app and work offline.",
+  calTitle:"Reminders via iPhone Calendar",
+  calHint:"A web app can't send reminders by itself. Add the times to your phone's calendar — the phone will remind you with a sound, even when the app is closed.",
+  calBtn:"📅 Add to calendar", calAll:"📅 Add all medicines to calendar",
+  calDone:"In the window that opens, tap «Add All»",
+  calNeed:"%1 is not in the calendar yet. Add it to get reminders",
+  calChanged:"%1 has changed. Delete the old calendar entry and add it again",
+  calAdded:"📅 In calendar",
+  calEvent:"Pill time",
+  home:"Home", reports:"Reports",
+  progress:"%2 of %1 taken", next:"Next", inHM:"in %1 h %2 min", inM:"in %1 min", now:"now",
+  allDone:"All of today's medicines are taken 🎉", noneLeft:"No more medicines today",
+  notTaken:"Not taken", reasonQ:"Why wasn't it taken?", skippedL:"Skipped",
+  r_nausea:"Felt sick", r_out:"Ran out", r_forgot:"Forgot", r_doctor:"Doctor stopped it", r_away:"Wasn't at home", r_other:"Other reason",
+  adherence:"Adherence", d7:"7 days", d30:"30 days", all:"All",
+  takenN:"taken", missedN:"missed", totalN:"total",
+  byPerson:"By person", byMed:"By medicine", byMedHint:"most often forgotten on top",
+  chartT:"By day", missedList:"Missed doses", noMissed:"No missed doses 👏", setReason:"Reason",
+  dailyHist:"Daily history", noRep:"No data for a report yet",
+  docBtn:"🩺 Report for the doctor", docT:"Report for the doctor", copy:"📋 Copy", share:"📤 Send", copied:"Copied ✓",
+  docHead:"Medication intake report", docPatient:"Patient", docPeriod:"Period", docMeds:"Medicines", docMissed:"Missed doses", docNone:"none", docFoot:"Data from the «Pill Time» app, entered by the patient or their family.",
+  theme:"Theme", th_auto:"Auto (dark at night)", th_light:"Light", th_dark:"Dark",
+  backup:"💾 Backup", backupHint:"To restore your data if you change phones. Send the backup to your Telegram «Saved Messages».",
+  exportB:"⬆️ Make a backup", importB:"⬇️ Restore from backup", importQ:"Current data will be replaced with the backup. Continue?", importOk:"Data restored ✓", importBad:"This is not a Pill Time backup", backupNoVoice:"Voice reminders are not included in the backup; record them again.",
+  tools:"Useful sections", weekBox:"Weekly pill box", health:"Health diary", appts:"Appointments",
+  weekBoxD:"Medicines Mon–Sun", healthD:"Blood pressure, sugar, temperature", apptsD:"Doctors and tests",
+  part_m:"Morning", part_d:"Afternoon", part_e:"Evening", part_n:"Night", weekNeed:"Needed this week", thisWeek:"This week", nextWeek:"Next week",
+  v_bp:"Blood pressure", v_sugar:"Sugar", v_temp:"Temperature", v_weight:"Weight", v_pulse:"Pulse",
+  vu_bp:"mmHg", vu_sugar:"mmol/L", vu_temp:"°C", vu_weight:"kg", vu_pulse:"bpm",
+  addVital:"+ Record", vitalT:"Measurement", sys:"Upper", dia:"Lower", value:"Value", note:"Note", notePh:"For example: after a meal",
+  when:"When", lastVal:"Last", noVitals:"No records yet", needVal:"Enter a value", vitalsHint:"The app does not assess results. Ask your doctor about normal ranges.",
+  addAppt:"+ Add appointment", apptT:"Appointment", apptTitle:"What", apptTitlePh:"For example: cardiologist, blood test", place:"Where", placePh:"For example: Clinic 3, room 205",
+  a_doctor:"Doctor", a_test:"Test", date:"Date", time:"Time", remindA:"Remind me (a day before and 2 hours before)",
+  upcoming:"Upcoming", past:"Past", noAppts:"No appointments", needTitle:"Write what it is", apptSoon:"%1: %2 at %3", todayW:"today", tomorrowW:"tomorrow", delQ:"Delete?",
+  rx:"Prescription photo", rxHint:"Take a photo of the prescription your doctor gave you", rxShow:"📄 Prescription",
+  sugTitle:"Suggestion:",
+  wd:["Mo","Tu","We","Th","Fr","Sa","Su"],
+  months:["January","February","March","April","May","June","July","August","September","October","November","December"],
+  wdl:["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"]
 };
 /* Lotin -> Kirill (o'zbek) */
 function toCyr(s){
@@ -436,11 +603,11 @@ const UZC = deepCyr(UZ);
 UZC.appName="Дори вақти";
 UZC.disc[0]="«Дори вақти» фақат эслатувчи ёрдамчи. У шифокор ёки фармацевт ўрнини босмайди.";
 UZC.disc[5]="Дорини нотўғри қабул қилиш, эслатма келмай қолиши ёки шунга ўхшаш ҳолатлар натижасида юзага келган оқибатлар учун илова ва унинг муаллифи жавобгар эмас.";
-const LANGS={uz:UZ,uzc:UZC,ru:RU};
+const LANGS={uz:UZ,uzc:UZC,ru:RU,en:EN};
 function T(k,...a){ const L=LANGS[D.lang]||UZ; let s=(k in L)?L[k]:((k in UZ)?UZ[k]:k); if(typeof s==="string") a.forEach((v,i)=>{s=s.split("%"+(i+1)).join(v)}); return s; }
 
 /* ================= Ma'lumot ================= */
-function fresh(){ return {v:1, lang:"uz", agreed:false, setupDone:false, setupFor:"self", owner:null, modeAuto:true, mode:"full", font:0, pin:"", persons:[], meds:[], log:{}, stars:{}, heroes:{}, skip:{}, theme:"auto"}; }
+function fresh(){ return {v:1, lang:"uz", agreed:false, setupDone:false, setupFor:"self", owner:null, modeAuto:true, mode:"full", font:0, pin:"", persons:[], meds:[], log:{}, stars:{}, heroes:{}, skip:{}, theme:"auto", vitals:[], appts:[]}; }
 function load(){
   try{ const s = N ? N.load() : localStorage.getItem("doriVaqti"); if(s){ const o=JSON.parse(s); return Object.assign(fresh(), o);} }catch(e){}
   return fresh();
@@ -465,8 +632,8 @@ const ageOf=y=>curYear()-Number(y);
 function ageGroup(y){ const a=ageOf(y); if(a<=12) return "child"; if(a<=17) return "teen"; if(a<=59) return "adult"; return "senior"; }
 function modeForAge(y){ const g=ageGroup(y); return g==="senior"?"simple":(g==="adult"?"full":"teen"); }
 function uiMode(){ if(!D.owner) return "full"; return D.modeAuto? modeForAge(D.owner.year) : D.mode; }
-function fmtDate(s){ const d=parseD(s); const L=LANGS[D.lang]; return d.getDate()+"-"+L.months[d.getMonth()]+(D.lang==="ru"?"":""); }
-function fmtDateLong(s){ const d=parseD(s); const L=LANGS[D.lang]; return L.wdl[d.getDay()]+", "+(D.lang==="ru"? d.getDate()+" "+L.months[d.getMonth()] : d.getDate()+"-"+L.months[d.getMonth()]); }
+function fmtDate(s){ const d=parseD(s); const L=LANGS[D.lang]; return (D.lang==="ru"||D.lang==="en")? d.getDate()+" "+L.months[d.getMonth()] : d.getDate()+"-"+L.months[d.getMonth()]; }
+function fmtDateLong(s){ const d=parseD(s); const L=LANGS[D.lang]; return L.wdl[d.getDay()]+", "+((D.lang==="ru"||D.lang==="en")? d.getDate()+" "+L.months[d.getMonth()] : d.getDate()+"-"+L.months[d.getMonth()]); }
 function toast(msg,ms=2200){ const t=document.createElement("div"); t.className="toast"; t.textContent=msg; document.body.appendChild(t); setTimeout(()=>t.remove(),ms); }
 const COLORS=["#0f8b6f","#2f6fd6","#c2410c","#9333ea","#db2777","#0891b2","#65a30d","#b45309"];
 const AVATARS=["🧑","👨","👩","👦","👧","👶","👴","👵","🧔","👱‍♀️"];
@@ -611,9 +778,12 @@ function render(){
   else if(R.scr==="family") h=renderFamily();
   else if(R.scr==="person") h=renderPersonForm();
   else if(R.scr==="hist"||R.scr==="rep") h=renderReports();
+  else if(R.scr==="week") h=renderWeek();
+  else if(R.scr==="health") h=renderHealth();
+  else if(R.scr==="appts") h=renderAppts();
   else if(R.scr==="set") h=renderSettings();
   else if(R.scr==="disc") h=renderDiscView();
-  const showNav=["home","meds","family","hist","rep","set"].includes(R.scr);
+  const showNav=["home","meds","family","hist","rep","set","week","health","appts"].includes(R.scr);
   a.innerHTML=h+(showNav?renderNav():"");
   bindAll();
 }
@@ -629,8 +799,8 @@ function renderOB(){
   let h=`<div class="ob">`+dots(s,TOT);
   if(s===0){
     h+=`<div class="logo">💊⏰</div><h2 style="text-align:center">Dori vaqti · Дори вақти</h2>
-    <p class="muted" style="text-align:center">Tilni tanlang · Тилни танланг · Выберите язык</p>
-    ${[["uz","🇺🇿","O'zbekcha (lotin)"],["uzc","🇺🇿","Ўзбекча (кирилл)"],["ru","🇷🇺","Русский"]].map(([k,f,l])=>`<button class="choice ${D.lang===k?"on":""}" data-lang="${k}"><span class="e">${f}</span><b>${l}</b></button>`).join("")}
+    <p class="muted" style="text-align:center">Tilni tanlang · Тилни танланг · Выберите язык · Choose a language</p>
+    ${[["uz","🇺🇿","O'zbekcha (lotin)"],["uzc","🇺🇿","Ўзбекча (кирилл)"],["ru","🇷🇺","Русский"],["en","🇬🇧","English"]].map(([k,f,l])=>`<button class="choice ${D.lang===k?"on":""}" data-lang="${k}"><span class="e">${f}</span><b>${l}</b></button>`).join("")}
     <button class="btn mt2" data-next>${T("next")}</button>`;
   }
   if(s===1){
@@ -773,6 +943,7 @@ function renderHome(){
   const mode=uiMode();
   let h=`<div class="top"><h1>${T("today")}<div class="sub">${fmtDateLong(day)}</div></h1>${R.care?`<button class="iconbtn" id="lockBtn" title="lock">🔒</button>`:""}</div><div class="wrap">`;
   if(xs.length) h+=progressCard(xs);
+  h+=toolsRow();
   if(!N) h+=calBanners();
   const pm=perms(); if(pm&&(!pm.notif||!pm.exact)) h+=`<div class="banner b">🔔 ${T("permHint")} <button class="chip" data-go="set" style="margin-top:6px">${T("perms")}</button></div>`;
   const kids=D.persons.filter(p=>["child","teen"].includes(ageGroup(p.year)));
@@ -829,6 +1000,7 @@ function renderMeds(){
       <div class="info"><div class="nm">${esc(m.name)}${m.paused?` <span class="small muted">(${T("paused")})</span>`:""}</div>
       <div class="meta">${esc(fmtAmt(m))} · ${T("f_"+m.food)}</div><div class="meta">${esc(schedText(m))}</div>
       <div class="meta">${end?("→ "+fmtDate(end)):T("forever")}${dl!==null?` · 📦 ${m.stock} ${T("u_"+m.unit)}`:""}</div>
+      ${m.rx?`<button class="chip" data-rx="${esc(m.rx)}" style="margin-top:6px">${T("rxShow")}</button>`:""}
       ${!N&&!m.paused?(m.calAt&&!m.calDirty?`<div class="small" style="color:var(--pri);font-weight:700;margin-top:4px">${T("calAdded")}</div>`:`<button class="chip mt" data-cal="${m.id}" style="margin-top:6px">${T("calBtn")}</button>`):""}</div><span class="muted">›</span></div>`; } }
   h+=`</div><button class="fab" id="fabAdd">${T("addMed")}</button>`;
   return h;
@@ -862,7 +1034,7 @@ function renderMedForm(){
   const ph=photoURL(F.photo);
   let h=`<div class="top"><button class="iconbtn" id="mBack">←</button><h1>${F.id?T("editMedT"):T("addMedT")}</h1></div><div class="wrap">`;
   h+=`<label class="f">${T("forWho")}</label><div class="chips">${D.persons.map(p=>`<button class="chip ${F.personId===p.id?"on":""}" data-fp="${p.id}">${p.avatar} ${esc(p.name)}</button>`).join("")}</div>`;
-  h+=`<label class="f">${T("medName")}</label><input class="inp" id="mName" value="${esc(F.name)}" placeholder="${esc(T("medNamePh"))}">`;
+  h+=`<label class="f">${T("medName")}</label><input class="inp" id="mName" autocomplete="off" value="${esc(F.name)}" placeholder="${esc(T("medNamePh"))}"><div class="chips" id="mSug" style="margin-top:6px"></div>`;
   h+=`<label class="f">${T("type")}</label><div class="grid3">${TYPES.map(t=>`<button class="tile ${F.type===t.k?"on":""}" data-ft="${t.k}"><span class="e">${t.e}</span>${T("t_"+t.k)}</button>`).join("")}</div>`;
   h+=`<label class="f">${T("amount")}</label><div class="row"><input class="inp" id="mAmt" inputmode="decimal" value="${esc(F.amount)}" style="flex:1">
       <div class="chips" style="flex:2">${ty.u.map(u=>`<button class="chip ${F.unit===u?"on":""}" data-fu="${u}">${T("u_"+u)}</button>`).join("")}</div></div>`;
@@ -886,6 +1058,10 @@ function renderMedForm(){
   h+=`<label class="f">${T("photo")}</label>${ph?`<img src="${ph}" style="width:100%;max-height:220px;object-fit:cover;border-radius:16px">`:""}
      <div class="row mt"><button class="btn sec" id="phCam">${T("takePhoto")}</button><button class="btn sec" id="phGal">${T("pickPhoto")}</button></div>
      ${ph?`<button class="btn ghost mt" id="phDel">${T("removePhoto")}</button>`:""}`;
+  const rxu=photoURL(F.rx);
+  h+=`<label class="f">📄 ${T("rx")}</label><div class="muted small">${T("rxHint")}</div>${rxu?`<img src="${rxu}" style="width:100%;max-height:220px;object-fit:contain;border-radius:16px;background:var(--card);margin-top:6px">`:""}
+     <div class="row mt"><button class="btn sec" id="rxCam">${T("takePhoto")}</button><button class="btn sec" id="rxGal">${T("pickPhoto")}</button></div>
+     ${rxu?`<button class="btn ghost mt" id="rxDel">${T("removePhoto")}</button>`:""}`;
   h+=`<button class="btn mt2" id="mSave">${T("save")}</button>`;
   if(F.id) h+=`<button class="btn sec mt" id="mPause">${F.paused?T("resume"):T("pause")}</button><button class="btn bad mt" id="mDel">${T("del")}</button>`;
   h+=`<div style="height:30px"></div></div>`;
@@ -909,6 +1085,10 @@ function bindMedForm(){
   $("#phCam").onclick=()=>{readForm();getPhoto(true,n=>{F.photo=n;render()})};
   $("#phGal").onclick=()=>{readForm();getPhoto(false,n=>{F.photo=n;render()})};
   const pd=$("#phDel"); if(pd) pd.onclick=()=>{readForm();F.photo=null;render()};
+  $("#rxCam").onclick=()=>{readForm();getPhoto(true,n=>{F.rx=n;render()})};
+  $("#rxGal").onclick=()=>{readForm();getPhoto(false,n=>{F.rx=n;render()})};
+  const rd=$("#rxDel"); if(rd) rd.onclick=()=>{readForm();F.rx=null;render()};
+  bindSuggest();
   $("#mSave").onclick=()=>{
     readForm();
     F.name=F.name.trim(); if(!F.name) return toast(T("needMedName"));
@@ -973,7 +1153,7 @@ function renderHist(){
 function renderSettings(){
   const auto=D.owner?modeForAge(D.owner.year):"full";
   let h=`<div class="top"><h1>${T("settings")}</h1>${R.care?`<button class="iconbtn" id="lockBtn">🔒</button>`:""}</div><div class="wrap">`;
-  h+=`<div class="card"><label class="f" style="margin-top:0">${T("language")}</label><div class="seg">${[["uz","O'zbek"],["uzc","Ўзбек"],["ru","Русский"]].map(([k,l])=>`<button class="${D.lang===k?"on":""}" data-sl="${k}">${l}</button>`).join("")}</div>
+  h+=`<div class="card"><label class="f" style="margin-top:0">${T("language")}</label><div class="seg">${[["uz","O'zbek"],["uzc","Ўзбек"],["ru","Рус"],["en","Eng"]].map(([k,l])=>`<button class="${D.lang===k?"on":""}" data-sl="${k}">${l}</button>`).join("")}</div>
     <label class="f">${T("viewMode")}</label><div class="seg">${["simple","teen","full"].map(k=>`<button class="${uiMode()===k?"on":""}" data-sm="${k}">${T("m_"+k)}${k===auto?" ✓":""}</button>`).join("")}</div>
     <div class="muted small" style="margin-top:6px">${T("m_"+uiMode()+"D")}</div>
     <label class="f">${T("theme")}</label><div class="seg">${["auto","light","dark"].map(k=>`<button class="${(D.theme||"auto")===k?"on":""}" data-th="${k}">${T("th_"+k)}</button>`).join("")}</div>
@@ -1020,6 +1200,8 @@ function bindAll(){
   if(R.scr==="family") bindFamily();
   if(R.scr==="set") bindSettings();
   if(R.scr==="rep"||R.scr==="hist") bindReports();
+  if(["week","health","appts"].includes(R.scr)) bindTools();
+  a.querySelectorAll("[data-rx]").forEach(b=>b.onclick=e=>{e.stopPropagation();rxView(b.dataset.rx)});
   const db=$("#dBack"); if(db) db.onclick=()=>go("set",{care:R.care});
   if(uiMode()==="simple"&&R.care&&R.scr==="home"&&!$("#lockBtn")){}
 }
@@ -1209,7 +1391,7 @@ function docSheet(){
 /* ================= Zaxira nusxa ================= */
 function exportBackup(){
   const photos={};
-  D.meds.forEach(m=>{ if(m.photo){ const u=photoURL(m.photo); if(u) photos[m.photo]=u; } });
+  D.meds.forEach(m=>{ [m.photo,m.rx].forEach(n=>{ if(n){ const u=photoURL(n); if(u) photos[n]=u; } }); });
   const obj={app:"dori-vaqti",v:1,at:new Date().toISOString(),data:D,photos};
   const json=JSON.stringify(obj), name="DoriVaqti-zaxira-"+ds()+".json";
   if(N&&N.exportBackup){ try{ N.exportBackup(json,name); return; }catch(e){} }
@@ -1231,6 +1413,172 @@ function restoreBackup(text){
     for(const name in ph){ if(N&&N.writePhoto){ try{N.writePhoto(name,ph[name])}catch(e){} } else { mockFiles[name]=ph[name]; try{localStorage.setItem("dvPhoto_"+name,ph[name])}catch(e){} } delete photoCache[name]; }
     D=Object.assign(fresh(),o.data); save(); R={scr:"home"}; render(); toast(T("importOk"),3000);
   });
+}
+
+/* ================= v1.3: dori nomlari (lotin + kirill) ================= */
+const MEDNAMES=("Paratsetamol,Panadol,Efferalgan,Ibuprofen,Nurofen,Analgin,Sitramon,No-shpa,Drotaverin,Aspirin,Kardiomagnil,Trombo ASS,Lozap,Lozartan,Lorista,Valz,Valsartan,Enap,Enalapril,Kaptopril,Kapoten,Amlodipin,Norvask,Bisoprolol,Konkor,Metoprolol,Egilok,Nebivolol,Nebilet,Indapamid,Arifon,Furosemid,Veroshpiron,Gipotiazid,Prestarium,Perindopril,Noliprel,Moksonidin,Fiziotenz,Atorvastatin,Atoris,Rozuvastatin,Krestor,Metformin,Glyukofaj,Siofor,Diabeton,Gliklazid,Glibenklamid,Amaril,Insulin,Lantus,Novorapid,L-tiroksin,Eutiroks,Omeprazol,Omez,Pantoprazol,Nolpaza,Famotidin,Almagel,Fosfalyugel,De-nol,Smekta,Enterosgel,Polisorb,Loperamid,Imodium,Linex,Bifiform,Mezim,Kreon,Festal,Duspatalin,Motilium,Serukal,Regidron,Nifuroksazid,Ersefuril,Amoksitsillin,Amoksiklav,Flemoksin,Augmentin,Azitromitsin,Sumamed,Klaritromitsin,Sefiksim,Supraks,Seftriakson,Tsiprofloksatsin,Levofloksatsin,Metronidazol,Trixopol,Flukonazol,Diflyukan,Asiklovir,Ergoferon,Arbidol,Kagotsel,Ingavirin,Ambroksol,Lazolvan,Ambrobene,Atsetilsistein,ATsTs,Bromgeksin,Gerbion,Prospan,Sinupret,Loratadin,Klaritin,Setirizin,Zirtek,Suprastin,Tavegil,Erius,Dezloratadin,Diazolin,Montelukast,Singulyar,Salbutamol,Ventolin,Berodual,Pulmikort,Vitamin D3,Akvadetrim,Vitamin C,Askorbin kislota,Foliy kislota,Sorbifer,Ferrum Lek,Maltofer,Kalsiy D3 Nikomed,Magne B6,Kombilipen,Milgamma,Neyromultivit,Glitsin,Fenibut,Afobazol,Novo-passit,Valeriana,Diklofenak,Voltaren,Ketorol,Ketonal,Nimesulid,Nise,Meloksikam,Movalis,Ksefokam,Pentalgin,Teraflyu,Koldreks,Ferveks,Ksilometazolin,Nazivin,Otipaks,Levomekol,Bepanten,Pantenol,Klotrimazol,Varfarin,Klopidogrel,Plaviks,Ksarelto,Eliquis,Digoksin,Nitroglitserin,Mildronat,Riboksin,Asparkam,Panangin,Preduktal,Trimetazidin,Betaserk,Kavinton,Piratsetam,Nootropil,Meksidol,Sertralin,Eglonil,Allopurinol,Prednizolon,Deksametazon,Metilprednizolon,Medrol,Tantum Verde,Faringosept,Strepsils,Lizobakt,Geksoral,Miramistin,Xlorgeksidin,Ursosan,Ursofalk,Essensiale,Karsil,Geptral,Kanefron,Furagin,Monural,Detraleks,Flebodia,Troksevazin,Venarus,Tamsulozin,Omnik").split(",");
+const CYR2LAT={"а":"a","б":"b","в":"v","г":"g","ғ":"g'","д":"d","е":"e","ё":"yo","ж":"j","з":"z","и":"i","й":"y","к":"k","қ":"q","л":"l","м":"m","н":"n","о":"o","ў":"o'","п":"p","р":"r","с":"s","т":"t","у":"u","ф":"f","х":"x","ҳ":"h","ц":"ts","ч":"ch","ш":"sh","щ":"sh","ъ":"","ы":"i","ь":"","э":"e","ю":"yu","я":"ya"};
+const isCyr=s=>/[а-яёўқғҳ]/i.test(s);
+function normName(s){
+  s=String(s).toLowerCase();
+  let o=""; for(const ch of s) o+= (ch in CYR2LAT)? CYR2LAT[ch] : ch;
+  return o.replace(/[ʻʼ'‘’`\-\s.]/g,"").replace(/kh/g,"x").replace(/h/g,"x").replace(/c(?!h)/g,"s").replace(/ph/g,"f");
+}
+const MEDNORM=MEDNAMES.map(n=>[n,normName(n)]);
+function medSuggest(q){
+  const nq=normName(q); if(nq.length<2) return [];
+  const starts=[], cont=[];
+  for(const [n,k] of MEDNORM){ if(k.startsWith(nq)) starts.push(n); else if(k.includes(nq)) cont.push(n); }
+  const res=starts.concat(cont).slice(0,6);
+  return isCyr(q)? res.map(n=>toCyr(n)) : res;
+}
+function bindSuggest(){
+  const inp=$("#mName"), box=$("#mSug"); if(!inp||!box) return;
+  const show=()=>{ const list=medSuggest(inp.value).filter(n=>n.toLowerCase()!==inp.value.trim().toLowerCase());
+    box.innerHTML= list.length? list.map(n=>`<button type="button" class="chip" data-sug="${esc(n)}">${esc(n)}</button>`).join("") : "";
+    box.querySelectorAll("[data-sug]").forEach(b=>b.onmousedown=b.ontouchstart=e=>{ e.preventDefault(); inp.value=b.dataset.sug; F.name=inp.value; box.innerHTML=""; }); };
+  inp.addEventListener("input",show);
+  inp.addEventListener("blur",()=>setTimeout(()=>{box.innerHTML=""},200));
+}
+
+/* ================= Bosh sahifa: foydali bo'limlar ================= */
+function toolsRow(){
+  const up=upcomingAppts().filter(a=>a.date<=addDays(ds(),1));
+  let h="";
+  up.forEach(a=>{ const p=personOf(a.personId); const tx=T("apptSoon",a.date===ds()?T("todayW"):T("tomorrowW"),a.title,a.time||"—"); h+=`<div class="banner g tap" data-go="appts">🩺 ${esc(tx.charAt(0).toUpperCase()+tx.slice(1))}${p&&D.persons.length>1?` · ${p.avatar} ${esc(p.name)}`:""}</div>`; });
+  h+=`<div class="tools">${[["week","🗓",T("weekBox"),T("weekBoxD")],["health","❤️",T("health"),T("healthD")],["appts","🩺",T("appts"),T("apptsD")]].map(([k,e,t,d])=>`<button class="tool" data-go="${k}"><span class="e">${e}</span><b>${t}</b><span>${d}</span></button>`).join("")}</div>`;
+  return h;
+}
+function subTop(title){ return `<div class="top"><button class="iconbtn" data-go="home">←</button><h1>${title}</h1></div>`; }
+
+/* ================= Haftalik quticha ================= */
+function partOf(t){ const m=tMin(t); return m<660?"m":m<960?"d":m<1260?"e":"n"; }
+function renderWeek(){
+  const off=R.wk||0, pf=R.pf||(D.persons[0]||{}).id;
+  const today=parseD(ds()); const mon=new Date(today); mon.setDate(mon.getDate()-((today.getDay()+6)%7)+7*off);
+  const days=[...Array(7)].map((_,i)=>{const d=new Date(mon);d.setDate(d.getDate()+i);return ds(d)});
+  let h=subTop("🗓 "+T("weekBox"))+`<div class="wrap">`;
+  h+=`<div class="seg">${[0,1].map(o=>`<button class="${off===o?"on":""}" data-wk="${o}">${o?T("nextWeek"):T("thisWeek")}</button>`).join("")}</div>`;
+  if(D.persons.length>1) h+=`<div class="chips mt">${D.persons.map(p=>`<button class="chip ${pf===p.id?"on":""}" data-wpf="${p.id}">${p.avatar} ${esc(p.name)}</button>`).join("")}</div>`;
+  const need={};
+  const cell=(day,part)=>{ const xs=dosesOn(day).filter(x=>x.m.personId===pf&&partOf(x.t)===part);
+    xs.forEach(x=>{ const k=x.m.id; (need[k]=need[k]||{m:x.m,n:0}).n+=Number(x.m.amount)||1; });
+    return xs.map(x=>`<div class="pill" title="${esc(x.m.name)} ${x.t}">${typeOf(x.m.type).e}<span>${esc(x.m.name.slice(0,9))}</span><i>${x.t}</i></div>`).join(""); };
+  h+=`<div class="box"><div class="bh"></div>${days.map(d=>{const dd=parseD(d);return `<div class="bh ${d===ds()?"today":""}">${LANGS[D.lang].wd[(dd.getDay()+6)%7]}<br><span>${dd.getDate()}</span></div>`}).join("")}`;
+  for(const part of ["m","d","e","n"]){ h+=`<div class="bp">${T("part_"+part)}</div>`+days.map(d=>`<div class="bc ${d===ds()?"today":""}">${cell(d,part)}</div>`).join(""); }
+  h+=`</div>`;
+  const nl=Object.values(need);
+  h+=`<div class="card mt"><b>📦 ${T("weekNeed")}</b>${nl.length?nl.map(o=>`<div class="row" style="padding:7px 0;border-bottom:1px solid var(--line)"><span>${typeOf(o.m.type).e} ${esc(o.m.name)}</span><b style="flex:none">${Math.round(o.n*100)/100} ${esc(T("u_"+o.m.unit))}</b></div>`).join(""):`<p class="muted">${T("nothing")}</p>`}</div>`;
+  return h+`</div>`;
+}
+
+/* ================= Sog'liq daftari ================= */
+const VT=["bp","sugar","temp","pulse","weight"];
+const vEmoji={bp:"🩸",sugar:"🍬",temp:"🌡️",pulse:"💓",weight:"⚖️"};
+function vitalStr(v){ return v.type==="bp"? v.v1+"/"+v.v2 : String(v.v1); }
+function renderHealth(){
+  D.vitals=D.vitals||[];
+  const pf=R.pf||(D.persons[0]||{}).id, vt=R.vt||"bp";
+  let h=subTop("❤️ "+T("health"))+`<div class="wrap">`;
+  if(D.persons.length>1) h+=`<div class="chips">${D.persons.map(p=>`<button class="chip ${pf===p.id?"on":""}" data-hpf="${p.id}">${p.avatar} ${esc(p.name)}</button>`).join("")}</div>`;
+  h+=`<div class="vgrid mt">${VT.map(t=>{ const last=D.vitals.filter(v=>v.personId===pf&&v.type===t).sort((a,b)=>b.at.localeCompare(a.at))[0];
+    return `<button class="vt ${vt===t?"on":""}" data-vt="${t}"><span>${vEmoji[t]} ${T("v_"+t)}</span><b>${last?esc(vitalStr(last)):"—"}</b><i>${last?esc(T("vu_"+t))+" · "+fmtDate(last.at.slice(0,10)):""}</i></button>`; }).join("")}</div>`;
+  const list=D.vitals.filter(v=>v.personId===pf&&v.type===vt).sort((a,b)=>a.at.localeCompare(b.at));
+  h+=`<button class="btn mt" id="vAdd">${T("addVital")}</button>`;
+  h+=`<div class="card"><b>${vEmoji[vt]} ${T("v_"+vt)}</b> <span class="muted small">${T("vu_"+vt)}</span>${list.length>1?`<div class="mt">${vitalChart(list.slice(-30),vt)}</div>`:""}
+    ${list.length?list.slice().reverse().slice(0,30).map(v=>`<div class="row" style="padding:8px 0;border-bottom:1px solid var(--line)"><div style="flex:1"><b style="font-size:1.1rem">${esc(vitalStr(v))}</b> <span class="muted small">${esc(T("vu_"+vt))}</span>${v.note?`<div class="muted small">${esc(v.note)}</div>`:""}</div><span class="muted small" style="flex:none">${fmtDate(v.at.slice(0,10))}, ${v.at.slice(11,16)}</span><button class="chip" style="flex:none" data-vdel="${v.id}">✕</button></div>`).join(""):`<p class="muted">${T("noVitals")}</p>`}</div>
+    <p class="muted small">ℹ️ ${T("vitalsHint")}</p>`;
+  return h+`</div>`;
+}
+function vitalChart(list,vt){
+  const W=600,H=170,pl=36,pb=22;
+  const vals=list.flatMap(v=>vt==="bp"?[+v.v1,+v.v2]:[+v.v1]);
+  let mn=Math.min(...vals), mx=Math.max(...vals); if(mn===mx){mn-=1;mx+=1} const padv=(mx-mn)*.15; mn-=padv; mx+=padv;
+  const X=i=>pl+(W-pl-10)*(list.length===1?0.5:i/(list.length-1)), Y=v=>H-pb-(v-mn)/(mx-mn)*(H-pb-8);
+  const line=(k,col)=>`<polyline fill="none" stroke="${col}" stroke-width="3" stroke-linejoin="round" points="${list.map((v,i)=>X(i)+","+Y(+v[k])).join(" ")}"/>`+list.map((v,i)=>`<circle cx="${X(i)}" cy="${Y(+v[k])}" r="4" fill="${col}"/>`).join("");
+  let s=`<svg class="chart" viewBox="0 0 ${W} ${H}">`;
+  [mx,(mx+mn)/2,mn].forEach(t=>{const y=Y(t); s+=`<line x1="${pl}" x2="${W}" y1="${y}" y2="${y}" stroke="var(--line)"/><text x="${pl-6}" y="${y+4}" font-size="12" text-anchor="end" fill="var(--muted)">${Math.round(t*10)/10}</text>`});
+  s+=line("v1","var(--pri)"); if(vt==="bp") s+=line("v2","var(--warn)");
+  [0,list.length-1].forEach(i=>{ if(list[i]) s+=`<text x="${X(i)}" y="${H-5}" font-size="12" text-anchor="${i?"end":"start"}" fill="var(--muted)">${fmtDate(list[i].at.slice(0,10))}</text>`; });
+  return s+`</svg>`+(vt==="bp"?`<div class="small muted" style="display:flex;gap:14px"><span><b style="color:var(--pri)">●</b> ${T("sys")}</span><span><b style="color:var(--warn)">●</b> ${T("dia")}</span></div>`:"");
+}
+function vitalSheet(){
+  const vt=R.vt||"bp", pf=R.pf||(D.persons[0]||{}).id;
+  const now=new Date(), dv=ds(now), tv=pad(now.getHours())+":"+pad(now.getMinutes());
+  $("#modal").innerHTML=`<div class="modal" onclick="if(event.target===this)closeModal()"><div class="sheet"><h3 style="margin:4px 0">${vEmoji[vt]} ${T("v_"+vt)}</h3>
+    ${vt==="bp"?`<div class="row"><div><label class="f">${T("sys")}</label><input class="inp" id="v1" inputmode="numeric" placeholder="120"></div><div><label class="f">${T("dia")}</label><input class="inp" id="v2" inputmode="numeric" placeholder="80"></div></div>`
+      :`<label class="f">${T("value")} (${T("vu_"+vt)})</label><input class="inp" id="v1" inputmode="decimal">`}
+    <div class="row"><div><label class="f">${T("date")}</label><input class="inp" type="date" id="vd" value="${dv}"></div><div><label class="f">${T("time")}</label><input class="inp" type="time" id="vtm" value="${tv}"></div></div>
+    <label class="f">${T("note")}</label><input class="inp" id="vn" placeholder="${esc(T("notePh"))}">
+    <div class="row mt2"><button class="btn ghost" id="vC">${T("cancel")}</button><button class="btn" id="vS">${T("save")}</button></div></div></div>`;
+  $("#vC").onclick=closeModal;
+  $("#vS").onclick=()=>{ const num=id=>{const e=$("#"+id);return e?Number(String(e.value).replace(",",".")):NaN};
+    const v1=num("v1"), v2=vt==="bp"?num("v2"):null;
+    if(!(v1>0)||(vt==="bp"&&!(v2>0))) return toast(T("needVal"));
+    D.vitals=D.vitals||[]; D.vitals.push({id:uid(),personId:pf,type:vt,v1,v2,at:($("#vd").value||dv)+"T"+($("#vtm").value||tv),note:$("#vn").value.trim()});
+    save(); closeModal(); render(); };
+}
+
+/* ================= Shifokor qabullari ================= */
+function upcomingAppts(){ const t=ds(); return (D.appts||[]).filter(a=>a.date>=t&&personOf(a.personId)).sort((a,b)=>(a.date+(a.time||"")).localeCompare(b.date+(b.time||""))); }
+function renderAppts(){
+  const up=upcomingAppts(), past=(D.appts||[]).filter(a=>a.date<ds()).sort((a,b)=>b.date.localeCompare(a.date));
+  let h=subTop("🩺 "+T("appts"))+`<div class="wrap"><button class="btn" id="aAdd">${T("addAppt")}</button>`;
+  const card=a=>{ const p=personOf(a.personId); const d=parseD(a.date);
+    return `<div class="card row tap" data-appt="${a.id}" style="cursor:pointer"><div class="dbox"><b>${d.getDate()}</b><span>${LANGS[D.lang].months[d.getMonth()].slice(0,3)}</span></div>
+      <div style="flex:1"><b>${a.kind==="test"?"🧪":"👨‍⚕️"} ${esc(a.title)}</b><div class="muted small">${a.time?"⏰ "+a.time:""}${a.place?" · 📍 "+esc(a.place):""}</div>
+      ${p&&D.persons.length>1?`<div class="small">${p.avatar} ${esc(p.name)}</div>`:""}${a.remind&&N?`<div class="small" style="color:var(--pri)">🔔</div>`:""}</div>
+      ${!N&&a.date>=ds()?`<button class="chip" style="flex:none" data-acal="${a.id}">📅</button>`:""}</div>`; };
+  h+=`<div class="tgroup">${T("upcoming")}</div>${up.length?up.map(card).join(""):`<p class="muted">${T("noAppts")}</p>`}`;
+  if(past.length) h+=`<div class="tgroup">${T("past")}</div><div style="opacity:.65">${past.slice(0,20).map(card).join("")}</div>`;
+  return h+`</div>`;
+}
+function apptSheet(id){
+  const a0=(D.appts||[]).find(a=>a.id===id);
+  const a=Object.assign({kind:"doctor",title:"",place:"",date:addDays(ds(),1),time:"09:00",personId:(D.persons[0]||{}).id,remind:true,note:""},a0||{});
+  const draw=()=>{ $("#modal").innerHTML=`<div class="modal"><div class="sheet"><h3 style="margin:4px 0">🩺 ${T("apptT")}</h3>
+    ${D.persons.length>1?`<label class="f">${T("forWho")}</label><div class="chips">${D.persons.map(p=>`<button class="chip ${a.personId===p.id?"on":""}" data-ap="${p.id}">${p.avatar} ${esc(p.name)}</button>`).join("")}</div>`:""}
+    <div class="seg mt">${["doctor","test"].map(k=>`<button class="${a.kind===k?"on":""}" data-ak="${k}">${k==="test"?"🧪":"👨‍⚕️"} ${T("a_"+k)}</button>`).join("")}</div>
+    <label class="f">${T("apptTitle")}</label><input class="inp" id="aT" value="${esc(a.title)}" placeholder="${esc(T("apptTitlePh"))}">
+    <div class="row"><div><label class="f">${T("date")}</label><input class="inp" type="date" id="aD" value="${esc(a.date)}"></div><div><label class="f">${T("time")}</label><input class="inp" type="time" id="aTm" value="${esc(a.time)}"></div></div>
+    <label class="f">${T("place")}</label><input class="inp" id="aP" value="${esc(a.place)}" placeholder="${esc(T("placePh"))}">
+    ${N?`<label class="check"><input type="checkbox" id="aR" ${a.remind?"checked":""}> ${T("remindA")}</label>`:""}
+    <div class="row mt2"><button class="btn ghost" id="aC">${T("cancel")}</button><button class="btn" id="aS">${T("save")}</button></div>
+    ${a0?`<button class="btn bad mt" id="aX">${T("del")}</button>`:""}</div></div>`;
+    const keep=()=>{a.title=$("#aT").value;a.date=$("#aD").value;a.time=$("#aTm").value;a.place=$("#aP").value;const r=$("#aR");if(r)a.remind=r.checked;};
+    document.querySelectorAll("[data-ap]").forEach(b=>b.onclick=()=>{keep();a.personId=b.dataset.ap;draw()});
+    document.querySelectorAll("[data-ak]").forEach(b=>b.onclick=()=>{keep();a.kind=b.dataset.ak;draw()});
+    $("#aC").onclick=closeModal;
+    $("#aS").onclick=()=>{ keep(); a.title=a.title.trim(); if(!a.title) return toast(T("needTitle")); if(!a.date) return;
+      D.appts=D.appts||[]; if(a0) Object.assign(a0,a); else D.appts.push(Object.assign({id:uid()},a)); save(); closeModal(); render(); };
+    const x=$("#aX"); if(x) x.onclick=()=>{ D.appts=D.appts.filter(y=>y.id!==id); save(); closeModal(); render(); };
+  };
+  draw();
+}
+function apptIcs(a){
+  const st=a.date.replace(/-/g,"")+"T"+(a.time||"09:00").replace(":","")+"00";
+  const L=["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Dori vaqti//UZ","BEGIN:VEVENT","UID:dv-appt-"+a.id+"@dorivaqti","DTSTAMP:"+new Date().toISOString().replace(/[-:]/g,"").slice(0,15)+"Z",
+    "DTSTART:"+st,"DURATION:PT1H","SUMMARY:"+icsEsc("🩺 "+a.title),"LOCATION:"+icsEsc(a.place||""),
+    "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+icsEsc(a.title),"TRIGGER:-P1D","END:VALARM",
+    "BEGIN:VALARM","ACTION:DISPLAY","DESCRIPTION:"+icsEsc(a.title),"TRIGGER:-PT2H","END:VALARM","END:VEVENT","END:VCALENDAR"];
+  const url=URL.createObjectURL(new Blob([L.join("\r\n")],{type:"text/calendar;charset=utf-8"}));
+  const el=document.createElement("a"); el.href=url; el.download="qabul.ics"; document.body.appendChild(el); el.click(); el.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),60000); toast(T("calDone"),3500);
+}
+function bindTools(){
+  const A=$("#app");
+  A.querySelectorAll("[data-wk]").forEach(b=>b.onclick=()=>{R.wk=+b.dataset.wk;render()});
+  A.querySelectorAll("[data-wpf],[data-hpf]").forEach(b=>b.onclick=()=>{R.pf=b.dataset.wpf||b.dataset.hpf;render()});
+  A.querySelectorAll("[data-vt]").forEach(b=>b.onclick=()=>{R.vt=b.dataset.vt;render()});
+  A.querySelectorAll("[data-vdel]").forEach(b=>b.onclick=()=>confirmBox(T("delQ"),()=>{D.vitals=D.vitals.filter(v=>v.id!==b.dataset.vdel);save();render()}));
+  const va=$("#vAdd"); if(va) va.onclick=vitalSheet;
+  const aa=$("#aAdd"); if(aa) aa.onclick=()=>apptSheet(null);
+  A.querySelectorAll("[data-appt]").forEach(b=>b.onclick=()=>apptSheet(b.dataset.appt));
+  A.querySelectorAll("[data-acal]").forEach(b=>b.onclick=e=>{e.stopPropagation();const a=D.appts.find(x=>x.id===b.dataset.acal);if(a)apptIcs(a)});
+}
+function rxView(name){
+  const u=photoURL(name); if(!u) return;
+  $("#modal").innerHTML=`<div class="modal" onclick="closeModal()"><div class="sheet" style="text-align:center"><img src="${u}" style="max-width:100%;max-height:75vh;border-radius:12px"><button class="btn ghost mt">${T("close")}</button></div></div>`;
 }
 
 window.handleBack=function(){
